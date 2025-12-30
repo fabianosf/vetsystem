@@ -1,0 +1,1804 @@
+INFO 2025-12-15 12:20:53,458 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 12:27:39,366 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 12:28:04,576 autoreload /home/fabianosf/Desktop/vetsystem/vetsystem-backend/config/settings.py changed, reloading.
+INFO 2025-12-15 12:28:05,138 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 12:28:10,446 autoreload Watching for file changes with StatReloader
+WARNING 2025-12-15 12:28:34,889 log Unauthorized: /api/auth/login/
+WARNING 2025-12-15 12:28:34,890 basehttp "POST /api/auth/login/ HTTP/1.1" 401 45
+INFO 2025-12-15 12:29:30,516 autoreload /home/fabianosf/Desktop/vetsystem/vetsystem-backend/config/settings.py changed, reloading.
+INFO 2025-12-15 12:29:31,181 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 12:30:49,781 basehttp "POST /api/auth/login/ HTTP/1.1" 200 837
+INFO 2025-12-15 12:34:52,964 basehttp "POST /api/auth/login/ HTTP/1.1" 200 837
+INFO 2025-12-15 12:34:53,091 basehttp "GET /api/auth/me/ HTTP/1.1" 200 156
+INFO 2025-12-15 12:34:53,200 basehttp "POST /api/tutores/ HTTP/1.1" 201 333
+INFO 2025-12-15 12:34:53,294 basehttp "GET /api/tutores/ HTTP/1.1" 200 385
+WARNING 2025-12-15 12:34:53,369 log Bad Request: /api/animais/
+WARNING 2025-12-15 12:34:53,369 basehttp "POST /api/animais/ HTTP/1.1" 400 94
+INFO 2025-12-15 12:34:53,455 basehttp "GET /api/animais/ HTTP/1.1" 200 52
+WARNING 2025-12-15 12:34:53,574 log Bad Request: /api/veterinarios/
+WARNING 2025-12-15 12:34:53,576 basehttp "POST /api/veterinarios/ HTTP/1.1" 400 99
+WARNING 2025-12-15 12:34:53,644 log Unauthorized: /api/tutores/
+WARNING 2025-12-15 12:34:53,644 basehttp "GET /api/tutores/ HTTP/1.1" 401 68
+INFO 2025-12-15 12:34:54,175 basehttp "POST /api/auth/register/ HTTP/1.1" 201 166
+INFO 2025-12-15 12:36:15,602 basehttp "POST /api/auth/login/ HTTP/1.1" 200 837
+INFO 2025-12-15 12:36:15,719 basehttp "GET /api/auth/me/ HTTP/1.1" 200 156
+INFO 2025-12-15 12:36:15,820 basehttp "POST /api/tutores/ HTTP/1.1" 201 333
+INFO 2025-12-15 12:36:15,903 basehttp "GET /api/tutores/ HTTP/1.1" 200 719
+INFO 2025-12-15 12:36:15,993 basehttp "POST /api/animais/ HTTP/1.1" 201 312
+INFO 2025-12-15 12:36:16,080 basehttp "GET /api/animais/ HTTP/1.1" 200 364
+INFO 2025-12-15 12:36:16,164 basehttp "POST /api/veterinarios/ HTTP/1.1" 201 421
+WARNING 2025-12-15 12:36:16,243 log Bad Request: /api/consultas/
+WARNING 2025-12-15 12:36:16,244 basehttp "POST /api/consultas/ HTTP/1.1" 400 93
+WARNING 2025-12-15 12:36:16,295 log Unauthorized: /api/tutores/
+WARNING 2025-12-15 12:36:16,295 basehttp "GET /api/tutores/ HTTP/1.1" 401 68
+INFO 2025-12-15 12:36:16,840 basehttp "POST /api/auth/register/ HTTP/1.1" 201 146
+INFO 2025-12-15 12:37:16,729 basehttp "POST /api/auth/login/ HTTP/1.1" 200 837
+INFO 2025-12-15 12:37:16,854 basehttp "GET /api/auth/me/ HTTP/1.1" 200 156
+INFO 2025-12-15 12:37:16,953 basehttp "POST /api/tutores/ HTTP/1.1" 201 314
+INFO 2025-12-15 12:37:17,045 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 12:37:17,123 basehttp "POST /api/animais/ HTTP/1.1" 201 312
+INFO 2025-12-15 12:37:17,208 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 12:37:17,289 basehttp "POST /api/veterinarios/ HTTP/1.1" 201 379
+INFO 2025-12-15 12:37:17,372 basehttp "POST /api/consultas/ HTTP/1.1" 201 298
+WARNING 2025-12-15 12:37:17,424 log Unauthorized: /api/tutores/
+WARNING 2025-12-15 12:37:17,425 basehttp "GET /api/tutores/ HTTP/1.1" 401 68
+INFO 2025-12-15 12:37:17,974 basehttp "POST /api/auth/register/ HTTP/1.1" 201 145
+INFO 2025-12-15 12:56:43,331 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 12:57:03,556 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 12:57:24,297 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 19:50:06,594 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 19:52:00,743 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 20:24:18,883 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 20:24:25,551 basehttp "OPTIONS /api/animais/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:24:25,552 basehttp "OPTIONS /api/tutores/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:24:25,554 basehttp "OPTIONS /api/consultas/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:24:25,562 basehttp "OPTIONS /api/veterinarios/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:24:25,568 basehttp "OPTIONS /api/animais/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:24:25,568 basehttp "OPTIONS /api/consultas/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:24:25,571 basehttp "OPTIONS /api/veterinarios/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:24:25,572 basehttp "OPTIONS /api/tutores/ HTTP/1.1" 200 0
+WARNING 2025-12-15 20:24:25,628 log Unauthorized: /api/animais/
+WARNING 2025-12-15 20:24:25,629 log Unauthorized: /api/veterinarios/
+WARNING 2025-12-15 20:24:25,630 log Unauthorized: /api/tutores/
+WARNING 2025-12-15 20:24:25,631 log Unauthorized: /api/consultas/
+WARNING 2025-12-15 20:24:25,632 basehttp "GET /api/animais/ HTTP/1.1" 401 197
+WARNING 2025-12-15 20:24:25,632 basehttp "GET /api/veterinarios/ HTTP/1.1" 401 197
+WARNING 2025-12-15 20:24:25,633 basehttp "GET /api/tutores/ HTTP/1.1" 401 197
+WARNING 2025-12-15 20:24:25,633 basehttp "GET /api/consultas/ HTTP/1.1" 401 197
+WARNING 2025-12-15 20:24:25,676 log Unauthorized: /api/animais/
+WARNING 2025-12-15 20:24:25,677 basehttp "GET /api/animais/ HTTP/1.1" 401 197
+WARNING 2025-12-15 20:24:25,684 log Unauthorized: /api/consultas/
+WARNING 2025-12-15 20:24:25,686 log Unauthorized: /api/veterinarios/
+WARNING 2025-12-15 20:24:25,689 basehttp "GET /api/consultas/ HTTP/1.1" 401 197
+WARNING 2025-12-15 20:24:25,691 log Unauthorized: /api/tutores/
+INFO 2025-12-15 20:24:25,692 basehttp "OPTIONS /api/auth/refresh/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:24:25,693 basehttp "OPTIONS /api/auth/refresh/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:24:25,693 basehttp "OPTIONS /api/auth/refresh/ HTTP/1.1" 200 0
+WARNING 2025-12-15 20:24:25,698 basehttp "GET /api/tutores/ HTTP/1.1" 401 197
+WARNING 2025-12-15 20:24:25,707 basehttp "GET /api/veterinarios/ HTTP/1.1" 401 197
+INFO 2025-12-15 20:24:25,714 basehttp "OPTIONS /api/auth/refresh/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:24:25,729 basehttp "OPTIONS /api/auth/refresh/ HTTP/1.1" 200 0
+WARNING 2025-12-15 20:24:25,737 log Unauthorized: /api/auth/refresh/
+WARNING 2025-12-15 20:24:25,740 log Unauthorized: /api/auth/refresh/
+WARNING 2025-12-15 20:24:25,741 basehttp "POST /api/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2025-12-15 20:24:25,744 log Unauthorized: /api/auth/refresh/
+WARNING 2025-12-15 20:24:25,744 basehttp "POST /api/auth/refresh/ HTTP/1.1" 401 58
+INFO 2025-12-15 20:24:25,744 basehttp "OPTIONS /api/auth/refresh/ HTTP/1.1" 200 0
+WARNING 2025-12-15 20:24:25,745 basehttp "POST /api/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2025-12-15 20:24:25,755 log Unauthorized: /api/auth/refresh/
+WARNING 2025-12-15 20:24:25,756 basehttp "POST /api/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2025-12-15 20:24:25,778 log Unauthorized: /api/auth/refresh/
+WARNING 2025-12-15 20:24:25,781 log Unauthorized: /api/auth/refresh/
+WARNING 2025-12-15 20:24:25,785 log Unauthorized: /api/auth/refresh/
+WARNING 2025-12-15 20:24:25,790 basehttp "POST /api/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2025-12-15 20:24:25,790 basehttp "POST /api/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2025-12-15 20:24:25,789 log Unauthorized: /api/auth/refresh/
+WARNING 2025-12-15 20:24:25,796 basehttp "POST /api/auth/refresh/ HTTP/1.1" 401 58
+WARNING 2025-12-15 20:24:25,790 basehttp "POST /api/auth/refresh/ HTTP/1.1" 401 58
+INFO 2025-12-15 20:39:06,852 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 20:42:25,410 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 20:42:59,806 basehttp "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+WARNING 2025-12-15 20:43:00,463 log Unauthorized: /api/auth/login/
+WARNING 2025-12-15 20:43:00,464 basehttp "POST /api/auth/login/ HTTP/1.1" 401 45
+WARNING 2025-12-15 20:43:09,936 log Unauthorized: /api/auth/login/
+WARNING 2025-12-15 20:43:09,936 basehttp "POST /api/auth/login/ HTTP/1.1" 401 45
+WARNING 2025-12-15 20:43:46,929 log Unauthorized: /api/auth/login/
+WARNING 2025-12-15 20:43:46,929 basehttp "POST /api/auth/login/ HTTP/1.1" 401 45
+WARNING 2025-12-15 20:44:01,991 log Unauthorized: /api/auth/login/
+WARNING 2025-12-15 20:44:01,992 basehttp "POST /api/auth/login/ HTTP/1.1" 401 45
+INFO 2025-12-15 20:44:50,882 autoreload Watching for file changes with StatReloader
+WARNING 2025-12-15 20:44:59,996 log Unauthorized: /api/auth/login/
+WARNING 2025-12-15 20:44:59,997 basehttp "POST /api/auth/login/ HTTP/1.1" 401 45
+INFO 2025-12-15 20:45:08,731 basehttp "POST /api/auth/login/ HTTP/1.1" 200 807
+INFO 2025-12-15 20:45:09,033 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 20:45:09,034 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 20:45:09,039 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:09,041 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 20:45:09,112 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:09,116 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 20:45:09,118 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 20:45:09,120 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 20:45:10,955 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:10,969 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 20:45:11,011 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:11,025 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 20:45:12,116 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 20:45:12,117 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 20:45:12,118 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:12,182 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 20:45:12,183 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:12,191 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 20:45:13,527 basehttp "OPTIONS /api/vacinas/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:45:13,532 basehttp "OPTIONS /api/vacinas/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:45:13,576 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 20:45:13,576 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:13,611 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:13,650 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 20:45:14,495 basehttp "OPTIONS /api/exames/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:45:14,515 basehttp "OPTIONS /api/exames/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:45:14,552 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:14,555 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 20:45:14,556 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 20:45:14,615 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 20:45:14,620 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 20:45:14,643 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:15,738 basehttp "OPTIONS /api/planos-saude/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:45:15,739 basehttp "OPTIONS /api/planos-saude/ HTTP/1.1" 200 0
+INFO 2025-12-15 20:45:15,773 basehttp "GET /api/planos-saude/ HTTP/1.1" 200 52
+INFO 2025-12-15 20:45:15,849 basehttp "GET /api/planos-saude/ HTTP/1.1" 200 52
+INFO 2025-12-15 20:45:17,233 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:17,246 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 20:45:17,251 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 20:45:17,258 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 20:45:17,316 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 20:45:17,333 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 20:45:17,340 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 20:45:17,346 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:59,122 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:59,131 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 20:45:59,191 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:45:59,202 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 20:46:00,284 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 20:46:00,304 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:46:00,320 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 20:46:00,371 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 20:46:00,387 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:46:00,397 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 20:46:01,238 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 20:46:01,263 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:46:01,286 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 20:46:01,305 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:46:02,214 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 20:46:02,225 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 20:46:02,227 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:46:02,273 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 20:46:02,294 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 20:46:02,301 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 20:46:03,198 basehttp "GET /api/planos-saude/ HTTP/1.1" 200 52
+INFO 2025-12-15 20:46:03,233 basehttp "GET /api/planos-saude/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:12:14,946 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 21:13:07,915 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 21:13:21,894 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:21,897 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:21,908 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:13:21,911 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:13:21,952 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:21,961 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:21,972 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:13:21,985 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:13:23,938 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:23,946 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:13:23,947 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:23,980 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:24,008 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:24,017 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:13:25,118 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:25,129 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:13:25,167 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:25,180 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:13:25,949 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:25,950 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:13:26,014 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:13:26,033 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:26,659 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:26,670 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:26,672 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:13:26,716 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:26,721 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:13:26,733 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:27,598 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:27,599 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:13:27,604 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:27,617 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:13:27,688 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:27,705 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:27,707 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:13:27,714 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:13:33,518 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:13:33,544 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:33,544 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:33,577 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:13:33,603 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:33,610 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:34,140 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:13:34,154 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:34,179 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:13:34,197 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:34,898 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:34,912 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:13:34,948 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:34,966 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:13:35,509 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:35,509 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:13:35,514 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:35,571 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:13:35,579 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:35,579 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:36,264 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:13:36,292 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:36,296 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:36,306 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:13:36,344 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:13:36,368 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:13:36,371 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:36,376 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:42,557 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:13:42,576 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:42,590 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:13:42,591 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:42,625 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:13:42,679 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:13:42,693 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:13:42,694 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:22:15,941 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 21:22:36,757 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:22:36,763 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:22:36,777 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:22:36,792 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:22:36,834 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:22:36,851 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:22:36,865 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:22:36,876 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:22:39,357 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:22:39,371 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:22:39,387 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:22:39,446 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:22:39,471 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:22:39,479 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:22:40,644 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:22:40,679 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:22:40,730 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:22:40,770 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:22:42,121 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:22:42,124 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:22:42,167 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:22:42,181 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:22:43,878 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:22:43,902 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:22:43,905 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:22:43,964 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:22:43,978 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:22:43,990 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:27:25,013 autoreload Watching for file changes with StatReloader
+WARNING 2025-12-15 21:27:48,761 log Unauthorized: /api/auth/login/
+WARNING 2025-12-15 21:27:48,762 basehttp "POST /api/auth/login/ HTTP/1.1" 401 45
+INFO 2025-12-15 21:27:48,838 basehttp "POST /api/auth/refresh/ HTTP/1.1" 200 686
+WARNING 2025-12-15 21:27:49,554 log Unauthorized: /api/auth/login/
+WARNING 2025-12-15 21:27:49,557 basehttp "POST /api/auth/login/ HTTP/1.1" 401 45
+INFO 2025-12-15 21:28:26,469 basehttp "POST /api/auth/login/ HTTP/1.1" 200 807
+INFO 2025-12-15 21:28:26,885 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:28:26,896 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:28:26,897 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:28:26,908 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:28:26,986 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:28:27,003 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:28:27,005 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:28:27,013 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:30:57,852 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:30:57,869 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:30:57,879 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:30:57,932 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:30:57,948 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:30:57,948 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:30:58,780 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:30:58,790 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:30:58,820 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:30:58,839 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:30:59,581 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:30:59,599 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:30:59,622 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:30:59,641 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:31:00,625 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:31:00,646 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:31:00,657 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:31:00,686 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:31:00,704 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:31:00,718 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:31:08,368 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:31:08,383 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:31:08,412 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:31:08,428 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:33:52,024 basehttp "POST /api/auth/login/ HTTP/1.1" 200 807
+INFO 2025-12-15 21:33:53,572 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:33:53,573 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:33:53,590 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:33:53,621 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:33:53,629 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:33:53,640 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:33:55,726 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:33:55,734 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:33:55,770 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:33:55,787 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:33:57,543 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:33:57,556 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:33:57,583 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:33:57,595 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:33:59,290 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:33:59,314 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:33:59,314 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:33:59,344 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:33:59,370 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:33:59,388 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:34:05,857 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:34:05,858 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:34:05,858 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:34:05,934 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:34:05,943 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:34:05,952 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:36:09,675 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:36:09,696 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:36:09,728 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:36:09,821 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:36:14,458 basehttp "POST /api/auth/login/ HTTP/1.1" 200 807
+INFO 2025-12-15 21:36:16,184 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:36:16,226 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:36:17,442 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:36:17,456 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:36:17,491 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:36:17,505 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:36:18,992 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:36:19,003 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:36:19,033 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:36:19,045 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:36:20,205 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:36:20,217 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:36:20,227 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:36:20,265 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:36:20,276 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 21:36:20,286 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:36:21,539 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:36:21,543 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:36:21,611 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:36:21,653 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:36:22,325 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:36:22,347 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:36:22,378 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:36:22,408 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:38:12,889 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:38:12,936 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:38:17,748 basehttp "POST /api/auth/login/ HTTP/1.1" 200 807
+INFO 2025-12-15 21:38:19,649 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:38:19,691 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:38:20,937 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:38:20,955 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:38:20,982 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:38:21,007 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:38:23,177 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:38:23,207 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:38:24,467 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:38:24,502 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:38:25,658 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:38:25,673 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:38:25,702 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:38:25,723 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 21:38:45,252 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:38:45,286 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:39:52,495 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:39:52,534 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:39:57,231 basehttp "POST /api/auth/login/ HTTP/1.1" 200 807
+INFO 2025-12-15 21:39:59,077 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:39:59,114 basehttp "GET /api/consultas/ HTTP/1.1" 200 350
+INFO 2025-12-15 21:40:00,528 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:40:00,572 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 21:40:02,602 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:40:02,644 basehttp "GET /api/vacinas/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:40:03,793 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 21:40:03,833 basehttp "GET /api/exames/ HTTP/1.1" 200 52
+INFO 2025-12-15 22:12:12,581 autoreload Watching for file changes with StatReloader
+WARNING 2025-12-15 22:12:17,745 log Not Found: /
+WARNING 2025-12-15 22:12:17,747 basehttp "GET / HTTP/1.1" 404 2779
+WARNING 2025-12-15 22:12:18,378 log Unauthorized: /api/auth/login/
+WARNING 2025-12-15 22:12:18,378 basehttp "POST /api/auth/login/ HTTP/1.1" 401 45
+WARNING 2025-12-15 22:12:18,397 log Unauthorized: /api/tutores/
+WARNING 2025-12-15 22:12:18,403 basehttp "GET /api/tutores/ HTTP/1.1" 401 68
+WARNING 2025-12-15 22:12:18,423 log Unauthorized: /api/animais/
+WARNING 2025-12-15 22:12:18,430 basehttp "GET /api/animais/ HTTP/1.1" 401 68
+WARNING 2025-12-15 22:12:18,455 log Unauthorized: /api/veterinarios/
+WARNING 2025-12-15 22:12:18,459 basehttp "GET /api/veterinarios/ HTTP/1.1" 401 68
+WARNING 2025-12-15 22:12:18,481 log Unauthorized: /api/consultas/
+WARNING 2025-12-15 22:12:18,483 basehttp "GET /api/consultas/ HTTP/1.1" 401 68
+WARNING 2025-12-15 22:12:18,501 log Unauthorized: /api/vacinas/
+WARNING 2025-12-15 22:12:18,504 basehttp "GET /api/vacinas/ HTTP/1.1" 401 68
+WARNING 2025-12-15 22:12:18,523 log Unauthorized: /api/exames/
+WARNING 2025-12-15 22:12:18,526 basehttp "GET /api/exames/ HTTP/1.1" 401 68
+WARNING 2025-12-15 22:12:18,560 log Not Found: /api/planos/
+WARNING 2025-12-15 22:12:18,562 basehttp "GET /api/planos/ HTTP/1.1" 404 12501
+INFO 2025-12-15 22:12:18,611 basehttp "GET /api/clinicas/ HTTP/1.1" 200 52
+WARNING 2025-12-15 22:12:18,626 log Unauthorized: /api/tutores/
+WARNING 2025-12-15 22:12:18,629 basehttp "GET /api/tutores/ HTTP/1.1" 401 68
+INFO 2025-12-15 22:18:28,716 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 22:18:39,358 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 22:19:46,061 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 22:21:23,404 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 22:22:05,314 autoreload /home/fabianosf/Desktop/vetsystem/backend/api/models/plano_saude.py changed, reloading.
+INFO 2025-12-15 22:22:06,144 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 22:22:34,903 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 22:23:17,601 autoreload /home/fabianosf/Desktop/vetsystem/backend/api/views.py changed, reloading.
+INFO 2025-12-15 22:23:18,503 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 22:24:11,762 autoreload /home/fabianosf/Desktop/vetsystem/backend/api/admin.py changed, reloading.
+INFO 2025-12-15 22:24:12,612 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 22:25:06,001 autoreload /home/fabianosf/Desktop/vetsystem/backend/api/admin.py changed, reloading.
+INFO 2025-12-15 22:25:06,846 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 22:26:13,791 autoreload /home/fabianosf/Desktop/vetsystem/backend/api/admin.py changed, reloading.
+INFO 2025-12-15 22:26:14,679 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 22:44:19,128 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 22:48:40,199 basehttp "OPTIONS /api/tutores/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:48:40,202 basehttp "OPTIONS /api/animais/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:48:40,205 basehttp "OPTIONS /api/veterinarios/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:48:40,208 basehttp "OPTIONS /api/planos/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:48:40,215 basehttp "OPTIONS /api/consultas/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:48:40,219 basehttp "OPTIONS /api/animais/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:48:40,218 basehttp "OPTIONS /api/tutores/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:48:40,225 basehttp "OPTIONS /api/consultas/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:48:40,230 basehttp "OPTIONS /api/planos/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:48:40,231 basehttp "OPTIONS /api/veterinarios/ HTTP/1.1" 200 0
+WARNING 2025-12-15 22:48:40,286 log Unauthorized: /api/tutores/
+WARNING 2025-12-15 22:48:40,288 log Unauthorized: /api/animais/
+WARNING 2025-12-15 22:48:40,290 log Unauthorized: /api/veterinarios/
+WARNING 2025-12-15 22:48:40,292 log Unauthorized: /api/consultas/
+WARNING 2025-12-15 22:48:40,293 log Unauthorized: /api/planos/
+WARNING 2025-12-15 22:48:40,294 basehttp "GET /api/tutores/ HTTP/1.1" 401 191
+WARNING 2025-12-15 22:48:40,294 basehttp "GET /api/veterinarios/ HTTP/1.1" 401 191
+WARNING 2025-12-15 22:48:40,295 basehttp "GET /api/consultas/ HTTP/1.1" 401 191
+WARNING 2025-12-15 22:48:40,295 basehttp "GET /api/animais/ HTTP/1.1" 401 191
+WARNING 2025-12-15 22:48:40,295 basehttp "GET /api/planos/ HTTP/1.1" 401 191
+WARNING 2025-12-15 22:48:40,335 log Unauthorized: /api/tutores/
+WARNING 2025-12-15 22:48:40,336 basehttp "GET /api/tutores/ HTTP/1.1" 401 191
+WARNING 2025-12-15 22:48:40,349 log Unauthorized: /api/animais/
+WARNING 2025-12-15 22:48:40,351 basehttp "GET /api/animais/ HTTP/1.1" 401 191
+WARNING 2025-12-15 22:48:40,357 log Unauthorized: /api/consultas/
+WARNING 2025-12-15 22:48:40,370 basehttp "GET /api/consultas/ HTTP/1.1" 401 191
+WARNING 2025-12-15 22:48:40,362 log Unauthorized: /api/planos/
+WARNING 2025-12-15 22:48:40,371 basehttp "GET /api/planos/ HTTP/1.1" 401 191
+WARNING 2025-12-15 22:48:40,369 log Unauthorized: /api/veterinarios/
+INFO 2025-12-15 22:48:40,375 basehttp "OPTIONS /api/auth/token/refresh/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:48:40,375 basehttp "OPTIONS /api/auth/token/refresh/ HTTP/1.1" 200 0
+WARNING 2025-12-15 22:48:40,376 basehttp "GET /api/veterinarios/ HTTP/1.1" 401 191
+INFO 2025-12-15 22:48:40,409 basehttp "OPTIONS /api/auth/token/refresh/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:48:40,429 basehttp "OPTIONS /api/auth/token/refresh/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:48:40,454 basehttp "OPTIONS /api/auth/token/refresh/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:48:40,463 basehttp "OPTIONS /api/auth/token/refresh/ HTTP/1.1" 200 0
+WARNING 2025-12-15 22:48:40,557 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 22:48:40,590 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-15 22:48:40,595 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 22:48:40,596 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 22:48:40,614 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 22:48:40,640 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-15 22:48:40,633 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-15 22:48:40,632 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 22:48:40,644 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-15 22:48:40,633 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-15 22:48:40,649 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 22:48:40,673 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 22:48:40,692 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-15 22:48:40,703 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-15 22:48:40,777 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 22:48:40,778 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-15 22:48:40,790 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 22:48:40,791 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-15 22:48:40,816 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 22:48:40,816 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+INFO 2025-12-15 22:48:59,746 basehttp "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+INFO 2025-12-15 22:49:00,398 basehttp "POST /api/auth/login/ HTTP/1.1" 200 807
+INFO 2025-12-15 22:49:00,727 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 22:49:00,739 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 22:49:00,742 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 22:49:00,809 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 22:49:00,811 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 22:49:00,817 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+ERROR 2025-12-15 22:49:00,931 log Internal Server Error: /api/consultas/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/Desktop/vetsystem/backend/api/views.py", line 71, in get_queryset
+    return queryset.order_by('-data_consulta')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 1659, in order_by
+    obj.query.add_ordering(*field_names)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 2221, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'data_consulta' into field. Choices are: animal, animal_id, created_at, data, diagnostico, hora, id, motivo, observacoes, prescricao, status, tipo, updated_at, valor, veterinario, veterinario_id
+ERROR 2025-12-15 22:49:00,989 log Internal Server Error: /api/planos/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedTable: relation "plano_saude" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "plano_saude"
+                                          ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 40, in list
+    page = self.paginate_queryset(queryset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/generics.py", line 171, in paginate_queryset
+    return self.paginator.paginate_queryset(queryset, self.request, view=self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/pagination.py", line 204, in paginate_queryset
+    self.page = paginator.page(page_number)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 72, in page
+    number = self.validate_number(number)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 53, in validate_number
+    if number > self.num_pages:
+                ^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 99, in num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+       ^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 93, in count
+    return c()
+           ^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 608, in count
+    return self.query.get_count(using=self.db)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 568, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 554, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: relation "plano_saude" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "plano_saude"
+                                          ^
+
+ERROR 2025-12-15 22:49:00,994 basehttp "GET /api/consultas/ HTTP/1.1" 500 125914
+ERROR 2025-12-15 22:49:01,004 basehttp "GET /api/planos/ HTTP/1.1" 500 194308
+ERROR 2025-12-15 22:49:01,110 log Internal Server Error: /api/consultas/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/Desktop/vetsystem/backend/api/views.py", line 71, in get_queryset
+    return queryset.order_by('-data_consulta')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 1659, in order_by
+    obj.query.add_ordering(*field_names)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 2221, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'data_consulta' into field. Choices are: animal, animal_id, created_at, data, diagnostico, hora, id, motivo, observacoes, prescricao, status, tipo, updated_at, valor, veterinario, veterinario_id
+ERROR 2025-12-15 22:49:01,114 basehttp "GET /api/consultas/ HTTP/1.1" 500 125914
+ERROR 2025-12-15 22:49:01,197 log Internal Server Error: /api/planos/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedTable: relation "plano_saude" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "plano_saude"
+                                          ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 40, in list
+    page = self.paginate_queryset(queryset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/generics.py", line 171, in paginate_queryset
+    return self.paginator.paginate_queryset(queryset, self.request, view=self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/pagination.py", line 204, in paginate_queryset
+    self.page = paginator.page(page_number)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 72, in page
+    number = self.validate_number(number)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 53, in validate_number
+    if number > self.num_pages:
+                ^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 99, in num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+       ^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 93, in count
+    return c()
+           ^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 608, in count
+    return self.query.get_count(using=self.db)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 568, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 554, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: relation "plano_saude" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "plano_saude"
+                                          ^
+
+ERROR 2025-12-15 22:49:01,201 basehttp "GET /api/planos/ HTTP/1.1" 500 194308
+INFO 2025-12-15 22:53:18,672 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 22:57:56,765 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 22:58:10,396 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 22:58:10,404 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 22:58:10,485 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 853
+INFO 2025-12-15 22:58:10,487 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+INFO 2025-12-15 22:58:10,518 basehttp "GET /api/animais/ HTTP/1.1" 200 677
+INFO 2025-12-15 22:58:10,562 basehttp "GET /api/tutores/ HTTP/1.1" 200 1034
+ERROR 2025-12-15 22:58:10,642 log Internal Server Error: /api/consultas/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/Desktop/vetsystem/backend/api/views.py", line 71, in get_queryset
+    return queryset.order_by('-data_consulta')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 1659, in order_by
+    obj.query.add_ordering(*field_names)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 2221, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'data_consulta' into field. Choices are: animal, animal_id, clinica, clinica_id, created_at, data, diagnostico, horario, id, motivo, observacoes, prescricao, status, tipo, updated_at, valor, veterinario, veterinario_id
+ERROR 2025-12-15 22:58:10,660 log Internal Server Error: /api/planos/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedTable: relation "plano_saude" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "plano_saude"
+                                          ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 40, in list
+    page = self.paginate_queryset(queryset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/generics.py", line 171, in paginate_queryset
+    return self.paginator.paginate_queryset(queryset, self.request, view=self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/pagination.py", line 204, in paginate_queryset
+    self.page = paginator.page(page_number)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 72, in page
+    number = self.validate_number(number)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 53, in validate_number
+    if number > self.num_pages:
+                ^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 99, in num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+       ^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 93, in count
+    return c()
+           ^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 608, in count
+    return self.query.get_count(using=self.db)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 568, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 554, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: relation "plano_saude" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "plano_saude"
+                                          ^
+
+ERROR 2025-12-15 22:58:10,680 basehttp "GET /api/planos/ HTTP/1.1" 500 194308
+ERROR 2025-12-15 22:58:10,668 basehttp "GET /api/consultas/ HTTP/1.1" 500 126510
+ERROR 2025-12-15 22:58:10,965 log Internal Server Error: /api/consultas/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/Desktop/vetsystem/backend/api/views.py", line 71, in get_queryset
+    return queryset.order_by('-data_consulta')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 1659, in order_by
+    obj.query.add_ordering(*field_names)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 2221, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'data_consulta' into field. Choices are: animal, animal_id, clinica, clinica_id, created_at, data, diagnostico, horario, id, motivo, observacoes, prescricao, status, tipo, updated_at, valor, veterinario, veterinario_id
+ERROR 2025-12-15 22:58:10,985 basehttp "GET /api/consultas/ HTTP/1.1" 500 126510
+ERROR 2025-12-15 22:58:11,085 log Internal Server Error: /api/planos/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+psycopg2.errors.UndefinedTable: relation "plano_saude" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "plano_saude"
+                                          ^
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 40, in list
+    page = self.paginate_queryset(queryset)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/generics.py", line 171, in paginate_queryset
+    return self.paginator.paginate_queryset(queryset, self.request, view=self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/pagination.py", line 204, in paginate_queryset
+    self.page = paginator.page(page_number)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 72, in page
+    number = self.validate_number(number)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 53, in validate_number
+    if number > self.num_pages:
+                ^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 99, in num_pages
+    if self.count == 0 and not self.allow_empty_first_page:
+       ^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/paginator.py", line 93, in count
+    return c()
+           ^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 608, in count
+    return self.query.get_count(using=self.db)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 568, in get_count
+    return obj.get_aggregation(using, {"__count": Count("*")})["__count"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 554, in get_aggregation
+    result = compiler.execute_sql(SINGLE)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.ProgrammingError: relation "plano_saude" does not exist
+LINE 1: SELECT COUNT(*) AS "__count" FROM "plano_saude"
+                                          ^
+
+ERROR 2025-12-15 22:58:11,097 basehttp "GET /api/planos/ HTTP/1.1" 500 194308
+INFO 2025-12-15 23:12:02,843 autoreload Watching for file changes with StatReloader
+WARNING 2025-12-15 23:12:22,846 log Unauthorized: /api/animais/
+WARNING 2025-12-15 23:12:22,852 basehttp "GET /api/animais/ HTTP/1.1" 401 61
+WARNING 2025-12-15 23:12:22,848 log Unauthorized: /api/tutores/
+WARNING 2025-12-15 23:12:22,855 basehttp "GET /api/tutores/ HTTP/1.1" 401 61
+WARNING 2025-12-15 23:12:22,884 log Unauthorized: /api/veterinarios/
+WARNING 2025-12-15 23:12:22,885 basehttp "GET /api/veterinarios/ HTTP/1.1" 401 61
+WARNING 2025-12-15 23:12:22,923 log Unauthorized: /api/planos/
+WARNING 2025-12-15 23:12:22,936 basehttp "GET /api/planos/ HTTP/1.1" 401 61
+WARNING 2025-12-15 23:12:22,963 log Unauthorized: /api/veterinarios/
+WARNING 2025-12-15 23:12:22,969 log Unauthorized: /api/tutores/
+WARNING 2025-12-15 23:12:22,969 basehttp "GET /api/veterinarios/ HTTP/1.1" 401 61
+WARNING 2025-12-15 23:12:22,970 log Unauthorized: /api/animais/
+WARNING 2025-12-15 23:12:22,975 basehttp "GET /api/tutores/ HTTP/1.1" 401 61
+WARNING 2025-12-15 23:12:22,975 basehttp "GET /api/animais/ HTTP/1.1" 401 61
+WARNING 2025-12-15 23:12:23,027 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 23:12:23,031 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 23:12:23,031 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-15 23:12:23,048 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-15 23:12:23,063 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 23:12:23,077 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-15 23:12:23,070 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 23:12:23,084 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-15 23:12:23,064 log Unauthorized: /api/planos/
+WARNING 2025-12-15 23:12:23,085 basehttp "GET /api/planos/ HTTP/1.1" 401 61
+WARNING 2025-12-15 23:12:23,102 log Not Found: /api/auth/token/refresh/
+INFO 2025-12-15 23:12:23,132 basehttp code 400, message Bad request syntax ('{"refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2NjQ1NDU0MCwiaWF0IjoxNzY1ODQ5NzQwLCJqdGkiOiIzNTY5ODIwZGJmYjQ0MDlkYTczNTU0NjRlOWJiODkxMyIsInVzZXJfaWQiOiI1IiwidXNlcm5hbWUiOiJmYWJpYW5vc2YiLCJlbWFpbCI6ImZhYmlhbm8uZnJlaXRhc0BnbWFpbC5jb20iLCJyb2xlIjoiVFVUT1IifQ.awG9gs_oHNiywD5_NY1u0KGtrmVB_IdTInAzc8gO_as"}')
+WARNING 2025-12-15 23:12:23,132 basehttp "{"refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2NjQ1NDU0MCwiaWF0IjoxNzY1ODQ5NzQwLCJqdGkiOiIzNTY5ODIwZGJmYjQ0MDlkYTczNTU0NjRlOWJiODkxMyIsInVzZXJfaWQiOiI1IiwidXNlcm5hbWUiOiJmYWJpYW5vc2YiLCJlbWFpbCI6ImZhYmlhbm8uZnJlaXRhc0BnbWFpbC5jb20iLCJyb2xlIjoiVFVUT1IifQ.awG9gs_oHNiywD5_NY1u0KGtrmVB_IdTInAzc8gO_as"}" 400 -
+INFO 2025-12-15 23:12:23,133 basehttp - Broken pipe from ('127.0.0.1', 45774)
+WARNING 2025-12-15 23:12:23,144 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-15 23:12:23,157 log Not Found: /api/auth/token/refresh/
+INFO 2025-12-15 23:12:23,159 basehttp code 400, message Bad request syntax ('{"refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2NjQ1NDU0MCwiaWF0IjoxNzY1ODQ5NzQwLCJqdGkiOiIzNTY5ODIwZGJmYjQ0MDlkYTczNTU0NjRlOWJiODkxMyIsInVzZXJfaWQiOiI1IiwidXNlcm5hbWUiOiJmYWJpYW5vc2YiLCJlbWFpbCI6ImZhYmlhbm8uZnJlaXRhc0BnbWFpbC5jb20iLCJyb2xlIjoiVFVUT1IifQ.awG9gs_oHNiywD5_NY1u0KGtrmVB_IdTInAzc8gO_as"}')
+WARNING 2025-12-15 23:12:23,161 basehttp "{"refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2NjQ1NDU0MCwiaWF0IjoxNzY1ODQ5NzQwLCJqdGkiOiIzNTY5ODIwZGJmYjQ0MDlkYTczNTU0NjRlOWJiODkxMyIsInVzZXJfaWQiOiI1IiwidXNlcm5hbWUiOiJmYWJpYW5vc2YiLCJlbWFpbCI6ImZhYmlhbm8uZnJlaXRhc0BnbWFpbC5jb20iLCJyb2xlIjoiVFVUT1IifQ.awG9gs_oHNiywD5_NY1u0KGtrmVB_IdTInAzc8gO_as"}" 400 -
+INFO 2025-12-15 23:12:23,161 basehttp code 400, message Bad request syntax ('{"refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2NjQ1NDU0MCwiaWF0IjoxNzY1ODQ5NzQwLCJqdGkiOiIzNTY5ODIwZGJmYjQ0MDlkYTczNTU0NjRlOWJiODkxMyIsInVzZXJfaWQiOiI1IiwidXNlcm5hbWUiOiJmYWJpYW5vc2YiLCJlbWFpbCI6ImZhYmlhbm8uZnJlaXRhc0BnbWFpbC5jb20iLCJyb2xlIjoiVFVUT1IifQ.awG9gs_oHNiywD5_NY1u0KGtrmVB_IdTInAzc8gO_as"}')
+INFO 2025-12-15 23:12:23,161 basehttp - Broken pipe from ('127.0.0.1', 45772)
+WARNING 2025-12-15 23:12:23,163 basehttp "{"refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2NjQ1NDU0MCwiaWF0IjoxNzY1ODQ5NzQwLCJqdGkiOiIzNTY5ODIwZGJmYjQ0MDlkYTczNTU0NjRlOWJiODkxMyIsInVzZXJfaWQiOiI1IiwidXNlcm5hbWUiOiJmYWJpYW5vc2YiLCJlbWFpbCI6ImZhYmlhbm8uZnJlaXRhc0BnbWFpbC5jb20iLCJyb2xlIjoiVFVUT1IifQ.awG9gs_oHNiywD5_NY1u0KGtrmVB_IdTInAzc8gO_as"}" 400 -
+INFO 2025-12-15 23:12:23,166 basehttp - Broken pipe from ('127.0.0.1', 45742)
+INFO 2025-12-15 23:14:47,099 basehttp "POST /api/auth/login/ HTTP/1.1" 200 763
+INFO 2025-12-15 23:14:47,354 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:14:47,376 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:14:47,396 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:14:47,399 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:14:47,430 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:14:47,451 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:14:47,470 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:14:47,472 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:14:53,165 basehttp "OPTIONS /api/clinicas/ HTTP/1.1" 200 0
+INFO 2025-12-15 23:14:53,170 basehttp "OPTIONS /api/clinicas/ HTTP/1.1" 200 0
+INFO 2025-12-15 23:14:53,246 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:14:53,250 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:14:53,262 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:14:53,317 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+ERROR 2025-12-15 23:14:53,326 log Internal Server Error: /api/consultas/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/Desktop/vetsystem/backend/api/views.py", line 71, in get_queryset
+    return queryset.order_by('-data_consulta')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 1659, in order_by
+    obj.query.add_ordering(*field_names)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 2221, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'data_consulta' into field. Choices are: animal, animal_id, clinica, clinica_id, created_at, data, diagnostico, horario, id, motivo, observacoes, prescricao, status, tipo, updated_at, valor, veterinario, veterinario_id
+INFO 2025-12-15 23:14:53,330 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+ERROR 2025-12-15 23:14:53,337 basehttp "GET /api/consultas/ HTTP/1.1" 500 126505
+INFO 2025-12-15 23:14:53,344 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+ERROR 2025-12-15 23:14:53,492 log Internal Server Error: /api/consultas/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/Desktop/vetsystem/backend/api/views.py", line 71, in get_queryset
+    return queryset.order_by('-data_consulta')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 1659, in order_by
+    obj.query.add_ordering(*field_names)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 2221, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'data_consulta' into field. Choices are: animal, animal_id, clinica, clinica_id, created_at, data, diagnostico, horario, id, motivo, observacoes, prescricao, status, tipo, updated_at, valor, veterinario, veterinario_id
+ERROR 2025-12-15 23:14:53,498 basehttp "GET /api/consultas/ HTTP/1.1" 500 126505
+INFO 2025-12-15 23:14:56,815 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:14:56,891 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:15:00,405 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:15:00,407 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:15:00,448 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:15:00,462 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:15:03,328 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:15:03,362 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:15:04,481 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:15:04,514 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:15:05,989 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:15:06,023 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:15:12,295 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:15:12,296 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:15:12,316 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:15:12,325 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:15:12,361 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:15:12,363 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:15:12,377 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:15:12,390 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:15:22,981 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:15:23,031 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:15:23,056 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:15:23,100 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+ERROR 2025-12-15 23:15:23,150 log Internal Server Error: /api/consultas/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/Desktop/vetsystem/backend/api/views.py", line 71, in get_queryset
+    return queryset.order_by('-data_consulta')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 1659, in order_by
+    obj.query.add_ordering(*field_names)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 2221, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'data_consulta' into field. Choices are: animal, animal_id, clinica, clinica_id, created_at, data, diagnostico, horario, id, motivo, observacoes, prescricao, status, tipo, updated_at, valor, veterinario, veterinario_id
+INFO 2025-12-15 23:15:23,151 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:15:23,158 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+ERROR 2025-12-15 23:15:23,158 basehttp "GET /api/consultas/ HTTP/1.1" 500 126505
+ERROR 2025-12-15 23:15:23,263 log Internal Server Error: /api/consultas/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/Desktop/vetsystem/backend/api/views.py", line 71, in get_queryset
+    return queryset.order_by('-data_consulta')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 1659, in order_by
+    obj.query.add_ordering(*field_names)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 2221, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'data_consulta' into field. Choices are: animal, animal_id, clinica, clinica_id, created_at, data, diagnostico, horario, id, motivo, observacoes, prescricao, status, tipo, updated_at, valor, veterinario, veterinario_id
+ERROR 2025-12-15 23:15:23,265 basehttp "GET /api/consultas/ HTTP/1.1" 500 126505
+INFO 2025-12-15 23:16:20,276 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:16:20,362 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:16:21,411 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:16:21,514 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:16:21,515 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:16:21,521 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:16:21,601 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+ERROR 2025-12-15 23:16:21,618 log Internal Server Error: /api/consultas/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/Desktop/vetsystem/backend/api/views.py", line 71, in get_queryset
+    return queryset.order_by('-data_consulta')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 1659, in order_by
+    obj.query.add_ordering(*field_names)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 2221, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'data_consulta' into field. Choices are: animal, animal_id, clinica, clinica_id, created_at, data, diagnostico, horario, id, motivo, observacoes, prescricao, status, tipo, updated_at, valor, veterinario, veterinario_id
+INFO 2025-12-15 23:16:21,619 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+ERROR 2025-12-15 23:16:21,622 basehttp "GET /api/consultas/ HTTP/1.1" 500 126505
+ERROR 2025-12-15 23:16:21,716 log Internal Server Error: /api/consultas/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/Desktop/vetsystem/backend/api/views.py", line 71, in get_queryset
+    return queryset.order_by('-data_consulta')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 1659, in order_by
+    obj.query.add_ordering(*field_names)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 2221, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'data_consulta' into field. Choices are: animal, animal_id, clinica, clinica_id, created_at, data, diagnostico, horario, id, motivo, observacoes, prescricao, status, tipo, updated_at, valor, veterinario, veterinario_id
+ERROR 2025-12-15 23:16:21,717 basehttp "GET /api/consultas/ HTTP/1.1" 500 126505
+INFO 2025-12-15 23:24:52,457 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 23:24:57,784 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:24:57,788 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:24:57,789 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:24:57,851 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:24:57,852 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:24:57,862 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+ERROR 2025-12-15 23:24:57,898 log Internal Server Error: /api/consultas/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/Desktop/vetsystem/backend/api/views.py", line 71, in get_queryset
+    return queryset.order_by('-data_consulta')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 1659, in order_by
+    obj.query.add_ordering(*field_names)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 2221, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'data_consulta' into field. Choices are: animal, animal_id, clinica, clinica_id, created_at, data, diagnostico, horario, id, motivo, observacoes, prescricao, status, tipo, updated_at, valor, veterinario, veterinario_id
+ERROR 2025-12-15 23:24:57,901 basehttp "GET /api/consultas/ HTTP/1.1" 500 126505
+ERROR 2025-12-15 23:24:57,988 log Internal Server Error: /api/consultas/
+Traceback (most recent call last):
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/views/decorators/csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/viewsets.py", line 125, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/rest_framework/mixins.py", line 38, in list
+    queryset = self.filter_queryset(self.get_queryset())
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/Desktop/vetsystem/backend/api/views.py", line 71, in get_queryset
+    return queryset.order_by('-data_consulta')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/query.py", line 1659, in order_by
+    obj.query.add_ordering(*field_names)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 2221, in add_ordering
+    self.names_to_path(item.split(LOOKUP_SEP), self.model._meta)
+  File "/home/fabianosf/.local/lib/python3.12/site-packages/django/db/models/sql/query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'data_consulta' into field. Choices are: animal, animal_id, clinica, clinica_id, created_at, data, diagnostico, horario, id, motivo, observacoes, prescricao, status, tipo, updated_at, valor, veterinario, veterinario_id
+ERROR 2025-12-15 23:24:57,990 basehttp "GET /api/consultas/ HTTP/1.1" 500 126505
+INFO 2025-12-15 23:25:13,066 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:25:13,151 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:30:54,408 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 23:33:32,651 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 23:33:43,822 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:33:43,864 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:33:48,509 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:33:48,557 basehttp "GET /api/consultas/ HTTP/1.1" 200 52
+INFO 2025-12-15 23:33:48,562 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:33:48,579 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:33:48,604 basehttp "GET /api/consultas/ HTTP/1.1" 200 52
+INFO 2025-12-15 23:33:48,618 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:33:48,644 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:33:48,644 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:33:50,150 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:33:50,162 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:33:50,169 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:33:50,174 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:33:50,210 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:33:50,244 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:33:50,246 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:33:50,254 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:33:55,219 basehttp "GET /api/consultas/ HTTP/1.1" 200 52
+INFO 2025-12-15 23:33:55,254 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:33:55,268 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:33:55,276 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:33:55,299 basehttp "GET /api/consultas/ HTTP/1.1" 200 52
+INFO 2025-12-15 23:33:55,324 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:33:55,330 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:33:55,346 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:33:56,694 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:33:56,725 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:33:57,755 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:33:57,793 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:33:59,621 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:33:59,653 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:34:02,334 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:34:02,373 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:34:03,954 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:34:03,995 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:34:29,978 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:34:30,018 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:34:31,371 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:34:31,390 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:34:31,432 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:34:31,449 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:34:32,478 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:34:32,521 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:34:34,017 basehttp "GET /api/consultas/ HTTP/1.1" 200 52
+INFO 2025-12-15 23:34:34,056 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:34:34,096 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:34:34,097 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:34:34,111 basehttp "GET /api/consultas/ HTTP/1.1" 200 52
+INFO 2025-12-15 23:34:34,163 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:34:34,189 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:34:34,199 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:34:35,124 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:34:35,150 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:34:35,151 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:34:35,168 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:34:35,211 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:34:35,229 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:34:35,238 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:34:35,244 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:34:36,776 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:34:36,817 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:34:38,498 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:34:38,541 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:35:42,566 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:35:42,624 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:36:46,428 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 23:36:50,307 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:36:50,324 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:36:50,329 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:36:50,344 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:36:50,371 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:36:50,381 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:36:50,396 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:36:50,413 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:36:59,772 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:36:59,782 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:36:59,786 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:36:59,787 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-15 23:36:59,906 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:36:59,926 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:36:59,933 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:36:59,945 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-15 23:37:02,009 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:37:02,043 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:37:04,456 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:37:04,469 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:37:04,508 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:37:04,523 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:37:05,636 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:37:05,672 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:37:07,188 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:37:07,233 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:37:09,473 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:37:09,509 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:37:11,046 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:37:11,088 basehttp "GET /api/planos/ HTTP/1.1" 200 1070
+INFO 2025-12-15 23:38:57,352 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 23:39:20,991 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:39:21,023 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:39:27,892 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:39:27,911 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:39:27,912 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:39:27,931 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:39:27,972 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:39:27,982 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:39:27,988 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:39:27,996 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:39:31,962 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:39:32,036 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:39:32,068 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-15 23:39:32,069 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:39:32,094 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:39:32,112 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:39:32,137 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:39:32,145 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-15 23:39:35,124 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:39:35,168 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:39:37,340 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:39:37,341 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:39:37,389 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:39:37,399 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:39:38,899 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:39:38,939 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:39:40,739 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:39:40,775 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:39:42,173 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:39:42,204 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:39:44,053 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:39:44,060 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:39:44,102 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:39:44,112 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:39:45,690 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:39:45,731 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:39:48,246 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:39:48,248 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:39:48,251 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:39:48,254 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-15 23:39:48,309 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-15 23:39:48,325 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:39:48,339 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:39:48,346 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:39:49,723 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:39:49,737 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:39:49,755 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:39:49,756 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:39:49,802 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:39:49,810 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:39:49,827 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:39:49,838 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:39:51,773 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:39:51,804 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:10,399 autoreload Watching for file changes with StatReloader
+INFO 2025-12-15 23:46:20,726 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:46:20,762 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:46:25,150 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-15 23:46:25,152 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:25,163 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:25,166 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:46:25,236 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:25,245 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:46:25,251 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-15 23:46:25,258 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:26,540 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:46:26,543 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:26,559 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:26,566 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:46:26,613 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:46:26,631 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:26,649 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:26,650 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:46:29,166 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:29,167 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-15 23:46:29,168 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:29,177 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:46:29,274 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-15 23:46:29,286 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:46:29,290 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:29,292 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:30,029 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:46:30,066 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:46:30,988 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:30,995 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:46:31,041 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:31,059 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:46:31,723 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:31,763 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:32,981 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:32,982 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:46:33,028 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:33,039 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:46:35,365 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:35,402 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:43,773 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:46:43,811 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:46:46,908 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:46:46,947 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:46:49,855 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:46:49,878 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:49,879 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:49,899 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:46:49,929 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-15 23:46:49,944 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:49,957 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:49,961 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-15 23:46:51,694 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-15 23:46:51,709 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:51,724 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:46:51,744 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-15 23:46:51,782 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-15 23:46:51,791 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-15 23:46:51,792 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-15 23:46:51,805 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-16 18:23:01,117 autoreload Watching for file changes with StatReloader
+INFO 2025-12-16 18:23:10,167 basehttp "OPTIONS /api/tutores/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:10,169 basehttp "OPTIONS /api/animais/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:10,170 basehttp "OPTIONS /api/veterinarios/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:10,173 basehttp "OPTIONS /api/tutores/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:10,175 basehttp "OPTIONS /api/animais/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:10,176 basehttp "OPTIONS /api/planos/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:10,182 basehttp "OPTIONS /api/veterinarios/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:10,190 basehttp "OPTIONS /api/planos/ HTTP/1.1" 200 0
+WARNING 2025-12-16 18:23:10,259 log Unauthorized: /api/animais/
+WARNING 2025-12-16 18:23:10,264 basehttp "GET /api/animais/ HTTP/1.1" 401 191
+WARNING 2025-12-16 18:23:10,261 log Unauthorized: /api/tutores/
+WARNING 2025-12-16 18:23:10,265 basehttp "GET /api/tutores/ HTTP/1.1" 401 191
+WARNING 2025-12-16 18:23:10,264 log Unauthorized: /api/veterinarios/
+WARNING 2025-12-16 18:23:10,262 log Unauthorized: /api/planos/
+WARNING 2025-12-16 18:23:10,269 basehttp "GET /api/planos/ HTTP/1.1" 401 191
+WARNING 2025-12-16 18:23:10,270 basehttp "GET /api/veterinarios/ HTTP/1.1" 401 191
+WARNING 2025-12-16 18:23:10,310 log Unauthorized: /api/animais/
+WARNING 2025-12-16 18:23:10,314 log Unauthorized: /api/tutores/
+WARNING 2025-12-16 18:23:10,319 basehttp "GET /api/animais/ HTTP/1.1" 401 191
+WARNING 2025-12-16 18:23:10,318 log Unauthorized: /api/planos/
+WARNING 2025-12-16 18:23:10,326 log Unauthorized: /api/veterinarios/
+INFO 2025-12-16 18:23:10,329 basehttp "OPTIONS /api/auth/token/refresh/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:10,329 basehttp "OPTIONS /api/auth/token/refresh/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:10,329 basehttp "OPTIONS /api/auth/token/refresh/ HTTP/1.1" 200 0
+WARNING 2025-12-16 18:23:10,329 basehttp "GET /api/planos/ HTTP/1.1" 401 191
+WARNING 2025-12-16 18:23:10,329 basehttp "GET /api/tutores/ HTTP/1.1" 401 191
+WARNING 2025-12-16 18:23:10,330 basehttp "GET /api/veterinarios/ HTTP/1.1" 401 191
+INFO 2025-12-16 18:23:10,334 basehttp "OPTIONS /api/auth/token/refresh/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:10,366 basehttp "OPTIONS /api/auth/token/refresh/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:10,384 basehttp "OPTIONS /api/auth/token/refresh/ HTTP/1.1" 200 0
+WARNING 2025-12-16 18:23:10,442 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-16 18:23:10,447 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-16 18:23:10,453 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-16 18:23:10,457 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-16 18:23:10,461 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-16 18:23:10,462 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-16 18:23:10,463 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-16 18:23:10,468 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-16 18:23:10,473 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-16 18:23:10,473 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-16 18:23:10,474 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-16 18:23:10,474 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-16 18:23:10,542 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-16 18:23:10,546 log Not Found: /api/auth/token/refresh/
+WARNING 2025-12-16 18:23:10,546 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+WARNING 2025-12-16 18:23:10,546 basehttp "POST /api/auth/token/refresh/ HTTP/1.1" 404 13429
+INFO 2025-12-16 18:23:36,024 basehttp "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:36,602 basehttp "POST /api/auth/login/ HTTP/1.1" 200 763
+INFO 2025-12-16 18:23:36,848 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-16 18:23:36,848 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-16 18:23:36,853 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-16 18:23:36,861 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-16 18:23:36,906 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-16 18:23:36,937 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-16 18:23:36,943 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-16 18:23:36,944 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-16 18:23:42,231 basehttp "OPTIONS /api/consultas/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:42,246 basehttp "OPTIONS /api/clinicas/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:42,243 basehttp "OPTIONS /api/consultas/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:42,253 basehttp "OPTIONS /api/clinicas/ HTTP/1.1" 200 0
+INFO 2025-12-16 18:23:42,277 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-16 18:23:42,305 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-16 18:23:42,336 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-16 18:23:42,339 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-16 18:23:42,356 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-16 18:23:42,363 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-16 18:23:42,395 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-16 18:23:42,411 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-16 18:23:44,337 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-16 18:23:44,368 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-16 18:23:46,570 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-16 18:23:46,582 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-16 18:23:46,624 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-16 18:23:46,627 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-16 18:23:47,298 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-16 18:23:47,391 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-16 18:23:48,549 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-16 18:23:48,584 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-16 18:23:52,070 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-16 18:23:52,115 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-16 18:23:53,048 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-16 18:23:53,051 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-16 18:23:53,064 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-16 18:23:53,081 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-16 18:23:53,099 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-16 18:23:53,121 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-16 18:23:53,124 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-16 18:23:53,133 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-25 17:37:59,159 autoreload Watching for file changes with StatReloader
+INFO 2025-12-25 17:38:18,291 autoreload Watching for file changes with StatReloader
+INFO 2025-12-25 17:38:48,311 basehttp "OPTIONS /api/auth/login/ HTTP/1.1" 200 0
+WARNING 2025-12-25 17:38:49,137 log Unauthorized: /api/auth/login/
+WARNING 2025-12-25 17:38:49,137 basehttp "POST /api/auth/login/ HTTP/1.1" 401 45
+INFO 2025-12-25 17:38:54,126 basehttp "POST /api/auth/login/ HTTP/1.1" 200 763
+INFO 2025-12-25 17:38:54,382 basehttp "OPTIONS /api/tutores/ HTTP/1.1" 200 0
+INFO 2025-12-25 17:38:54,408 basehttp "OPTIONS /api/veterinarios/ HTTP/1.1" 200 0
+INFO 2025-12-25 17:38:54,418 basehttp "OPTIONS /api/planos/ HTTP/1.1" 200 0
+INFO 2025-12-25 17:38:54,418 basehttp "OPTIONS /api/tutores/ HTTP/1.1" 200 0
+INFO 2025-12-25 17:38:54,419 basehttp "OPTIONS /api/animais/ HTTP/1.1" 200 0
+INFO 2025-12-25 17:38:54,430 basehttp "OPTIONS /api/animais/ HTTP/1.1" 200 0
+INFO 2025-12-25 17:38:54,432 basehttp "OPTIONS /api/veterinarios/ HTTP/1.1" 200 0
+INFO 2025-12-25 17:38:54,466 basehttp "OPTIONS /api/planos/ HTTP/1.1" 200 0
+INFO 2025-12-25 17:38:54,570 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-25 17:38:54,583 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-25 17:38:54,587 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-25 17:38:54,598 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-25 17:38:54,662 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-25 17:38:54,675 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-25 17:38:54,682 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-25 17:38:54,698 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-25 17:39:14,626 basehttp "POST /api/auth/login/ HTTP/1.1" 200 763
+INFO 2025-12-25 17:39:15,048 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-25 17:39:15,089 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-25 17:39:15,101 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-25 17:39:15,175 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-25 17:39:15,180 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-25 17:39:15,226 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-25 17:39:15,275 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-25 17:39:15,277 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-25 17:39:19,188 basehttp "OPTIONS /api/consultas/ HTTP/1.1" 200 0
+INFO 2025-12-25 17:39:19,223 basehttp "OPTIONS /api/clinicas/ HTTP/1.1" 200 0
+INFO 2025-12-25 17:39:19,233 basehttp "OPTIONS /api/consultas/ HTTP/1.1" 200 0
+INFO 2025-12-25 17:39:19,235 basehttp "OPTIONS /api/clinicas/ HTTP/1.1" 200 0
+INFO 2025-12-25 17:39:19,290 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-25 17:39:19,322 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-25 17:39:19,360 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-25 17:39:19,373 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-25 17:39:19,387 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-25 17:39:19,442 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-25 17:39:19,462 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-25 17:39:19,516 basehttp "GET /api/consultas/ HTTP/1.1" 200 2310
+INFO 2025-12-25 17:39:21,088 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-25 17:39:21,143 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-25 17:39:23,806 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-25 17:39:23,853 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-25 17:39:23,956 basehttp "GET /api/tutores/ HTTP/1.1" 200 363
+INFO 2025-12-25 17:39:23,994 basehttp "GET /api/animais/ HTTP/1.1" 200 675
+INFO 2025-12-25 17:39:26,139 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-25 17:39:26,200 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-25 17:39:28,618 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-25 17:39:28,683 basehttp "GET /api/planos/ HTTP/1.1" 200 1059
+INFO 2025-12-25 17:39:30,695 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647
+INFO 2025-12-25 17:39:30,760 basehttp "GET /api/clinicas/ HTTP/1.1" 200 647

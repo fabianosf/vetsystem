@@ -1,0 +1,3 @@
+
+# Importar tasks no topo do arquivo (adicionar se não existir)
+from api.tasks import enviar_email_boas_vindas, enviar_confirmacao_consulta

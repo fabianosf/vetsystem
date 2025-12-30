@@ -1,0 +1,68 @@
+from django.contrib import admin
+from .models import (
+    Tutor, Animal, Veterinario, Consulta, 
+    Vacina, Exame, PlanoSaude, ContratoPlano, Clinica
+)
+
+@admin.register(Tutor)
+class TutorAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'cpf', 'phone', 'city', 'is_active', 'created_at']
+    list_filter = ['is_active', 'state', 'created_at']
+    search_fields = ['name', 'email', 'cpf', 'phone']
+    readonly_fields = ['created_at', 'updated_at']
+
+@admin.register(Animal)
+class AnimalAdmin(admin.ModelAdmin):
+    list_display = ['name', 'species', 'breed', 'tutor', 'age', 'weight', 'is_active']
+    list_filter = ['species', 'gender', 'is_active', 'created_at']
+    search_fields = ['name', 'microchip', 'tutor__name']
+    readonly_fields = ['created_at', 'updated_at']
+
+@admin.register(Veterinario)
+class VeterinarioAdmin(admin.ModelAdmin):
+    list_display = ['name', 'crmv', 'email', 'status', 'specialties']
+    list_filter = ['status', 'created_at']
+    search_fields = ['name', 'crmv', 'email']
+    readonly_fields = ['created_at', 'updated_at']
+
+@admin.register(Consulta)
+class ConsultaAdmin(admin.ModelAdmin):
+    list_display = ['animal', 'veterinario', 'data', 'hora', 'status', 'tipo', 'valor']
+    list_filter = ['status', 'tipo', 'data', 'created_at']
+    search_fields = ['animal__name', 'veterinario__name']
+    readonly_fields = ['created_at', 'updated_at']
+    date_hierarchy = 'data'
+
+@admin.register(Vacina)
+class VacinaAdmin(admin.ModelAdmin):
+    list_display = ['nome_vacina', 'animal', 'data_aplicacao', 'data_proxima_dose', 'lote']
+    list_filter = ['nome_vacina', 'data_aplicacao']
+    search_fields = ['animal__name', 'lote']
+    readonly_fields = ['created_at', 'updated_at']
+
+@admin.register(Exame)
+class ExameAdmin(admin.ModelAdmin):
+    list_display = ['tipo_exame', 'animal', 'veterinario_solicitante', 'status', 'data_solicitacao']
+    list_filter = ['tipo_exame', 'status', 'data_solicitacao']
+    search_fields = ['animal__name', 'tipo_exame']
+    readonly_fields = ['created_at', 'updated_at']
+
+@admin.register(PlanoSaude)
+class PlanoSaudeAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'preco_mensal', 'consultas_mes', 'exames_mes', 'is_active']
+    list_filter = ['nome', 'is_active']
+    readonly_fields = ['created_at', 'updated_at']
+
+@admin.register(ContratoPlano)
+class ContratoPlanoAdmin(admin.ModelAdmin):
+    list_display = ['tutor', 'plano', 'data_inicio', 'status']
+    list_filter = ['status', 'plano', 'data_inicio']
+    search_fields = ['tutor__name', 'plano__nome']
+    readonly_fields = ['created_at', 'updated_at']
+
+@admin.register(Clinica)
+class ClinicaAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'cidade', 'estado', 'atendimento_24h', 'atende_emergencia', 'avaliacao_media']
+    list_filter = ['atendimento_24h', 'atende_emergencia', 'estado']
+    search_fields = ['nome', 'cidade', 'endereco']
+    readonly_fields = ['created_at', 'updated_at']

@@ -1,0 +1,28 @@
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from api.views import (
+    TutorViewSet,
+    AnimalViewSet,
+    VeterinarioViewSet,
+    ConsultaViewSet,
+    VacinaViewSet,
+    ExameViewSet,
+    PlanoSaudeViewSet,
+    ContratoPlanoViewSet,
+    ClinicaViewSet,
+)
+
+router = DefaultRouter()
+router.register(r'tutores', TutorViewSet, basename='tutor')
+router.register(r'animais', AnimalViewSet, basename='animal')
+router.register(r'veterinarios', VeterinarioViewSet, basename='veterinario')
+router.register(r'consultas', ConsultaViewSet, basename='consulta')
+router.register(r'vacinas', VacinaViewSet, basename='vacina')
+router.register(r'exames', ExameViewSet, basename='exame')
+router.register(r'planos', PlanoSaudeViewSet, basename='plano')
+router.register(r'contratos', ContratoPlanoViewSet, basename='contrato')
+router.register(r'clinicas', ClinicaViewSet, basename='clinica')
+
+urlpatterns = [
+    path('', include(router.urls)),
+]

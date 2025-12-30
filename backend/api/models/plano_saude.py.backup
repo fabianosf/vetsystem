@@ -1,0 +1,210 @@
+from django.db import models
+from .tutor import Tutor
+
+class PlanoSaude(models.Model):
+    """
+    Model representando os planos de saúde disponíveis
+    """
+    TIER_CHOICES = [
+        ('BASICO', 'Pet Básico'),
+        ('PREMIUM', 'Pet Premium'),
+        ('VIP', 'Pet VIP'),
+    ]
+
+    nome = models.CharField(
+        max_length=100,
+        choices=TIER_CHOICES,
+        unique=True,
+        verbose_name='Nome do Plano'
+    )
+    descricao = models.TextField(
+        verbose_name='Descrição',
+        help_text='Descrição completa do plano'
+    )
+    preco_mensal = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        verbose_name='Preço Mensal (R$)'
+    )
+    
+    # Benefícios do plano
+    consultas_mes = models.IntegerField(
+        verbose_name='Consultas por Mês',
+        blank=True,
+        null=True,
+        help_text='Deixe vazio para ilimitado'
+    )
+    exames_mes = models.IntegerField(
+        verbose_name='Exames por Mês',
+        blank=True,
+        null=True,
+        help_text='Deixe vazio para ilimitado'
+    )
+    vacinas_ano = models.IntegerField(
+        verbose_name='Vacinas por Ano',
+        blank=True,
+        null=True,
+        help_text='Deixe vazio para ilimitado'
+    )
+    
+    # Features especiais
+    telemedicina_incluida = models.BooleanField(
+        default=False,
+        verbose_name='Telemedicina Incluída'
+    )
+    atendimento_24h = models.BooleanField(
+        default=False,
+        verbose_name='Atendimento 24h'
+    )
+    internacao_incluida = models.BooleanField(
+        default=False,
+        verbose_name='Internação Incluída'
+    )
+    emergencia_prioritaria = models.BooleanField(
+        default=False,
+        verbose_name='Emergência Prioritária'
+    )
+    
+    # Descontos
+    desconto_cirurgia = models.IntegerField(
+        verbose_name='Desconto em Cirurgias (%)',
+        default=0,
+        help_text='Percentual de desconto'
+    )
+    desconto_medicamentos = models.IntegerField(
+        verbose_name='Desconto em Medicamentos (%)',
+        default=0,
+        help_text='Percentual de desconto'
+    )
+    
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name='Plano Ativo'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Criado em'
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name='Atualizado em'
+    )
+
+    class Meta:
+        db_table = 'api_plano_saude'
+        verbose_name = 'Plano de Saúde'
+        verbose_name_plural = 'Planos de Saúde'
+        ordering = ['preco_mensal']
+
+    def __str__(self):
+        return f"{self.nome} - R$ {self.preco_mensal}/mês"
+
+    @property
+    def consultas_ilimitadas(self):
+        return self.consultas_mes is None
+
+    @property
+    def exames_ilimitados(self):
+        return self.exames_mes is None
+
+    @property
+    def vacinas_ilimitadas(self):
+        return self.vacinas_ano is None
+
+
+class ContratoPlano(models.Model):
+    """
+    Model representando contratos de planos de saúde dos tutores
+    """
+    STATUS_CHOICES = [
+        ('ATIVO', 'Ativo'),
+        ('CANCELADO', 'Cancelado'),
+        ('SUSPENSO', 'Suspenso'),
+        ('VENCIDO', 'Vencido'),
+    ]
+
+    tutor = models.ForeignKey(
+        Tutor,
+        on_delete=models.CASCADE,
+        related_name='contratos_plano',
+        verbose_name='Tutor'
+    )
+    plano = models.ForeignKey(
+        PlanoSaude,
+        on_delete=models.PROTECT,
+        related_name='contratos',
+        verbose_name='Plano'
+    )
+    data_inicio = models.DateField(
+        verbose_name='Data de Início'
+    )
+    data_fim = models.DateField(
+        verbose_name='Data de Término',
+        blank=True,
+        null=True,
+        help_text='Deixe vazio para contrato por tempo indeterminado'
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='ATIVO',
+        verbose_name='Status'
+    )
+    
+    # Uso mensal
+    consultas_utilizadas_mes = models.IntegerField(
+        default=0,
+        verbose_name='Consultas Utilizadas no Mês'
+    )
+    exames_utilizados_mes = models.IntegerField(
+        default=0,
+        verbose_name='Exames Utilizados no Mês'
+    )
+    vacinas_utilizadas_ano = models.IntegerField(
+        default=0,
+        verbose_name='Vacinas Utilizadas no Ano'
+    )
+    
+    observacoes = models.TextField(
+        verbose_name='Observações',
+        blank=True,
+        null=True
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Contratado em'
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name='Atualizado em'
+    )
+
+    class Meta:
+        db_table = 'api_contrato_plano'
+        verbose_name = 'Contrato de Plano'
+        verbose_name_plural = 'Contratos de Planos'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.tutor.name} - {self.plano.nome} ({self.status})"
+
+    @property
+    def pode_agendar_consulta(self):
+        """Verifica se ainda pode agendar consulta no mês"""
+        if self.plano.consultas_ilimitadas:
+            return True
+        return self.consultas_utilizadas_mes < self.plano.consultas_mes
+
+    @property
+    def pode_fazer_exame(self):
+        """Verifica se ainda pode fazer exame no mês"""
+        if self.plano.exames_ilimitados:
+            return True
+        return self.exames_utilizados_mes < self.plano.exames_mes
+
+    @property
+    def pode_vacinar(self):
+        """Verifica se ainda pode vacinar no ano"""
+        if self.plano.vacinas_ilimitadas:
+            return True
+        return self.vacinas_utilizadas_ano < self.plano.vacinas_ano
