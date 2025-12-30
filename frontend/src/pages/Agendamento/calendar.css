@@ -1,0 +1,60 @@
+/* Estilos personalizados para FullCalendar */
+.fc {
+  font-family: 'Inter', 'Roboto', sans-serif;
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.fc .fc-button {
+  text-transform: none;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+
+.fc .fc-button-primary {
+  background-color: #0ea5e9;
+  border-color: #0ea5e9;
+}
+
+.fc .fc-button-primary:hover {
+  background-color: #0284c7;
+  border-color: #0284c7;
+}
+
+.fc .fc-button-primary:disabled {
+  background-color: #cbd5e1;
+  border-color: #cbd5e1;
+}
+
+.fc-daygrid-event {
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin: 1px;
+}
+
+.fc-event:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.fc-toolbar-title {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+}
+
+.fc-col-header-cell-cushion {
+  font-weight: 600;
+  color: #64748b;
+}
+
+.fc-daygrid-day-number {
+  font-weight: 500;
+}
+
+.fc-day-today {
+  background-color: rgba(14, 165, 233, 0.1) !important;
+}

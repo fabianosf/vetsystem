@@ -1,0 +1,100 @@
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { ToastProvider } from './contexts/ToastContext';
+import PrivateRoute from './components/PrivateRoute';
+import Layout from './components/layout/Layout';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Tutores from './pages/Tutores/Tutores';
+import Animais from './pages/Animais/Animais';
+import Veterinarios from './pages/Veterinarios/Veterinarios';
+import Planos from './pages/Planos/Planos';
+import Clinicas from './pages/Clinicas/Clinicas';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <ThemeProvider>
+        <AuthProvider>
+          <ToastProvider>
+            <Routes>
+              {/* Rotas Públicas */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+
+              {/* Rotas Protegidas */}
+              <Route
+                path="/dashboard"
+                element={
+                  <PrivateRoute>
+                    <Layout>
+                      <Dashboard />
+                    </Layout>
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/tutores"
+                element={
+                  <PrivateRoute>
+                    <Layout>
+                      <Tutores />
+                    </Layout>
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/animais"
+                element={
+                  <PrivateRoute>
+                    <Layout>
+                      <Animais />
+                    </Layout>
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/veterinarios"
+                element={
+                  <PrivateRoute>
+                    <Layout>
+                      <Veterinarios />
+                    </Layout>
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/planos"
+                element={
+                  <PrivateRoute>
+                    <Layout>
+                      <Planos />
+                    </Layout>
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/clinicas"
+                element={
+                  <PrivateRoute>
+                    <Layout>
+                      <Clinicas />
+                    </Layout>
+                  </PrivateRoute>
+                }
+              />
+
+              {/* Redirect */}
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="*" element={<Navigate to="/login" replace />} />
+            </Routes>
+          </ToastProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </BrowserRouter>
+  );
+}
+
+export default App;
