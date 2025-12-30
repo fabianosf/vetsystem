@@ -1,37 +1,7 @@
-# Python
-*.pyc
 __pycache__/
-venv/
-*.egg-info/
-.pytest_cache/
-htmlcov/
-.coverage
-
-# Django
-*.log
+*.pyc
+*.pyo
+*.pyd
 db.sqlite3
-media/
-staticfiles/
-
-# Node
-node_modules/
-dist/
-build/
-.env.local
-.env.production
-
-# IDEs
-.vscode/
-.idea/
-*.swp
-*.swo
-.DS_Store
-
-# Environment
 .env
-*.env
-
-# Others
-*.pdf
-*.zip
-.vercel/
+.DS_Store
