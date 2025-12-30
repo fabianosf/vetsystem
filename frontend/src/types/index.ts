@@ -2,14 +2,13 @@
 // TYPES DO VETSYSTEM
 // ============================================================
 
+// ===== AUTH & USER =====
 export interface User {
   id: number;
   username: string;
   email: string;
-  first_name: string;
-  last_name: string;
-  role: 'ADMIN' | 'VETERINARIO' | 'TUTOR';
-  phone?: string;
+  first_name?: string;
+  last_name?: string;
 }
 
 export interface LoginResponse {
@@ -18,6 +17,7 @@ export interface LoginResponse {
   user: User;
 }
 
+// ===== TUTOR =====
 export interface Tutor {
   id: number;
   name: string;
@@ -28,12 +28,14 @@ export interface Tutor {
   city?: string;
   state?: string;
   cep?: string;
-  is_active: boolean;
-  total_animais: number;
+  animais_count?: number;
+  is_active?: boolean;
+  total_animais?: number;
   created_at: string;
   updated_at: string;
 }
 
+// ===== ANIMAL =====
 export interface Animal {
   id: number;
   tutor: number;
@@ -51,6 +53,7 @@ export interface Animal {
   updated_at: string;
 }
 
+// ===== VETERINARIO =====
 export interface Veterinario {
   id: number;
   name: string;
@@ -67,6 +70,7 @@ export interface Veterinario {
   updated_at: string;
 }
 
+// ===== CONSULTA =====
 export interface Consulta {
   id: number;
   animal: number;
@@ -86,6 +90,7 @@ export interface Consulta {
   updated_at: string;
 }
 
+// ===== VACINA =====
 export interface Vacina {
   id: number;
   animal: number;
@@ -103,6 +108,7 @@ export interface Vacina {
   created_at: string;
 }
 
+// ===== EXAME =====
 export interface Exame {
   id: number;
   animal: number;
@@ -120,6 +126,7 @@ export interface Exame {
   created_at: string;
 }
 
+// ===== PLANO DE SAÚDE =====
 export interface PlanoSaude {
   id: number;
   nome: string;
@@ -159,6 +166,7 @@ export interface ContratoPlano {
   created_at: string;
 }
 
+// ===== CLÍNICA =====
 export interface Clinica {
   id: number;
   nome: string;
@@ -184,6 +192,24 @@ export interface Clinica {
   created_at: string;
 }
 
+// ===== NOTIFICAÇÃO =====
+export interface Notificacao {
+  id: number;
+  user: number;
+  user_name: string;
+  titulo: string;
+  mensagem: string;
+  tipo: 'INFO' | 'SUCCESS' | 'WARNING' | 'ERROR';
+  categoria: 'CONSULTA' | 'VACINA' | 'EXAME' | 'PLANO' | 'SISTEMA';
+  lida: boolean;
+  lida_em: string | null;
+  link: string | null;
+  icone: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+// ===== PAGINAÇÃO =====
 export interface PaginatedResponse<T> {
   count: number;
   next: string | null;

@@ -3,6 +3,9 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.shortcuts import get_object_or_404
+from api.models import Notificacao  # Adicionar no import
+from api.serializers import NotificacaoSerializer  # Adicionar no import
+
 
 from api.models import (
     Tutor, Animal, Veterinario, Consulta, Vacina, Exame,
@@ -140,3 +143,50 @@ class ClinicaViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = Clinica.objects.all()
         return queryset.order_by('-created_at')
+
+
+class NotificacaoViewSet(viewsets.ModelViewSet):
+    """ViewSet para Notificações"""
+    serializer_class = NotificacaoSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        """Retorna apenas notificações do usuário logado"""
+        return Notificacao.objects.filter(user=self.request.user)
+    
+    @action(detail=False, methods=['get'])
+    def nao_lidas(self, request):
+        """Retorna apenas notificações não lidas"""
+        queryset = self.get_queryset().filter(lida=False)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({
+            'count': queryset.count(),
+            'results': serializer.data
+        })
+    
+    @action(detail=True, methods=['post'])
+    def marcar_lida(self, request, pk=None):
+        """Marca uma notificação como lida"""
+        notificacao = self.get_object()
+        notificacao.marcar_como_lida()
+        return Response({'status': 'Notificação marcada como lida'})
+    
+    @action(detail=False, methods=['post'])
+    def marcar_todas_lidas(self, request):
+        """Marca todas as notificações como lidas"""
+        notificacoes = self.get_queryset().filter(lida=False)
+        count = notificacoes.update(
+            lida=True,
+            lida_em=timezone.now()
+        )
+        return Response({
+            'status': f'{count} notificações marcadas como lidas'
+        })
+    
+    @action(detail=False, methods=['delete'])
+    def limpar_lidas(self, request):
+        """Remove todas as notificações já lidas"""
+        count, _ = self.get_queryset().filter(lida=True).delete()
+        return Response({
+            'status': f'{count} notificações removidas'
+        })

@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useNavigate } from 'react-router-dom';
+import NotificationBell from '../Notifications/NotificationBell';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
@@ -58,6 +59,8 @@ export default function Navbar() {
               <Notifications />
             </Badge>
           </IconButton>
+
+          <NotificationBell />
 
           {/* Menu do Usuário */}
           <IconButton onClick={handleMenu} size="small">

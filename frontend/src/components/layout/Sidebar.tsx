@@ -6,23 +6,28 @@ import {
   MedicalServices, 
   HealthAndSafety,
   LocalHospital,
-  CalendarMonth
+  CalendarMonth,
+  BiotechOutlined
 } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 
 const menuItems = [
   { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
   { text: 'Agendamento', icon: <CalendarMonth />, path: '/agendamento' },
   { text: 'Tutores', icon: <Person />, path: '/tutores' },
   { text: 'Animais', icon: <Pets />, path: '/animais' },
+  { text: 'Diagnóstico IA', icon: <BiotechOutlined />, path: '/diagnosticos' },
   { text: 'Veterinários', icon: <MedicalServices />, path: '/veterinarios' },
   { text: 'Planos', icon: <HealthAndSafety />, path: '/planos' },
   { text: 'Clínicas', icon: <LocalHospital />, path: '/clinicas' },
 ];
 
+
 export default function Sidebar() {
   const location = useLocation();
   const navigate = useNavigate();
+
 
   return (
     <Box sx={{ width: 240, height: '100%', bgcolor: 'background.paper', borderRight: 1, borderColor: 'divider' }}>

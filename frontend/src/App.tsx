@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ToastProvider } from './contexts/ToastContext';
+import { DiagnosticoPage } from './pages/Diagnostico';
 import PrivateRoute from './components/PrivateRoute';
 import Layout from './components/layout/Layout';
 import Login from './pages/auth/Login';
@@ -14,6 +15,9 @@ import Planos from './pages/Planos/Planos';
 import Clinicas from './pages/Clinicas/Clinicas';
 import Agendamento from './pages/Agendamento/Agendamento';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   return (
     <BrowserRouter>
@@ -24,6 +28,7 @@ function App() {
               {/* Rotas Públicas */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/diagnosticos" element={<DiagnosticoPage />} />
 
               {/* Rotas Protegidas */}
               <Route
@@ -101,6 +106,21 @@ function App() {
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="*" element={<Navigate to="/login" replace />} />
             </Routes>
+
+            {/* Toast Container - Configuração Global */}
+            <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+              style={{ zIndex: 9999 }}
+            />
           </ToastProvider>
         </AuthProvider>
       </ThemeProvider>
