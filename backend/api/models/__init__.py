@@ -23,3 +23,4 @@ __all__ = [
     'Notificacao',
 ]
 from api.models.diagnostico import DiagnosticoIA
+from api.models.notificacao_externa import NotificacaoExterna

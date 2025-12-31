@@ -14,9 +14,7 @@ import {
 } from '@mui/material';
 import {
   Notifications,
-  NotificationsNone,
-  EventAvailable,
-  Vaccines,
+  NotificationsNone,  
   Warning,
   Info,
   CheckCircle,
@@ -65,13 +63,6 @@ export default function NotificationBell() {
     }
   };
 
-  const getIconByCategory = (categoria: string) => {
-    switch (categoria) {
-      case 'CONSULTA': return <EventAvailable />;
-      case 'VACINA': return <Vaccines />;
-      default: return <Info />;
-    }
-  };
 
   return (
     <>
@@ -97,7 +88,15 @@ export default function NotificationBell() {
         }}
       >
         {/* Header */}
-        <Box sx={{ px: 2, py: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box
+          sx={{
+            px: 2,
+            py: 1.5,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
           <Typography variant="h6" fontWeight="bold">
             Notificações
           </Typography>
@@ -115,14 +114,16 @@ export default function NotificationBell() {
         {/* Lista de notificações */}
         {notificacoes.length === 0 ? (
           <Box sx={{ py: 4, textAlign: 'center' }}>
-            <NotificationsNone sx={{ fontSize: 48, color: 'text.secondary', mb: 1 }} />
+            <NotificationsNone
+              sx={{ fontSize: 48, color: 'text.secondary', mb: 1 }}
+            />
             <Typography color="text.secondary">
               Nenhuma notificação
             </Typography>
           </Box>
         ) : (
           <>
-            {notificacoes.map((notif) => (
+            {notificacoes.map((notif: any) => (
               <MenuItem
                 key={notif.id}
                 onClick={() => handleNotificationClick(notif)}
@@ -130,16 +131,27 @@ export default function NotificationBell() {
                   py: 1.5,
                   px: 2,
                   borderLeft: 3,
-                  borderColor: notif.tipo === 'ERROR' ? 'error.main' :
-                               notif.tipo === 'WARNING' ? 'warning.main' :
-                               notif.tipo === 'SUCCESS' ? 'success.main' : 'info.main',
+                  borderColor:
+                    notif.tipo === 'ERROR'
+                      ? 'error.main'
+                      : notif.tipo === 'WARNING'
+                      ? 'warning.main'
+                      : notif.tipo === 'SUCCESS'
+                      ? 'success.main'
+                      : 'info.main',
                   '&:hover': {
                     bgcolor: 'action.hover',
                   },
                 }}
               >
                 <ListItemIcon>
-                  {getIconByCategory(notif.categoria)}
+                  {getIconByType(notif.tipo)}
+                  {/* Se quiser mostrar também o ícone por categoria junto, use:
+                  <Box display="flex" alignItems="center" gap={0.5}>
+                    {getIconByCategory(notif.categoria)}
+                    {getIconByType(notif.tipo)}
+                  </Box>
+                  */}
                 </ListItemIcon>
                 <ListItemText
                   primary={notif.titulo}

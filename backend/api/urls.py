@@ -58,5 +58,31 @@ urlpatterns = [
     path('pdf/consulta/<int:consulta_id>/prescricao/', prescricao_pdf, name='prescricao-pdf'),
     path('pdf/consulta/<int:consulta_id>/atestado/', atestado_pdf, name='atestado-pdf'),
     path('pdf/consulta/<int:consulta_id>/relatorio/', relatorio_consulta_pdf, name='relatorio-pdf'),
+    # Notificações
+    # path('notificacoes/', include('api.urls.notification_urls')),
 
+
+]
+
+# Notificações (function-based views)
+from api.views.notification_views import (
+    notificar_consulta_agendada,
+    notificar_lembrete_consulta,
+    notificar_consulta_cancelada,
+    enviar_notificacao_custom,
+    listar_notificacoes,
+)
+
+# Adicionar aos urlpatterns existentes
+urlpatterns += [
+    # Notificações automáticas
+    path('notificacoes/consulta/<int:consulta_id>/agendada/', notificar_consulta_agendada, name='notificar-consulta-agendada'),
+    path('notificacoes/consulta/<int:consulta_id>/lembrete/', notificar_lembrete_consulta, name='notificar-lembrete'),
+    path('notificacoes/consulta/<int:consulta_id>/cancelada/', notificar_consulta_cancelada, name='notificar-cancelada'),
+    
+    # Notificações personalizadas
+    path('notificacoes/custom/', enviar_notificacao_custom, name='notificacao-custom'),
+    
+    # Listar notificações
+    path('notificacoes/', listar_notificacoes, name='listar-notificacoes'),
 ]
