@@ -6397,3 +6397,139 @@ WARNING 2025-12-30 20:29:11,130 log Not Found: /api/notificacoes/nao_lidas/
 WARNING 2025-12-30 20:29:11,131 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 29
 INFO 2025-12-30 20:29:11,188 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
 INFO 2025-12-30 20:29:11,219 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 20:49:52,345 autoreload Watching for file changes with StatReloader
+INFO 2025-12-30 20:50:58,899 autoreload Watching for file changes with StatReloader
+INFO 2025-12-30 20:51:51,714 autoreload Watching for file changes with StatReloader
+INFO 2025-12-30 20:52:42,135 autoreload Watching for file changes with StatReloader
+WARNING 2025-12-30 20:53:08,738 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 20:53:08,750 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 12971
+WARNING 2025-12-30 20:53:08,800 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 20:53:08,811 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 12971
+INFO 2025-12-30 20:53:08,831 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 20:53:08,882 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 20:53:08,892 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 20:53:08,919 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 20:53:08,921 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 20:53:08,954 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 20:53:08,984 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 20:53:09,015 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 20:53:13,067 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 20:53:13,120 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+WARNING 2025-12-30 20:53:15,004 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 20:53:15,007 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 12971
+INFO 2025-12-30 20:53:15,051 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 20:53:15,081 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+WARNING 2025-12-30 20:53:15,083 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 20:53:15,094 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 12971
+INFO 2025-12-30 20:53:15,141 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 20:53:15,141 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 20:53:15,141 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 20:53:15,141 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 20:53:15,221 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 20:53:15,229 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 20:53:17,835 basehttp "GET /api/consultas/ HTTP/1.1" 200 3739
+INFO 2025-12-30 20:53:17,849 basehttp "GET /api/clinicas/ HTTP/1.1" 200 664
+INFO 2025-12-30 20:53:17,849 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 20:53:17,850 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 20:53:17,962 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 20:53:17,963 basehttp "GET /api/consultas/ HTTP/1.1" 200 3739
+INFO 2025-12-30 20:53:17,963 basehttp "GET /api/clinicas/ HTTP/1.1" 200 664
+INFO 2025-12-30 20:53:17,978 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 20:53:18,636 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 20:53:18,692 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 20:53:19,678 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 20:53:19,696 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 20:53:19,727 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 20:53:19,757 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 20:53:20,692 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 20:53:20,730 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+WARNING 2025-12-30 20:53:22,715 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 20:53:22,716 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 12971
+WARNING 2025-12-30 20:53:22,745 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 20:53:22,753 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 12971
+INFO 2025-12-30 20:53:22,753 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 20:53:22,780 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 20:53:22,816 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 20:53:22,860 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 20:53:24,236 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 20:53:24,272 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 20:53:25,791 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 20:53:25,857 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 20:53:26,887 basehttp "GET /api/clinicas/ HTTP/1.1" 200 664
+INFO 2025-12-30 20:53:26,957 basehttp "GET /api/clinicas/ HTTP/1.1" 200 664
+INFO 2025-12-30 20:53:29,048 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 20:53:29,104 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+WARNING 2025-12-30 20:53:52,942 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 20:53:52,943 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 12971
+WARNING 2025-12-30 20:54:22,938 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 20:54:22,939 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 12971
+INFO 2025-12-30 21:00:38,313 autoreload Watching for file changes with StatReloader
+WARNING 2025-12-30 21:01:12,090 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:01:12,091 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+WARNING 2025-12-30 21:01:22,940 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:01:22,940 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+WARNING 2025-12-30 21:01:52,940 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:01:52,940 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+WARNING 2025-12-30 21:02:40,957 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:02:40,960 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+WARNING 2025-12-30 21:03:40,955 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:03:40,955 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+WARNING 2025-12-30 21:04:40,951 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:04:40,951 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+WARNING 2025-12-30 21:05:40,971 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:05:40,974 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+WARNING 2025-12-30 21:06:40,954 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:06:40,955 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+WARNING 2025-12-30 21:07:40,944 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:07:40,944 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+WARNING 2025-12-30 21:08:40,948 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:08:40,949 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+WARNING 2025-12-30 21:09:40,955 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:09:40,956 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+WARNING 2025-12-30 21:10:40,946 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:10:40,947 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+INFO 2025-12-30 21:10:58,659 autoreload Watching for file changes with StatReloader
+WARNING 2025-12-30 21:11:09,742 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:11:09,744 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+WARNING 2025-12-30 21:11:13,010 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:11:13,018 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+WARNING 2025-12-30 21:11:13,045 log Not Found: /api/notificacoes/nao_lidas/
+WARNING 2025-12-30 21:11:13,046 basehttp "GET /api/notificacoes/nao_lidas/ HTTP/1.1" 404 13846
+INFO 2025-12-30 21:11:13,114 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 21:11:13,157 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 21:11:15,355 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 21:11:15,366 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 21:11:15,375 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 21:11:15,408 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 21:11:15,441 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 21:11:15,475 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 21:11:15,488 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 21:11:15,512 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 21:11:16,694 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 21:11:16,729 basehttp "GET /api/consultas/ HTTP/1.1" 200 3739
+INFO 2025-12-30 21:11:16,738 basehttp "GET /api/clinicas/ HTTP/1.1" 200 664
+INFO 2025-12-30 21:11:16,739 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 21:11:16,791 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 21:11:16,827 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 21:11:16,846 basehttp "GET /api/consultas/ HTTP/1.1" 200 3739
+INFO 2025-12-30 21:11:16,847 basehttp "GET /api/clinicas/ HTTP/1.1" 200 664
+INFO 2025-12-30 21:11:18,139 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 21:11:18,197 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 21:11:19,617 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 21:11:19,639 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 21:11:19,672 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 21:11:19,710 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 21:11:21,337 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 21:11:21,373 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 21:11:22,749 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 21:11:22,805 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 21:11:24,789 basehttp "GET /api/clinicas/ HTTP/1.1" 200 664
+INFO 2025-12-30 21:11:24,828 basehttp "GET /api/clinicas/ HTTP/1.1" 200 664
+INFO 2025-12-30 21:11:29,401 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 21:11:29,403 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 21:11:29,413 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 21:11:29,455 basehttp "GET /api/planos/ HTTP/1.1" 200 3300
+INFO 2025-12-30 21:11:29,482 basehttp "GET /api/animais/ HTTP/1.1" 200 1915
+INFO 2025-12-30 21:11:29,496 basehttp "GET /api/veterinarios/ HTTP/1.1" 200 434
+INFO 2025-12-30 21:11:29,529 basehttp "GET /api/tutores/ HTTP/1.1" 200 1031
+INFO 2025-12-30 21:11:29,540 basehttp "GET /api/planos/ HTTP/1.1" 200 3300

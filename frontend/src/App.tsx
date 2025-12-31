@@ -14,6 +14,8 @@ import Veterinarios from './pages/Veterinarios/Veterinarios';
 import Planos from './pages/Planos/Planos';
 import Clinicas from './pages/Clinicas/Clinicas';
 import Agendamento from './pages/Agendamento/Agendamento';
+import { AnimalDetailsPage } from './pages/Animais/AnimalDetails';
+import { ConsultaDetailsPage } from './pages/Consultas/ConsultaDetails';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -29,6 +31,8 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/diagnosticos" element={<DiagnosticoPage />} />
+              <Route path="/animais/:id" element={<AnimalDetailsPage />} />
+              <Route path="/consultas/:id" element={<ConsultaDetailsPage />} />
 
               {/* Rotas Protegidas */}
               <Route
