@@ -30,24 +30,23 @@ import {
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import api from '../../services/api';
 import { motion } from 'framer-motion';
-
+import { useAuth } from '../../contexts/AuthContext';
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { login } = useAuth();
   
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -57,70 +56,41 @@ export const Login: React.FC = () => {
     setError('');
   };
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-
     try {
-      const response = await api.post('/auth/login/', {
-        email: formData.email.toLowerCase().trim(),
-        password: formData.password,
-      });
-
-
-      console.log('✅ Login bem-sucedido:', response.data);
-
-
-      // Salva tokens
-      localStorage.setItem('access_token', response.data.access);
-      localStorage.setItem('refresh_token', response.data.refresh);
-      
-      // Salva dados do usuário
-      if (response.data.user) {
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-      }
+      await login(formData.username.trim(), formData.password);
 
       // Remember Me
       if (rememberMe) {
-        localStorage.setItem('remember_email', formData.email);
+        localStorage.setItem('remember_username', formData.username);
       } else {
-        localStorage.removeItem('remember_email');
+        localStorage.removeItem('remember_username');
       }
 
-
-      toast.success('Login realizado com sucesso!');
-      
       // Redireciona para dashboard
-      setTimeout(() => {
-        window.location.href = '/dashboard';
-      }, 500);
+      navigate('/dashboard');
       
     } catch (error: any) {
       console.error('❌ Erro no login:', error);
-      
-      const errorMsg = error.response?.data?.detail || 
-                       error.response?.data?.error || 
-                       'Email ou senha incorretos';
+      const errorMsg = 'Usuário ou senha incorretos';
       setError(errorMsg);
-      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }
   };
 
-
-  // Carregar email salvo
+  // Carregar username salvo
   React.useEffect(() => {
-    const savedEmail = localStorage.getItem('remember_email');
-    if (savedEmail) {
-      setFormData(prev => ({ ...prev, email: savedEmail }));
+    const savedUsername = localStorage.getItem('remember_username');
+    if (savedUsername) {
+      setFormData(prev => ({ ...prev, username: savedUsername }));
       setRememberMe(true);
     }
   }, []);
-
 
   return (
     <Box
@@ -190,7 +160,6 @@ export const Login: React.FC = () => {
               </Typography>
             </Box>
 
-
             <Paper
               elevation={isMobile ? 10 : 0}
               sx={{
@@ -208,7 +177,6 @@ export const Login: React.FC = () => {
                 Entre com suas credenciais para acessar o sistema
               </Typography>
 
-
               {/* Erro */}
               {error && (
                 <motion.div
@@ -221,18 +189,17 @@ export const Login: React.FC = () => {
                 </motion.div>
               )}
 
-
               {/* Formulário */}
               <Box component="form" onSubmit={handleSubmit}>
                 <TextField
                   fullWidth
                   required
-                  label="Email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
+                  label="Usuário"
+                  name="username"
+                  type="text"
+                  value={formData.username}
                   onChange={handleChange}
-                  autoComplete="email"
+                  autoComplete="username"
                   autoFocus
                   disabled={loading}
                   InputProps={{
@@ -255,7 +222,6 @@ export const Login: React.FC = () => {
                     },
                   }}
                 />
-
 
                 <TextField
                   fullWidth
@@ -299,7 +265,6 @@ export const Login: React.FC = () => {
                   }}
                 />
 
-
                 {/* Remember Me + Esqueci Senha */}
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
                   <FormControlLabel
@@ -320,7 +285,7 @@ export const Login: React.FC = () => {
                     component="button"
                     type="button"
                     variant="body2"
-                    onClick={() => navigate('/forgot-password')}
+                    onClick={() => toast.info('Funcionalidade em desenvolvimento')}
                     underline="hover"
                     sx={{ 
                       cursor: 'pointer',
@@ -331,7 +296,6 @@ export const Login: React.FC = () => {
                     Esqueceu sua senha?
                   </Link>
                 </Box>
-
 
                 {/* Botão Login */}
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -362,49 +326,33 @@ export const Login: React.FC = () => {
                 </motion.div>
               </Box>
 
-
               {/* Divider */}
               <Divider sx={{ my: 3 }}>
                 <Typography variant="body2" color="text.secondary" fontWeight={500}>
-                  OU
+                  Credenciais de Teste
                 </Typography>
               </Divider>
 
-
-              {/* Link Cadastro */}
-              <Box textAlign="center">
-                <Typography variant="body2" color="text.secondary">
-                  Não tem uma conta?{' '}
-                  <Link
-                    component="button"
-                    type="button"
-                    variant="body2"
-                    onClick={() => navigate('/register')}
-                    underline="hover"
-                    sx={{ 
-                      fontWeight: 700, 
-                      cursor: 'pointer', 
-                      color: 'primary.main',
-                      fontSize: '0.95rem',
-                    }}
-                  >
-                    Cadastre-se gratuitamente
-                  </Link>
+              {/* Credenciais de exemplo */}
+              <Box sx={{ bgcolor: 'grey.50', p: 2, borderRadius: 2 }}>
+                <Typography variant="caption" display="block" fontWeight={600} mb={0.5}>
+                  👨‍💼 Admin: admin / admin123
+                </Typography>
+                <Typography variant="caption" display="block" fontWeight={600}>
+                  👨‍⚕️ Veterinário: veterinario / vet123
                 </Typography>
               </Box>
             </Paper>
 
-
             {/* Footer */}
             <Box textAlign="center" mt={4}>
               <Typography variant="caption" color="text.secondary">
-                © 2025 VetSystem. Todos os direitos reservados.
+                © 2026 VetSystem. Todos os direitos reservados.
               </Typography>
             </Box>
           </motion.div>
         </Container>
       </Box>
-
 
       {/* LADO DIREITO - Ilustração Veterinária (apenas desktop) */}
       {!isMobile && (
@@ -452,7 +400,6 @@ export const Login: React.FC = () => {
             }}
           />
 
-
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -487,14 +434,12 @@ export const Login: React.FC = () => {
               </motion.div>
             </Box>
 
-
             <Typography variant="h3" fontWeight={800} gutterBottom>
               Cuidando com Amor
             </Typography>
             <Typography variant="h6" fontWeight={300} mb={4} sx={{ opacity: 0.9 }}>
               Tecnologia de ponta para gestão veterinária
             </Typography>
-
 
             {/* Features */}
             <Box sx={{ textAlign: 'left', maxWidth: 400, mx: 'auto' }}>
@@ -521,7 +466,6 @@ export const Login: React.FC = () => {
                 </motion.div>
               ))}
             </Box>
-
 
             <Box mt={5}>
               <Typography variant="body2" sx={{ opacity: 0.8 }}>

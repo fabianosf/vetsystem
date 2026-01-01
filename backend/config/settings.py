@@ -16,7 +16,7 @@ SECRET_KEY = 'o-hi_3zjktov5apa_10r5*0s2)77gehl52zm81g(7x&^i)xblq'
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0','192.168.0.13']
 
 # ==================== CUSTOM USER MODEL ====================
 AUTH_USER_MODEL = 'accounts.User'
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # Local apps
     'accounts',
     'api',
+    'financeiro',
 ]
 
 MIDDLEWARE = [
@@ -181,6 +182,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:3000",
     "http://127.0.0.1:5173",
+    "http://192.168.0.13:5173",
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = [

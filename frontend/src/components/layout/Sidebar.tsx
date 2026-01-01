@@ -21,6 +21,7 @@ import {
   HealthAndSafety,
   Assessment,
   Description,
+  AttachMoney,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -36,9 +37,10 @@ const menuItems = [
   { text: 'Consultas', icon: <MedicalServices />, path: '/consultas' },
   { text: 'Tutores', icon: <Person />, path: '/tutores' },
   { text: 'Animais', icon: <Pets />, path: '/animais' },
-  { text: 'Prontuário', icon: <Description />, path: '/prontuario' }, // ✅ NOVO
+  { text: 'Prontuário', icon: <Description />, path: '/prontuario' },
   { text: 'Diagnóstico IA', icon: <Science />, path: '/diagnostico' },
   { text: 'Veterinários', icon: <MedicalServices />, path: '/veterinarios' },
+  { text: 'Financeiro', icon: <AttachMoney />, path: '/financeiro' }, // ✅ NOVO
   { text: 'Planos', icon: <HealthAndSafety />, path: '/planos' },
   { text: 'Clínicas', icon: <LocalHospital />, path: '/clinicas' },
   { text: 'Relatórios', icon: <Assessment />, path: '/relatorios' },
@@ -75,7 +77,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, isMobile }) => {
       {/* Menu Items */}
       <List sx={{ pt: 2 }}>
         {menuItems.map((item) => {
-          const isActive = location.pathname === item.path;
+          const isActive = location.pathname.startsWith(item.path);
 
           return (
             <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>

@@ -1,9 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView
-from api.views.diagnostico_views import DiagnosticoIAViewSet
-from .views import dashboard_views  # ← ADICIONAR ESTE IMPORT
-from api.views.prontuario_views import ProntuarioViewSet, PrescricaoViewSet
+
 
 # ViewSets
 from api.views import (
@@ -15,11 +13,16 @@ from api.views import (
     VacinaViewSet,
     ClinicaViewSet,
     PlanoSaudeViewSet,
-    DiagnosticoIAViewSet,
 )
+from api.views.diagnostico_views import DiagnosticoIAViewSet
+from api.views.prontuario_views import ProntuarioViewSet, PrescricaoViewSet
 
-# Dashboard e Auth views
+
+# Dashboard views
 from api.views.dashboard_views import dashboard_kpis
+
+
+# Auth views
 from api.views.auth_views import (
     login_view,
     register_user,
@@ -28,6 +31,7 @@ from api.views.auth_views import (
     confirm_password_reset,
 )
 
+
 # Notification views
 from api.views.notification_views import (
     listar_notificacoes,
@@ -35,6 +39,8 @@ from api.views.notification_views import (
     marcar_como_lida,
     marcar_todas_como_lidas,
 )
+
+
 
 # Router
 router = DefaultRouter()
@@ -50,6 +56,8 @@ router.register(r'diagnosticos', DiagnosticoIAViewSet, basename='diagnostico')
 router.register(r'prontuarios', ProntuarioViewSet, basename='prontuario')
 router.register(r'prescricoes', PrescricaoViewSet, basename='prescricao')
 
+
+
 urlpatterns = [
     # Router
     path('', include(router.urls)),
@@ -63,13 +71,14 @@ urlpatterns = [
     path('auth/password-reset/confirm/', confirm_password_reset, name='password-reset-confirm'),
     
     # Dashboard
-    path('dashboard/kpis/', dashboard_kpis, name='dashboard-kpis'),
-    path('dashboard/', dashboard_views.dashboard_kpis, name='dashboard-kpis'),
-
+    path('dashboard/', dashboard_kpis, name='dashboard-kpis'),
     
     # Notificações
     path('notificacoes/', listar_notificacoes, name='notificacoes-list'),
     path('notificacoes/nao_lidas/', listar_notificacoes_nao_lidas, name='notificacoes-nao-lidas'),
     path('notificacoes/<int:pk>/marcar_lida/', marcar_como_lida, name='notificacao-marcar-lida'),
     path('notificacoes/marcar_todas_lidas/', marcar_todas_como_lidas, name='notificacoes-marcar-todas'),
+    
+    # Financeiro ✅ NOVO MÓDULO
+    path('financeiro/', include('financeiro.urls')),
 ]

@@ -21,19 +21,19 @@ import Veterinarios from './pages/Veterinarios/Veterinarios';
 import Planos from './pages/Planos/Planos';
 import Clinicas from './pages/Clinicas/Clinicas';
 import Configuracoes from './pages/Configuracoes/Configuracoes';
-import Consultas from './pages/Consultas/Consultas'; // ✅ Nova
+import Consultas from './pages/Consultas/Consultas';
 import { ConsultaDetailsPage } from './pages/Consultas/ConsultaDetailsPage';
-import Documentos from './pages/Documentos/Documentos'; // ✅ Nova importação
-import Exames from './pages/Exames/Exames'; // ✅ Nova importação
-import Perfil from './pages/Perfil/Perfil'; // ✅ Nova importação
-import Relatorios from './pages/Relatorios/Relatorios'; // ✅ Nova importação
-import Vacinas from './pages/Vacinas/Vacinas'; // ✅ Nova importação
+import Documentos from './pages/Documentos/Documentos';
+import Exames from './pages/Exames/Exames';
+import Perfil from './pages/Perfil/Perfil';
+import Relatorios from './pages/Relatorios/Relatorios';
+import Vacinas from './pages/Vacinas/Vacinas';
 import Prontuario from './pages/Prontuario/Prontuario';
 
-
-
-
-
+// Financeiro
+import DashboardFinanceiro from './pages/Financeiro/DashboardFinanceiro';
+import ListaTransacoes from './pages/Financeiro/ListaTransacoes';
+import GerenciarCategorias from './pages/Financeiro/GerenciarCategorias';
 
 const App: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -93,19 +93,22 @@ const App: React.FC = () => {
                     <Route path="/planos" element={<Planos />} />
                     <Route path="/clinicas" element={<Clinicas />} />
                     <Route path="/configuracoes" element={<Configuracoes />} />
-                    <Route path="/documentos" element={<Documentos />} /> {/* ✅ Nova rota */}
-                    <Route path="/exames" element={<Exames />} /> {/* ✅ Nova rota */}
-                    <Route path="/perfil" element={<Perfil />} /> {/* ✅ Nova rota */}
-                    <Route path="/relatorios" element={<Relatorios />} /> {/* ✅ Nova rota */}
-                    <Route path="/vacinas" element={<Vacinas />} /> {/* ✅ Nova rota */}
+                    <Route path="/documentos" element={<Documentos />} />
+                    <Route path="/exames" element={<Exames />} />
+                    <Route path="/perfil" element={<Perfil />} />
+                    <Route path="/relatorios" element={<Relatorios />} />
+                    <Route path="/vacinas" element={<Vacinas />} />
                     <Route path="/prontuario" element={<Prontuario />} />
 
-
-
-
                     {/* Consultas */}
-                    <Route path="/consultas" element={<Consultas />} /> {/* ✅ Nova */}
-                    <Route path="/consultas/:id" element={<ConsultaDetailsPage />} /> {/* ✅ Nova */}
+                    <Route path="/consultas" element={<Consultas />} />
+                    <Route path="/consultas/:id" element={<ConsultaDetailsPage />} />
+                    
+                    {/* Financeiro */}
+                    <Route path="/financeiro/dashboard" element={<DashboardFinanceiro />} />
+                    <Route path="/financeiro/transacoes" element={<ListaTransacoes />} />
+                    <Route path="/financeiro/categorias" element={<GerenciarCategorias />} />
+                    <Route path="/financeiro" element={<Navigate to="/financeiro/dashboard" />} />
                     
                     {/* Redirect root to dashboard */}
                     <Route path="/" element={<Navigate to="/dashboard" />} />
