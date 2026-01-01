@@ -2,6 +2,8 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenRefreshView
 from api.views.diagnostico_views import DiagnosticoIAViewSet
+from .views import dashboard_views  # ← ADICIONAR ESTE IMPORT
+from api.views.prontuario_views import ProntuarioViewSet, PrescricaoViewSet
 
 # ViewSets
 from api.views import (
@@ -45,6 +47,8 @@ router.register(r'vacinas', VacinaViewSet, basename='vacina')
 router.register(r'clinicas', ClinicaViewSet, basename='clinica')
 router.register(r'planos', PlanoSaudeViewSet, basename='plano')
 router.register(r'diagnosticos', DiagnosticoIAViewSet, basename='diagnostico')
+router.register(r'prontuarios', ProntuarioViewSet, basename='prontuario')
+router.register(r'prescricoes', PrescricaoViewSet, basename='prescricao')
 
 urlpatterns = [
     # Router
@@ -60,6 +64,8 @@ urlpatterns = [
     
     # Dashboard
     path('dashboard/kpis/', dashboard_kpis, name='dashboard-kpis'),
+    path('dashboard/', dashboard_views.dashboard_kpis, name='dashboard-kpis'),
+
     
     # Notificações
     path('notificacoes/', listar_notificacoes, name='notificacoes-list'),

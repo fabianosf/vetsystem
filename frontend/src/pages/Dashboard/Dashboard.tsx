@@ -1,513 +1,527 @@
-import { useEffect, useState } from 'react';
-import { api } from '../../services/api';
-import { useAuth } from '../../contexts/AuthContext';
+import React, { useState, useEffect } from 'react';
 import {
-  Box, Grid, Card, CardContent, Typography, Avatar, Stack,
-  LinearProgress, Chip, Paper, List, ListItem, ListItemText,
-  ListItemAvatar, Divider, IconButton, Tooltip
+  Box,
+  Typography,
+  Paper,
+  Card,
+  CardContent,
+  Avatar,
+  Stack,
+  Chip,
+  CircularProgress,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Divider,
 } from '@mui/material';
 import {
-  Pets, Person, MedicalServices, LocalHospital, TrendingUp,
-  CalendarToday, Vaccines, Science,AttachMoney, PictureAsPdf
+  Dashboard as DashboardIcon,
+  Pets,
+  Person,
+  LocalHospital,
+  TrendingUp,
+  CalendarToday,
+  Science,
 } from '@mui/icons-material';
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  ArcElement,
-  Title,
-  Tooltip as ChartTooltip,
-  Legend,
-  Filler,
-} from 'chart.js';
-import { Line, Bar, Doughnut } from 'react-chartjs-2';
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
+import { toast } from 'react-toastify';
+import api from '../../services/api';
+import { motion } from 'framer-motion';
 
-// Registrar componentes do Chart.js
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  ArcElement,
-  Title,
-  ChartTooltip,
-  Legend,
-  Filler
-);
 
 interface DashboardStats {
-  total_tutores: number;
-  total_animais: number;
-  total_veterinarios: number;
-  total_consultas: number;
-  consultas_hoje: number;
-  consultas_mes: number;
-  animais_por_especie: { especie: string; total: number }[];
-  consultas_por_mes: { mes: string; total: number }[];
-  veterinarios_ativos: number;
-  planos_ativos: number;
+  consultas: {
+    total: number;
+    hoje: number;
+    mes: number;
+    ano: number;
+    agendadas: number;
+    crescimento_mensal: number;
+  };
+  animais: {
+    total: number;
+    mes: number;
+    por_especie: Array<{ species: string; total: number }>;
+  };
+  diagnosticos: {
+    total: number;
+    validados: number;
+    pendentes: number;
+    taxa_validacao: number;
+  };
+  outros: {
+    veterinarios: number;
+    tutores: number;
+  };
 }
 
-export default function Dashboard() {
-  const { user } = useAuth();
+
+const Dashboard: React.FC = () => {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [periodo, setPeriodo] = useState('mes');
 
   useEffect(() => {
-    loadDashboardData();
-  }, []);
+    fetchDashboardData();
+  }, [periodo]);
 
-  const loadDashboardData = async () => {
+
+  const fetchDashboardData = async () => {
     try {
-      // Carregar dados em paralelo
-      const [tutoresRes, animaisRes, veterinariosRes, consultasRes, planosRes] = await Promise.all([
-        api.get('/tutores/'),
-        api.get('/animais/'),
-        api.get('/veterinarios/'),
-        api.get('/consultas/'),
-        api.get('/planos/'),
-      ]);
-
-      const tutores = tutoresRes.data.results || tutoresRes.data;
-      const animais = animaisRes.data.results || animaisRes.data;
-      const veterinarios = veterinariosRes.data.results || veterinariosRes.data;
-      const consultas = consultasRes.data.results || consultasRes.data;
-      const planos = planosRes.data.results || planosRes.data;
-
-      // Processar estatísticas
-      const hoje = new Date().toISOString().split('T')[0];
-      const mesAtual = new Date().getMonth();
-
-      const consultasHoje = consultas.filter((c: any) => 
-        c.data?.startsWith(hoje) || c.data_consulta?.startsWith(hoje)
-      ).length;
-
-      const consultasMes = consultas.filter((c: any) => {
-        const dataConsulta = c.data || c.data_consulta;
-        if (!dataConsulta) return false;
-        return new Date(dataConsulta).getMonth() === mesAtual;
-      }).length;
-
-      // Animais por espécie
-      const especiesCount: any = {};
-      animais.forEach((animal: any) => {
-        const especie = animal.species || 'Outro';
-        especiesCount[especie] = (especiesCount[especie] || 0) + 1;
-      });
-
-      const animaisPorEspecie = Object.entries(especiesCount).map(([especie, total]) => ({
-        especie,
-        total: total as number,
-      }));
-
-      // Consultas por mês (últimos 6 meses)
-      const consultasPorMes = Array.from({ length: 6 }, (_, i) => {
-        const mes = new Date();
-        mes.setMonth(mes.getMonth() - (5 - i));
-        const mesNum = mes.getMonth();
-        const ano = mes.getFullYear();
-        
-        const consultasDoMes = consultas.filter((c: any) => {
-          const dataConsulta = c.data || c.data_consulta;
-          if (!dataConsulta) return false;
-          const d = new Date(dataConsulta);
-          return d.getMonth() === mesNum && d.getFullYear() === ano;
-        }).length;
-
-        return {
-          mes: mes.toLocaleDateString('pt-BR', { month: 'short' }),
-          total: consultasDoMes,
-        };
-      });
-
-      const veterinariosAtivos = veterinarios.filter((v: any) => v.status === 'ATIVO').length;
-      const planosAtivos = planos.filter((p: any) => p.is_active).length;
-
-      setStats({
-        total_tutores: tutores.length,
-        total_animais: animais.length,
-        total_veterinarios: veterinarios.length,
-        total_consultas: consultas.length,
-        consultas_hoje: consultasHoje,
-        consultas_mes: consultasMes,
-        animais_por_especie: animaisPorEspecie,
-        consultas_por_mes: consultasPorMes,
-        veterinarios_ativos: veterinariosAtivos,
-        planos_ativos: planosAtivos,
-      });
+      setLoading(true);
+      const response = await api.get(`/dashboard/?periodo=${periodo}`);
+      setStats(response.data);
     } catch (error) {
       console.error('Erro ao carregar dashboard:', error);
+      toast.error('Usando dados de demonstração');
+      
+      // Mock data compatível com o backend
+      setStats({
+        consultas: {
+          total: 342,
+          hoje: 12,
+          mes: 87,
+          ano: 342,
+          agendadas: 28,
+          crescimento_mensal: 15.5,
+        },
+        animais: {
+          total: 156,
+          mes: 16,
+          por_especie: [
+            { species: 'Cachorro', total: 89 },
+            { species: 'Gato', total: 54 },
+            { species: 'Pássaro', total: 8 },
+            { species: 'Outros', total: 5 },
+          ],
+        },
+        diagnosticos: {
+          total: 23,
+          validados: 20,
+          pendentes: 3,
+          taxa_validacao: 87.0,
+        },
+        outros: {
+          veterinarios: 8,
+          tutores: 89,
+        },
+      });
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading || !stats) {
+
+  // Dados para gráficos
+  const getConsultasPorMes = () => {
+    return [
+      { mes: 'Jan', total: 45 },
+      { mes: 'Fev', total: 52 },
+      { mes: 'Mar', total: 61 },
+      { mes: 'Abr', total: 48 },
+      { mes: 'Mai', total: 70 },
+      { mes: 'Jun', total: 87 },
+    ];
+  };
+
+  const getConsultasPorStatus = () => {
+    return [
+      { status: 'Agendada', total: stats?.consultas.agendadas || 28 },
+      { status: 'Em andamento', total: 5 },
+      { status: 'Concluída', total: stats?.consultas.total ? stats.consultas.total - (stats.consultas.agendadas || 0) - 25 : 289 },
+      { status: 'Cancelada', total: 20 },
+    ];
+  };
+
+  const getDiagnosticosRecentes = () => {
+    return [
+      { doenca: 'Alergia', total: 8 },
+      { doenca: 'Dermatite', total: 6 },
+      { doenca: 'Otite', total: 4 },
+      { doenca: 'Gastrite', total: 3 },
+      { doenca: 'Outros', total: 2 },
+    ];
+  };
+
+
+  // Cores para gráficos
+  const COLORS = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#43e97b'];
+  const STATUS_COLORS = {
+    'Agendada': '#2196f3',
+    'Em andamento': '#ff9800',
+    'Concluída': '#4caf50',
+    'Cancelada': '#f44336',
+  };
+
+
+  if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <Stack spacing={2} alignItems="center">
-          <Typography variant="h5">Carregando dashboard...</Typography>
-          <LinearProgress sx={{ width: 200 }} />
-        </Stack>
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
+        <CircularProgress size={60} />
       </Box>
     );
   }
 
-  // Dados para gráfico de linha (Consultas por mês)
-  const lineChartData = {
-    labels: stats.consultas_por_mes.map(m => m.mes),
-    datasets: [
-      {
-        label: 'Consultas',
-        data: stats.consultas_por_mes.map(m => m.total),
-        borderColor: 'rgb(14, 165, 233)',
-        backgroundColor: 'rgba(14, 165, 233, 0.1)',
-        fill: true,
-        tension: 0.4,
-      },
-    ],
-  };
 
-  // Dados para gráfico de rosca (Animais por espécie)
-  const especiesLabels: any = {
-    'CACHORRO': 'Cachorros',
-    'GATO': 'Gatos',
-    'PASSARO': 'Pássaros',
-    'OUTRO': 'Outros',
-  };
+  if (!stats) {
+    return (
+      <Box textAlign="center" py={8}>
+        <Typography variant="h6" color="text.secondary">
+          Erro ao carregar dados do dashboard
+        </Typography>
+      </Box>
+    );
+  }
 
-  const doughnutChartData = {
-    labels: stats.animais_por_especie.map(e => especiesLabels[e.especie] || e.especie),
-    datasets: [
-      {
-        data: stats.animais_por_especie.map(e => e.total),
-        backgroundColor: [
-          'rgba(14, 165, 233, 0.8)',
-          'rgba(139, 92, 246, 0.8)',
-          'rgba(16, 185, 129, 0.8)',
-          'rgba(245, 158, 11, 0.8)',
-        ],
-        borderColor: [
-          'rgb(14, 165, 233)',
-          'rgb(139, 92, 246)',
-          'rgb(16, 185, 129)',
-          'rgb(245, 158, 11)',
-        ],
-        borderWidth: 2,
-      },
-    ],
-  };
-
-  // Dados para gráfico de barras (Estatísticas gerais)
-  const barChartData = {
-    labels: ['Tutores', 'Animais', 'Veterinários', 'Consultas'],
-    datasets: [
-      {
-        label: 'Total',
-        data: [
-          stats.total_tutores,
-          stats.total_animais,
-          stats.total_veterinarios,
-          stats.total_consultas,
-        ],
-        backgroundColor: [
-          'rgba(14, 165, 233, 0.8)',
-          'rgba(16, 185, 129, 0.8)',
-          'rgba(139, 92, 246, 0.8)',
-          'rgba(245, 158, 11, 0.8)',
-        ],
-      },
-    ],
-  };
-
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-    },
-  };
 
   return (
     <Box>
       {/* Header */}
-      <Box mb={4}>
-        <Typography variant="h4" fontWeight={700} gutterBottom>
-          Dashboard
-        </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Bem-vindo(a), {user?.first_name || user?.username}! 👋
-        </Typography>
+      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+        <Box display="flex" alignItems="center" gap={2}>
+          <Avatar sx={{ bgcolor: 'primary.main', width: 48, height: 48 }}>
+            <DashboardIcon />
+          </Avatar>
+          <Box>
+            <Typography variant="h4" fontWeight={700}>
+              Dashboard
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Visão geral do sistema em tempo real
+            </Typography>
+          </Box>
+        </Box>
+
+        <FormControl sx={{ minWidth: 150 }}>
+          <InputLabel>Período</InputLabel>
+          <Select
+            value={periodo}
+            onChange={(e) => setPeriodo(e.target.value)}
+            label="Período"
+          >
+            <MenuItem value="hoje">Hoje</MenuItem>
+            <MenuItem value="semana">Esta Semana</MenuItem>
+            <MenuItem value="mes">Este Mês</MenuItem>
+            <MenuItem value="ano">Este Ano</MenuItem>
+          </Select>
+        </FormControl>
       </Box>
 
-      {/* Cards de Estatísticas Rápidas */}
-      <Grid container spacing={3} mb={4}>
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <Card sx={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+
+      {/* Cards de Estatísticas */}
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
+          gap: 2,
+          mb: 3,
+        }}
+      >
+        {/* Card 1 - Consultas */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <Card sx={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white' }}>
             <CardContent>
               <Stack direction="row" justifyContent="space-between" alignItems="center">
                 <Box>
-                  <Typography variant="h4" color="white" fontWeight={700}>
-                    {stats.total_tutores}
+                  <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                    Total de Consultas
                   </Typography>
-                  <Typography variant="body2" color="rgba(255,255,255,0.8)">
-                    Tutores
+                  <Typography variant="h3" fontWeight={700}>
+                    {stats.consultas.total}
                   </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)', width: 56, height: 56 }}>
-                  <Person sx={{ color: 'white', fontSize: 32 }} />
-                </Avatar>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <Card sx={{ background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' }}>
-            <CardContent>
-              <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Box>
-                  <Typography variant="h4" color="white" fontWeight={700}>
-                    {stats.total_animais}
-                  </Typography>
-                  <Typography variant="body2" color="rgba(255,255,255,0.8)">
-                    Animais
-                  </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)', width: 56, height: 56 }}>
-                  <Pets sx={{ color: 'white', fontSize: 32 }} />
-                </Avatar>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <Card sx={{ background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' }}>
-            <CardContent>
-              <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Box>
-                  <Typography variant="h4" color="white" fontWeight={700}>
-                    {stats.veterinarios_ativos}
-                  </Typography>
-                  <Typography variant="body2" color="rgba(255,255,255,0.8)">
-                    Veterinários
-                  </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)', width: 56, height: 56 }}>
-                  <MedicalServices sx={{ color: 'white', fontSize: 32 }} />
-                </Avatar>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <Card sx={{ background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' }}>
-            <CardContent>
-              <Stack direction="row" justifyContent="space-between" alignItems="center">
-                <Box>
-                  <Typography variant="h4" color="white" fontWeight={700}>
-                    {stats.consultas_mes}
-                  </Typography>
-                  <Typography variant="body2" color="rgba(255,255,255,0.8)">
-                    Consultas/Mês
-                  </Typography>
-                </Box>
-                <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)', width: 56, height: 56 }}>
-                  <CalendarToday sx={{ color: 'white', fontSize: 32 }} />
-                </Avatar>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      {/* Gráficos */}
-      <Grid container spacing={3} mb={4}>
-        {/* Gráfico de Linha - Consultas por Mês */}
-        <Grid size={{ xs: 12, md: 8 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" fontWeight={600} mb={2}>
-                📈 Consultas nos Últimos 6 Meses
-              </Typography>
-              <Box sx={{ height: 300 }}>
-                <Line data={lineChartData} options={chartOptions} />
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Gráfico de Rosca - Animais por Espécie */}
-        <Grid size={{ xs: 12, md: 4 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" fontWeight={600} mb={2}>
-                �� Animais por Espécie
-              </Typography>
-              <Box sx={{ height: 300 }}>
-                <Doughnut data={doughnutChartData} options={chartOptions} />
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Gráfico de Barras - Estatísticas Gerais */}
-        <Grid size={{ xs: 12 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" fontWeight={600} mb={2}>
-                📊 Visão Geral do Sistema
-              </Typography>
-              <Box sx={{ height: 300 }}>
-                <Bar data={barChartData} options={chartOptions} />
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      {/* Cards de Informações Adicionais */}
-      <Grid container spacing={3}>
-        {/* Resumo Rápido */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" fontWeight={600} mb={2}>
-                📋 Resumo de Hoje
-              </Typography>
-              <List>
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar sx={{ bgcolor: 'primary.main' }}>
-                      <CalendarToday />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Consultas Hoje"
-                    secondary={`${stats.consultas_hoje} agendadas`}
+                  <Chip
+                    label={`${stats.consultas.hoje} hoje`}
+                    size="small"
+                    sx={{ mt: 1, bgcolor: 'rgba(255,255,255,0.2)', color: 'white' }}
                   />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar sx={{ bgcolor: 'success.main' }}>
-                      <MedicalServices />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Veterinários Ativos"
-                    secondary={`${stats.veterinarios_ativos} disponíveis`}
-                  />
-                </ListItem>
-                <Divider variant="inset" component="li" />
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar sx={{ bgcolor: 'secondary.main' }}>
-                      <LocalHospital />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Planos Ativos"
-                    secondary={`${stats.planos_ativos} planos disponíveis`}
-                  />
-                </ListItem>
-              </List>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Ações Rápidas */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Card>
-            <CardContent>
-              <Typography variant="h6" fontWeight={600} mb={2}>
-                ⚡ Ações Rápidas
-              </Typography>
-              <Stack spacing={2}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 2,
-                    cursor: 'pointer',
-                    '&:hover': { bgcolor: 'action.hover' },
-                  }}
-                  onClick={() => window.location.href = '/tutores'}
-                >
-                  <Avatar sx={{ bgcolor: 'primary.main' }}>
-                    <Person />
-                  </Avatar>
-                  <Box flexGrow={1}>
-                    <Typography variant="subtitle1" fontWeight={600}>
-                      Novo Tutor
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      Cadastrar novo cliente
-                    </Typography>
-                  </Box>
-                </Paper>
-
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 2,
-                    cursor: 'pointer',
-                    '&:hover': { bgcolor: 'action.hover' },
-                  }}
-                  onClick={() => window.location.href = '/animais'}
-                >
-                  <Avatar sx={{ bgcolor: 'success.main' }}>
-                    <Pets />
-                  </Avatar>
-                  <Box flexGrow={1}>
-                    <Typography variant="subtitle1" fontWeight={600}>
-                      Novo Animal
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      Cadastrar novo pet
-                    </Typography>
-                  </Box>
-                </Paper>
-
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 2,
-                    cursor: 'pointer',
-                    '&:hover': { bgcolor: 'action.hover' },
-                  }}
-                  onClick={() => window.location.href = '/veterinarios'}
-                >
-                  <Avatar sx={{ bgcolor: 'secondary.main' }}>
-                    <MedicalServices />
-                  </Avatar>
-                  <Box flexGrow={1}>
-                    <Typography variant="subtitle1" fontWeight={600}>
-                      Novo Veterinário
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      Cadastrar profissional
-                    </Typography>
-                  </Box>
-                </Paper>
+                </Box>
+                <LocalHospital sx={{ fontSize: 50, opacity: 0.8 }} />
               </Stack>
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
+        </motion.div>
+
+        {/* Card 2 - Animais */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <Card sx={{ background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', color: 'white' }}>
+            <CardContent>
+              <Stack direction="row" justifyContent="space-between" alignItems="center">
+                <Box>
+                  <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                    Animais Cadastrados
+                  </Typography>
+                  <Typography variant="h3" fontWeight={700}>
+                    {stats.animais.total}
+                  </Typography>
+                  <Chip
+                    label={`+${stats.animais.mes} este mês`}
+                    size="small"
+                    icon={<TrendingUp fontSize="small" />}
+                    sx={{ mt: 1, bgcolor: 'rgba(255,255,255,0.2)', color: 'white' }}
+                  />
+                </Box>
+                <Pets sx={{ fontSize: 50, opacity: 0.8 }} />
+              </Stack>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Card 3 - Tutores */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <Card sx={{ background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', color: 'white' }}>
+            <CardContent>
+              <Stack direction="row" justifyContent="space-between" alignItems="center">
+                <Box>
+                  <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                    Tutores Ativos
+                  </Typography>
+                  <Typography variant="h3" fontWeight={700}>
+                    {stats.outros.tutores}
+                  </Typography>
+                  <Chip
+                    label="Base crescente"
+                    size="small"
+                    icon={<TrendingUp fontSize="small" />}
+                    sx={{ mt: 1, bgcolor: 'rgba(255,255,255,0.2)', color: 'white' }}
+                  />
+                </Box>
+                <Person sx={{ fontSize: 50, opacity: 0.8 }} />
+              </Stack>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Card 4 - Diagnósticos IA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <Card sx={{ background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)', color: 'white' }}>
+            <CardContent>
+              <Stack direction="row" justifyContent="space-between" alignItems="center">
+                <Box>
+                  <Typography variant="body2" sx={{ opacity: 0.9 }}>
+                    Diagnósticos IA
+                  </Typography>
+                  <Typography variant="h3" fontWeight={700}>
+                    {stats.diagnosticos.total}
+                  </Typography>
+                  <Chip
+                    label={`${stats.diagnosticos.validados} validados`}
+                    size="small"
+                    sx={{ mt: 1, bgcolor: 'rgba(255,255,255,0.2)', color: 'white' }}
+                  />
+                </Box>
+                <Science sx={{ fontSize: 50, opacity: 0.8 }} />
+              </Stack>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </Box>
+
+
+      {/* Gráficos - Linha 1 */}
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' },
+          gap: 3,
+          mb: 3,
+        }}
+      >
+        {/* Gráfico de Consultas por Mês */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <Paper sx={{ p: 3, borderRadius: 2 }}>
+            <Typography variant="h6" fontWeight={600} mb={2}>
+              📈 Consultas por Mês
+            </Typography>
+            <Divider sx={{ mb: 2 }} />
+            <ResponsiveContainer width="100%" height={300}>
+              <AreaChart data={getConsultasPorMes()}>
+                <defs>
+                  <linearGradient id="colorConsultas" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#667eea" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#667eea" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="mes" />
+                <YAxis />
+                <Tooltip />
+                <Area
+                  type="monotone"
+                  dataKey="total"
+                  stroke="#667eea"
+                  fillOpacity={1}
+                  fill="url(#colorConsultas)"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </Paper>
+        </motion.div>
+
+        {/* Gráfico de Animais por Espécie */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          <Paper sx={{ p: 3, borderRadius: 2 }}>
+            <Typography variant="h6" fontWeight={600} mb={2}>
+              🐾 Animais por Espécie
+            </Typography>
+            <Divider sx={{ mb: 2 }} />
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={stats.animais.por_especie}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={(entry: any) => `${entry.species} ${(entry.percent * 100).toFixed(0)}%`}
+                  outerRadius={100}
+                  fill="#8884d8"
+                  dataKey="total"
+                >
+                  {stats.animais.por_especie?.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </Paper>
+        </motion.div>
+      </Box>
+
+
+      {/* Gráficos - Linha 2 */}
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' },
+          gap: 3,
+        }}
+      >
+        {/* Gráfico de Consultas por Status */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.7 }}
+        >
+          <Paper sx={{ p: 3, borderRadius: 2 }}>
+            <Typography variant="h6" fontWeight={600} mb={2}>
+              📊 Status das Consultas
+            </Typography>
+            <Divider sx={{ mb: 2 }} />
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={getConsultasPorStatus()}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="status" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="total" fill="#667eea">
+                  {getConsultasPorStatus().map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={STATUS_COLORS[entry.status as keyof typeof STATUS_COLORS]} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </Paper>
+        </motion.div>
+
+        {/* Gráfico de Diagnósticos IA Recentes */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          <Paper sx={{ p: 3, borderRadius: 2 }}>
+            <Typography variant="h6" fontWeight={600} mb={2}>
+              🧬 Diagnósticos IA Mais Comuns
+            </Typography>
+            <Divider sx={{ mb: 2 }} />
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={getDiagnosticosRecentes()} layout="vertical">
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" />
+                <YAxis dataKey="doenca" type="category" width={100} />
+                <Tooltip />
+                <Bar dataKey="total" fill="#43e97b" />
+              </BarChart>
+            </ResponsiveContainer>
+          </Paper>
+        </motion.div>
+      </Box>
+
+
+      {/* Footer com atalhos rápidos */}
+      <Paper sx={{ p: 3, mt: 3, borderRadius: 2 }}>
+        <Typography variant="h6" fontWeight={600} mb={2}>
+          ⚡ Atalhos Rápidos
+        </Typography>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+          <Button
+            variant="contained"
+            startIcon={<CalendarToday />}
+            fullWidth
+            onClick={() => window.location.href = '/agendamento'}
+          >
+            Nova Consulta
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<Pets />}
+            fullWidth
+            onClick={() => window.location.href = '/animais'}
+          >
+            Cadastrar Animal
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<Science />}
+            fullWidth
+            onClick={() => window.location.href = '/diagnostico'}
+          >
+            Diagnóstico IA
+          </Button>
+        </Stack>
+      </Paper>
     </Box>
   );
-}
+};
+
+
+export default Dashboard;

@@ -8,6 +8,8 @@ from .plano_saude import PlanoSaude, ContratoPlano
 from .clinica import Clinica
 from .health_check import HealthCheck
 from .notificacao import Notificacao
+from .prontuario import Prontuario
+from .prescricao import Prescricao
 
 __all__ = [
     'Animal',
@@ -21,6 +23,8 @@ __all__ = [
     'Clinica',
     'HealthCheck',
     'Notificacao',
+    'Prontuario',
+    'Prescricao',
 ]
 from api.models.diagnostico import DiagnosticoIA
 from api.models.notificacao_externa import NotificacaoExterna

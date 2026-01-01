@@ -102,9 +102,23 @@ class Exame(models.Model):
         auto_now=True,
         verbose_name='Atualizado em'
     )
+    arquivo = models.FileField(
+        upload_to='exames/%Y/%m/',
+        null=True,
+        blank=True,
+        verbose_name='Arquivo do Exame'
+    )
+    arquivo_url = models.URLField(
+        max_length=500,
+        null=True,
+        blank=True,
+        verbose_name='URL do Arquivo'
+    )
+    
+    
 
     class Meta:
-        db_table = 'api_exame'
+        db_table = 'exames'
         verbose_name = 'Exame'
         verbose_name_plural = 'Exames'
         ordering = ['-data_solicitacao']

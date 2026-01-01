@@ -39,6 +39,7 @@ import {
 import { toast } from 'react-toastify';
 import api from '../../services/api';
 
+
 interface Clinica {
   id: number;
   name: string;
@@ -51,6 +52,7 @@ interface Clinica {
   is_active: boolean;
   created_at?: string;
 }
+
 
 const Clinicas: React.FC = () => {
   const [clinicas, setClinicas] = useState<Clinica[]>([]);
@@ -68,9 +70,11 @@ const Clinicas: React.FC = () => {
     state: '',
   });
 
+
   useEffect(() => {
     fetchClinicas();
   }, []);
+
 
   const fetchClinicas = async () => {
     try {
@@ -87,6 +91,7 @@ const Clinicas: React.FC = () => {
       setLoading(false);
     }
   };
+
 
   const handleOpenDialog = (clinica?: Clinica) => {
     if (clinica) {
@@ -115,10 +120,12 @@ const Clinicas: React.FC = () => {
     setOpenDialog(true);
   };
 
+
   const handleCloseDialog = () => {
     setOpenDialog(false);
     setEditingClinica(null);
   };
+
 
   const handleSave = async () => {
     try {
@@ -137,6 +144,7 @@ const Clinicas: React.FC = () => {
     }
   };
 
+
   const handleDelete = async (id: number) => {
     if (window.confirm('Deseja realmente excluir esta clínica?')) {
       try {
@@ -149,12 +157,15 @@ const Clinicas: React.FC = () => {
     }
   };
 
+
+  // ✅ CORRIGIDO: Proteção contra campos undefined
   const filteredClinicas = clinicas.filter(
     (clinica) =>
-      clinica.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      clinica.cnpj.includes(searchTerm) ||
-      clinica.city.toLowerCase().includes(searchTerm.toLowerCase())
+      (clinica.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (clinica.cnpj || '').includes(searchTerm) ||
+      (clinica.city || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
+
 
   return (
     <Box>
@@ -194,6 +205,7 @@ const Clinicas: React.FC = () => {
         </Button>
       </Box>
 
+
       {/* Stats Cards */}
       <Box
         sx={{
@@ -215,6 +227,7 @@ const Clinicas: React.FC = () => {
           </Stack>
         </Card>
 
+
         <Card sx={{ p: 2, bgcolor: 'success.light', color: 'success.contrastText' }}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Box>
@@ -227,11 +240,12 @@ const Clinicas: React.FC = () => {
           </Stack>
         </Card>
 
+
         <Card sx={{ p: 2, bgcolor: 'info.light', color: 'info.contrastText' }}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Box>
               <Typography variant="h4" fontWeight={700}>
-                {new Set(clinicas.map(c => c.city)).size}
+                {new Set(clinicas.map(c => c.city).filter(Boolean)).size}
               </Typography>
               <Typography variant="body2">Cidades</Typography>
             </Box>
@@ -239,6 +253,7 @@ const Clinicas: React.FC = () => {
           </Stack>
         </Card>
       </Box>
+
 
       {/* Search Bar */}
       <Card sx={{ p: 2, mb: 3 }}>
@@ -256,6 +271,7 @@ const Clinicas: React.FC = () => {
           }}
         />
       </Card>
+
 
       {/* Table */}
       <Card>
@@ -394,8 +410,9 @@ const Clinicas: React.FC = () => {
         </TableContainer>
       </Card>
 
+
       {/* Dialog */}
-      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth disableEnforceFocus>
+      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth>
         <DialogTitle>
           <Stack direction="row" spacing={1} alignItems="center">
             {editingClinica ? <Edit /> : <Add />}
@@ -429,12 +446,14 @@ const Clinicas: React.FC = () => {
               }}
             />
 
+
             <TextField
               fullWidth
               label="CNPJ"
               value={formData.cnpj}
               onChange={(e) => setFormData({ ...formData, cnpj: e.target.value })}
             />
+
 
             <TextField
               fullWidth
@@ -449,6 +468,7 @@ const Clinicas: React.FC = () => {
                 ),
               }}
             />
+
 
             <TextField
               fullWidth
@@ -466,6 +486,7 @@ const Clinicas: React.FC = () => {
               }}
             />
 
+
             <TextField
               fullWidth
               label="Endereço"
@@ -481,12 +502,14 @@ const Clinicas: React.FC = () => {
               }}
             />
 
+
             <TextField
               fullWidth
               label="Cidade"
               value={formData.city}
               onChange={(e) => setFormData({ ...formData, city: e.target.value })}
             />
+
 
             <TextField
               fullWidth
@@ -510,5 +533,6 @@ const Clinicas: React.FC = () => {
     </Box>
   );
 };
+
 
 export default Clinicas;

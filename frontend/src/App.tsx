@@ -12,7 +12,7 @@ import { Login } from './pages/auth/Login';
 import { Register } from './pages/auth/Register';
 
 // Pages - App
-import DashboardSimple from './pages/Dashboard/DashboardSimple';
+import Dashboard from './pages/Dashboard/Dashboard';
 import Agendamento from './pages/Agendamento/Agendamento';
 import Tutores from './pages/Tutores/Tutores';
 import Animais from './pages/Animais/Animais';
@@ -28,6 +28,8 @@ import Exames from './pages/Exames/Exames'; // ✅ Nova importação
 import Perfil from './pages/Perfil/Perfil'; // ✅ Nova importação
 import Relatorios from './pages/Relatorios/Relatorios'; // ✅ Nova importação
 import Vacinas from './pages/Vacinas/Vacinas'; // ✅ Nova importação
+import Prontuario from './pages/Prontuario/Prontuario';
+
 
 
 
@@ -80,7 +82,7 @@ const App: React.FC = () => {
                 <Layout darkMode={darkMode} onToggleTheme={handleToggleTheme}>
                   <Routes>
                     {/* Dashboard */}
-                    <Route path="/dashboard" element={<DashboardSimple />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
                     
                     {/* Módulos */}
                     <Route path="/agendamento" element={<Agendamento />} />
@@ -96,6 +98,8 @@ const App: React.FC = () => {
                     <Route path="/perfil" element={<Perfil />} /> {/* ✅ Nova rota */}
                     <Route path="/relatorios" element={<Relatorios />} /> {/* ✅ Nova rota */}
                     <Route path="/vacinas" element={<Vacinas />} /> {/* ✅ Nova rota */}
+                    <Route path="/prontuario" element={<Prontuario />} />
+
 
 
 

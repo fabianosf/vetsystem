@@ -13,7 +13,7 @@ urlpatterns = [
     
     # Autenticação
     path('api/auth/', include('accounts.urls')),
-     path('api-token-auth/', drf_authtoken_views.obtain_auth_token),  # 👈 ADD ISTO
+    path('api-token-auth/', drf_authtoken_views.obtain_auth_token),  # 👈 ADD ISTO
     
     # Documentação da API
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

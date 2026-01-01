@@ -1,371 +1,654 @@
-import { useState, ReactElement } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Card,
-  CardContent,
   Typography,
   Button,
-  Stack,
-  Divider,
-  Paper,
-  Chip,
+  Card,
+  CardContent,
   Avatar,
+  Stack,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  TextField,
+  Divider,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  TextField,
-  MenuItem,
-  Alert,
+  CircularProgress,
+  Chip,
 } from '@mui/material';
 import {
   Assessment,
   PictureAsPdf,
-  Download,
-  TrendingUp,
-  AttachMoney,
+  TableChart,
   Pets,
-  MedicalServices,
-  CalendarMonth,
-  Schedule,
+  LocalHospital,
   Science,
-  BarChart,
-  CheckCircle,
+  Download,
   DateRange,
 } from '@mui/icons-material';
 import { toast } from 'react-toastify';
+import api from '../../services/api';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import * as XLSX from 'xlsx';
 
-interface Relatorio {
-  id: string;
-  titulo: string;
-  descricao: string;
-  icon: ReactElement;
-  color: string;
-  bgColor: string;
-  categoria: string;
-  campos: string[];
-}
 
-export default function Relatorios() {
-  const [gerandoRelatorio, setGerandoRelatorio] = useState<string | null>(null);
-  const [periodo, setPeriodo] = useState('mes_atual');
+const Relatorios: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  const [tipoRelatorio, setTipoRelatorio] = useState('consultas');
   const [dataInicio, setDataInicio] = useState('');
   const [dataFim, setDataFim] = useState('');
+  const [formato, setFormato] = useState('pdf');
 
-  const relatorios: Relatorio[] = [
-    {
-      id: 'financeiro',
-      titulo: 'Relatório Financeiro',
-      descricao: 'Receitas, despesas e lucro líquido do período',
-      icon: <AttachMoney sx={{ fontSize: 48 }} />,
-      color: '#10b981',
-      bgColor: '#d1fae5',
-      categoria: 'Financeiro',
-      campos: ['Receitas por categoria', 'Despesas detalhadas', 'Fluxo de caixa', 'Lucro líquido'],
-    },
-    {
-      id: 'consultas',
-      titulo: 'Relatório de Consultas',
-      descricao: 'Total de consultas realizadas e agendadas',
-      icon: <MedicalServices sx={{ fontSize: 48 }} />,
-      color: '#3b82f6',
-      bgColor: '#dbeafe',
-      categoria: 'Atendimento',
-      campos: ['Consultas por período', 'Consultas por veterinário', 'Taxa de comparecimento', 'Receita gerada'],
-    },
-    {
-      id: 'animais',
-      titulo: 'Relatório de Animais',
-      descricao: 'Estatísticas de animais cadastrados e ativos',
-      icon: <Pets sx={{ fontSize: 48 }} />,
-      color: '#f59e0b',
-      bgColor: '#fef3c7',
-      categoria: 'Cadastro',
-      campos: ['Total de animais', 'Espécies', 'Raças mais comuns', 'Novos cadastros'],
-    },
-    {
-      id: 'exames',
-      titulo: 'Relatório de Exames',
-      descricao: 'Exames solicitados e resultados do período',
-      icon: <Science sx={{ fontSize: 48 }} />,
-      color: '#8b5cf6',
-      bgColor: '#f3e8ff',
-      categoria: 'Laboratório',
-      campos: ['Exames realizados', 'Tipos de exames', 'Tempo médio de resultado', 'Custo total'],
-    },
-    {
-      id: 'agendamento',
-      titulo: 'Relatório de Agendamentos',
-      descricao: 'Performance e ocupação da agenda',
-      icon: <CalendarMonth sx={{ fontSize: 48 }} />,
-      color: '#ec4899',
-      bgColor: '#fce7f3',
-      categoria: 'Agenda',
-      campos: ['Taxa de ocupação', 'Horários mais procurados', 'Cancelamentos', 'No-shows'],
-    },
-    {
-      id: 'desempenho',
-      titulo: 'Relatório de Desempenho',
-      descricao: 'KPIs e métricas gerais da clínica',
-      icon: <TrendingUp sx={{ fontSize: 48 }} />,
-      color: '#06b6d4',
-      bgColor: '#cffafe',
-      categoria: 'Gestão',
-      campos: ['Faturamento total', 'Ticket médio', 'Crescimento mensal', 'ROI'],
-    },
-  ];
+  // Estados para dados
+  const [consultas, setConsultas] = useState<any[]>([]);
+  const [animais, setAnimais] = useState<any[]>([]);
+  const [diagnosticos, setDiagnosticos] = useState<any[]>([]);
 
-  const handleGerarRelatorio = async (relatorioId: string) => {
-    setGerandoRelatorio(relatorioId);
+
+  useEffect(() => {
+    // Definir data padrão (último mês)
+    const hoje = new Date();
+    const mesPassado = new Date(hoje.getFullYear(), hoje.getMonth() - 1, hoje.getDate());
+    
+    setDataFim(hoje.toISOString().split('T')[0]);
+    setDataInicio(mesPassado.toISOString().split('T')[0]);
+  }, []);
+
+
+  const fetchDados = async () => {
+    setLoading(true);
     try {
-      // Simular geração de relatório
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      toast.success('Relatório gerado com sucesso!');
-      
-      // Em produção, chamaria a API:
-      // const response = await api.post(`/relatorios/${relatorioId}/`, {
-      //   periodo,
-      //   dataInicio,
-      //   dataFim,
-      // });
-      // window.open(response.data.url);
+      if (tipoRelatorio === 'consultas') {
+        const response = await api.get('/consultas/', {
+          params: { data_inicio: dataInicio, data_fim: dataFim }
+        });
+        setConsultas(response.data.results || response.data || []);
+      } else if (tipoRelatorio === 'animais') {
+        const response = await api.get('/animais/');
+        setAnimais(response.data.results || response.data || []);
+      } else if (tipoRelatorio === 'diagnosticos') {
+        const response = await api.get('/diagnosticos/');
+        setDiagnosticos(response.data.results || response.data || []);
+      }
     } catch (error) {
-      toast.error('Erro ao gerar relatório');
+      console.error('Erro ao buscar dados:', error);
+      toast.error('Erro ao carregar dados para o relatório');
     } finally {
-      setGerandoRelatorio(null);
+      setLoading(false);
     }
   };
+
+
+  useEffect(() => {
+    if (dataInicio && dataFim) {
+      fetchDados();
+    }
+  }, [tipoRelatorio, dataInicio, dataFim]);
+
+
+  // Função para gerar PDF de Consultas
+  const gerarPDFConsultas = () => {
+    const doc = new jsPDF();
+    
+    // Cabeçalho
+    doc.setFontSize(20);
+    doc.setTextColor(102, 126, 234);
+    doc.text('VetSystem', 14, 20);
+    
+    doc.setFontSize(16);
+    doc.setTextColor(0, 0, 0);
+    doc.text('Relatório de Consultas', 14, 30);
+    
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text(`Período: ${formatDate(dataInicio)} a ${formatDate(dataFim)}`, 14, 37);
+    doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 14, 42);
+    
+    // Linha separadora
+    doc.setDrawColor(102, 126, 234);
+    doc.setLineWidth(0.5);
+    doc.line(14, 45, 196, 45);
+    
+    // Estatísticas
+    const total = consultas.length;
+    const agendadas = consultas.filter(c => c.status === 'agendada').length;
+    const concluidas = consultas.filter(c => c.status === 'concluida').length;
+    const canceladas = consultas.filter(c => c.status === 'cancelada').length;
+    
+    doc.setFontSize(12);
+    doc.setTextColor(0);
+    doc.text('Resumo:', 14, 53);
+    
+    doc.setFontSize(10);
+    doc.text(`Total de Consultas: ${total}`, 14, 60);
+    doc.text(`Agendadas: ${agendadas}`, 14, 66);
+    doc.text(`Concluídas: ${concluidas}`, 14, 72);
+    doc.text(`Canceladas: ${canceladas}`, 14, 78);
+    
+    // Tabela de consultas
+    const tableData = consultas.map(c => [
+      formatDate(c.data),
+      c.hora || '-',
+      c.animal?.name || 'N/A',
+      c.tutor?.name || 'N/A',
+      c.veterinario?.name || 'N/A',
+      translateStatus(c.status),
+      c.motivo || '-'
+    ]);
+    
+    autoTable(doc, {
+      startY: 85,
+      head: [['Data', 'Hora', 'Animal', 'Tutor', 'Veterinário', 'Status', 'Motivo']],
+      body: tableData,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [102, 126, 234],
+        textColor: 255,
+        fontStyle: 'bold',
+        fontSize: 9,
+      },
+      bodyStyles: {
+        fontSize: 8,
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+      margin: { left: 14, right: 14 },
+    });
+    
+    // Rodapé
+    const pageCount = (doc as any).internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.setTextColor(150);
+      doc.text(
+        `Página ${i} de ${pageCount}`,
+        doc.internal.pageSize.width / 2,
+        doc.internal.pageSize.height - 10,
+        { align: 'center' }
+      );
+    }
+    
+    doc.save(`relatorio-consultas-${Date.now()}.pdf`);
+    toast.success('PDF gerado com sucesso!');
+  };
+
+
+  // Função para gerar PDF de Animais
+  const gerarPDFAnimais = () => {
+    const doc = new jsPDF();
+    
+    // Cabeçalho
+    doc.setFontSize(20);
+    doc.setTextColor(102, 126, 234);
+    doc.text('VetSystem', 14, 20);
+    
+    doc.setFontSize(16);
+    doc.setTextColor(0, 0, 0);
+    doc.text('Relatório de Animais Cadastrados', 14, 30);
+    
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 14, 37);
+    
+    doc.setDrawColor(102, 126, 234);
+    doc.setLineWidth(0.5);
+    doc.line(14, 40, 196, 40);
+    
+    // Estatísticas
+    const total = animais.length;
+    const especies = [...new Set(animais.map(a => a.species))];
+    
+    doc.setFontSize(12);
+    doc.setTextColor(0);
+    doc.text('Resumo:', 14, 48);
+    
+    doc.setFontSize(10);
+    doc.text(`Total de Animais: ${total}`, 14, 55);
+    doc.text(`Espécies diferentes: ${especies.length}`, 14, 61);
+    
+    // Tabela de animais
+    const tableData = animais.map(a => [
+      a.name || 'N/A',
+      a.species || 'N/A',
+      a.breed || '-',
+      a.birth_date ? formatDate(a.birth_date) : '-',
+      a.tutor?.name || 'N/A',
+    ]);
+    
+    autoTable(doc, {
+      startY: 68,
+      head: [['Nome', 'Espécie', 'Raça', 'Nascimento', 'Tutor']],
+      body: tableData,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [102, 126, 234],
+        textColor: 255,
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+      margin: { left: 14, right: 14 },
+    });
+    
+    const pageCount = (doc as any).internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.setTextColor(150);
+      doc.text(
+        `Página ${i} de ${pageCount}`,
+        doc.internal.pageSize.width / 2,
+        doc.internal.pageSize.height - 10,
+        { align: 'center' }
+      );
+    }
+    
+    doc.save(`relatorio-animais-${Date.now()}.pdf`);
+    toast.success('PDF gerado com sucesso!');
+  };
+
+
+  // Função para gerar PDF de Diagnósticos
+  const gerarPDFDiagnosticos = () => {
+    const doc = new jsPDF();
+    
+    doc.setFontSize(20);
+    doc.setTextColor(102, 126, 234);
+    doc.text('VetSystem', 14, 20);
+    
+    doc.setFontSize(16);
+    doc.setTextColor(0, 0, 0);
+    doc.text('Relatório de Diagnósticos IA', 14, 30);
+    
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 14, 37);
+    
+    doc.setDrawColor(102, 126, 234);
+    doc.setLineWidth(0.5);
+    doc.line(14, 40, 196, 40);
+    
+    const total = diagnosticos.length;
+    const validados = diagnosticos.filter(d => d.validado).length;
+    
+    doc.setFontSize(12);
+    doc.setTextColor(0);
+    doc.text('Resumo:', 14, 48);
+    
+    doc.setFontSize(10);
+    doc.text(`Total de Diagnósticos: ${total}`, 14, 55);
+    doc.text(`Validados: ${validados}`, 14, 61);
+    doc.text(`Pendentes: ${total - validados}`, 14, 67);
+    
+    const tableData = diagnosticos.map(d => [
+      formatDate(d.created_at),
+      d.animal?.name || 'N/A',
+      d.classe_predita || '-',
+      `${(d.confianca * 100).toFixed(1)}%`,
+      d.validado ? 'Sim' : 'Não',
+    ]);
+    
+    autoTable(doc, {
+      startY: 74,
+      head: [['Data', 'Animal', 'Diagnóstico', 'Confiança', 'Validado']],
+      body: tableData,
+      theme: 'grid',
+      headStyles: {
+        fillColor: [102, 126, 234],
+        textColor: 255,
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+      margin: { left: 14, right: 14 },
+    });
+    
+    const pageCount = (doc as any).internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.setTextColor(150);
+      doc.text(
+        `Página ${i} de ${pageCount}`,
+        doc.internal.pageSize.width / 2,
+        doc.internal.pageSize.height - 10,
+        { align: 'center' }
+      );
+    }
+    
+    doc.save(`relatorio-diagnosticos-${Date.now()}.pdf`);
+    toast.success('PDF gerado com sucesso!');
+  };
+
+
+  // Função para gerar Excel de Consultas
+  const gerarExcelConsultas = () => {
+    const data = consultas.map(c => ({
+      'Data': formatDate(c.data),
+      'Hora': c.hora || '-',
+      'Animal': c.animal?.name || 'N/A',
+      'Tutor': c.tutor?.name || 'N/A',
+      'Veterinário': c.veterinario?.name || 'N/A',
+      'Status': translateStatus(c.status),
+      'Motivo': c.motivo || '-',
+      'Observações': c.observacoes || '-',
+    }));
+    
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Consultas');
+    
+    XLSX.writeFile(wb, `relatorio-consultas-${Date.now()}.xlsx`);
+    toast.success('Excel gerado com sucesso!');
+  };
+
+
+  // Função para gerar Excel de Animais
+  const gerarExcelAnimais = () => {
+    const data = animais.map(a => ({
+      'Nome': a.name || 'N/A',
+      'Espécie': a.species || 'N/A',
+      'Raça': a.breed || '-',
+      'Nascimento': a.birth_date ? formatDate(a.birth_date) : '-',
+      'Tutor': a.tutor?.name || 'N/A',
+      'Peso (kg)': a.weight || '-',
+      'Cor': a.color || '-',
+    }));
+    
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Animais');
+    
+    XLSX.writeFile(wb, `relatorio-animais-${Date.now()}.xlsx`);
+    toast.success('Excel gerado com sucesso!');
+  };
+
+
+  // Função para gerar Excel de Diagnósticos
+  const gerarExcelDiagnosticos = () => {
+    const data = diagnosticos.map(d => ({
+      'Data': formatDate(d.created_at),
+      'Animal': d.animal?.name || 'N/A',
+      'Diagnóstico': d.classe_predita || '-',
+      'Confiança': `${(d.confianca * 100).toFixed(1)}%`,
+      'Validado': d.validado ? 'Sim' : 'Não',
+      'Veterinário': d.veterinario?.name || '-',
+    }));
+    
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Diagnósticos');
+    
+    XLSX.writeFile(wb, `relatorio-diagnosticos-${Date.now()}.xlsx`);
+    toast.success('Excel gerado com sucesso!');
+  };
+
+
+  const handleGerarRelatorio = () => {
+    if (!dataInicio || !dataFim) {
+      toast.error('Selecione o período do relatório');
+      return;
+    }
+
+    if (formato === 'pdf') {
+      if (tipoRelatorio === 'consultas') gerarPDFConsultas();
+      else if (tipoRelatorio === 'animais') gerarPDFAnimais();
+      else if (tipoRelatorio === 'diagnosticos') gerarPDFDiagnosticos();
+    } else {
+      if (tipoRelatorio === 'consultas') gerarExcelConsultas();
+      else if (tipoRelatorio === 'animais') gerarExcelAnimais();
+      else if (tipoRelatorio === 'diagnosticos') gerarExcelDiagnosticos();
+    }
+  };
+
+
+  // Helpers
+  const formatDate = (dateString: string) => {
+    if (!dateString) return '-';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR');
+  };
+
+  const translateStatus = (status: string) => {
+    const translations: { [key: string]: string } = {
+      'agendada': 'Agendada',
+      'em_andamento': 'Em Andamento',
+      'concluida': 'Concluída',
+      'cancelada': 'Cancelada',
+    };
+    return translations[status] || status;
+  };
+
 
   return (
     <Box>
       {/* Header */}
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+      <Box display="flex" alignItems="center" gap={2} mb={3}>
+        <Avatar sx={{ bgcolor: 'secondary.main', width: 48, height: 48 }}>
+          <Assessment />
+        </Avatar>
         <Box>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Avatar sx={{ bgcolor: 'success.main', width: 48, height: 48 }}>
-              <Assessment />
-            </Avatar>
-            <Box>
-              <Typography variant="h4" fontWeight={700}>
-                Relatórios
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Gere relatórios detalhados para análise e tomada de decisão
-              </Typography>
-            </Box>
-          </Stack>
+          <Typography variant="h4" fontWeight={700}>
+            Relatórios
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Gere relatórios detalhados em PDF ou Excel
+          </Typography>
         </Box>
-        <Chip
-          icon={<BarChart />}
-          label="Analytics"
-          color="success"
-          sx={{ fontWeight: 600 }}
-        />
       </Box>
 
-      {/* Filtros de Período */}
-      <Card sx={{ mb: 3 }}>
-        <CardContent>
-          <Typography variant="h6" fontWeight={600} gutterBottom>
-            Período de Análise
-          </Typography>
-          <Divider sx={{ mb: 2 }} />
-          
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
-              gap: 2,
-            }}
-          >
-            <TextField
-              select
-              label="Período"
-              value={periodo}
-              onChange={(e) => setPeriodo(e.target.value)}
-              fullWidth
-              InputProps={{
-                startAdornment: (
-                  <DateRange sx={{ mr: 1, color: 'action.active' }} />
-                ),
-              }}
-            >
-              <MenuItem value="hoje">Hoje</MenuItem>
-              <MenuItem value="semana_atual">Esta Semana</MenuItem>
-              <MenuItem value="mes_atual">Este Mês</MenuItem>
-              <MenuItem value="ultimo_mes">Último Mês</MenuItem>
-              <MenuItem value="trimestre">Últimos 3 Meses</MenuItem>
-              <MenuItem value="semestre">Últimos 6 Meses</MenuItem>
-              <MenuItem value="ano">Este Ano</MenuItem>
-              <MenuItem value="personalizado">Personalizado</MenuItem>
-            </TextField>
 
-            {periodo === 'personalizado' && (
-              <>
-                <TextField
-                  type="date"
-                  label="Data Início"
-                  value={dataInicio}
-                  onChange={(e) => setDataInicio(e.target.value)}
-                  InputLabelProps={{ shrink: true }}
-                  fullWidth
-                />
-                <TextField
-                  type="date"
-                  label="Data Fim"
-                  value={dataFim}
-                  onChange={(e) => setDataFim(e.target.value)}
-                  InputLabelProps={{ shrink: true }}
-                  fullWidth
-                />
-              </>
-            )}
-          </Box>
-        </CardContent>
-      </Card>
-
-      {/* Grid de Relatórios */}
+      {/* Grid usando Box */}
       <Box
         sx={{
           display: 'grid',
-          gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' },
+          gridTemplateColumns: { xs: '1fr', md: '400px 1fr' },
           gap: 3,
-          mb: 4,
         }}
       >
-        {relatorios.map((relatorio) => (
-          <Card
-            key={relatorio.id}
-            sx={{
-              height: '100%',
-              transition: 'all 0.3s',
-              '&:hover': {
-                transform: 'translateY(-8px)',
-                boxShadow: 6,
-              },
-            }}
-          >
-            {/* Header do Card */}
-            <Box
-              sx={{
-                p: 3,
-                bgcolor: relatorio.bgColor,
-                borderBottom: '3px solid',
-                borderColor: relatorio.color,
-              }}
-            >
-              <Stack direction="row" spacing={2} alignItems="center">
-                <Box sx={{ color: relatorio.color }}>
-                  {relatorio.icon}
-                </Box>
-                <Box flex={1}>
-                  <Chip
-                    label={relatorio.categoria}
-                    size="small"
-                    sx={{
-                      bgcolor: relatorio.color,
-                      color: 'white',
-                      fontWeight: 600,
-                      mb: 1,
-                    }}
-                  />
-                  <Typography variant="h6" fontWeight={700}>
-                    {relatorio.titulo}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {relatorio.descricao}
-                  </Typography>
-                </Box>
-              </Stack>
-            </Box>
-
+        {/* Configurações do Relatório */}
+        <Box>
+          <Card>
             <CardContent>
-              <Typography variant="subtitle2" fontWeight={700} gutterBottom>
-                Campos Incluídos:
-              </Typography>
-              
-              <List dense>
-                {relatorio.campos.map((campo, index) => (
-                  <ListItem key={index} disablePadding>
-                    <ListItemIcon sx={{ minWidth: 32 }}>
-                      <CheckCircle sx={{ fontSize: 18, color: relatorio.color }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={campo}
-                      primaryTypographyProps={{
-                        variant: 'body2',
-                        color: 'text.secondary',
+              <Stack spacing={3}>
+                <Box>
+                  <Typography variant="h6" fontWeight={600} mb={2}>
+                    Configurações
+                  </Typography>
+                  <Divider />
+                </Box>
+
+                {/* Tipo de Relatório */}
+                <FormControl fullWidth>
+                  <InputLabel>Tipo de Relatório</InputLabel>
+                  <Select
+                    value={tipoRelatorio}
+                    onChange={(e) => setTipoRelatorio(e.target.value)}
+                    label="Tipo de Relatório"
+                  >
+                    <MenuItem value="consultas">
+                      <Stack direction="row" spacing={1} alignItems="center">
+                        <LocalHospital fontSize="small" />
+                        <span>Consultas</span>
+                      </Stack>
+                    </MenuItem>
+                    <MenuItem value="animais">
+                      <Stack direction="row" spacing={1} alignItems="center">
+                        <Pets fontSize="small" />
+                        <span>Animais</span>
+                      </Stack>
+                    </MenuItem>
+                    <MenuItem value="diagnosticos">
+                      <Stack direction="row" spacing={1} alignItems="center">
+                        <Science fontSize="small" />
+                        <span>Diagnósticos IA</span>
+                      </Stack>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+
+                {/* Período */}
+                <Box>
+                  <Typography variant="body2" fontWeight={600} mb={1}>
+                    Período
+                  </Typography>
+                  <Stack spacing={2}>
+                    <TextField
+                      fullWidth
+                      type="date"
+                      label="Data Início"
+                      value={dataInicio}
+                      onChange={(e) => setDataInicio(e.target.value)}
+                      InputLabelProps={{ shrink: true }}
+                      InputProps={{
+                        startAdornment: <DateRange sx={{ mr: 1, color: 'action.active' }} />,
                       }}
                     />
-                  </ListItem>
-                ))}
-              </List>
+                    <TextField
+                      fullWidth
+                      type="date"
+                      label="Data Fim"
+                      value={dataFim}
+                      onChange={(e) => setDataFim(e.target.value)}
+                      InputLabelProps={{ shrink: true }}
+                      InputProps={{
+                        startAdornment: <DateRange sx={{ mr: 1, color: 'action.active' }} />,
+                      }}
+                    />
+                  </Stack>
+                </Box>
 
-              <Button
-                fullWidth
-                variant="contained"
-                startIcon={
-                  gerandoRelatorio === relatorio.id ? (
-                    <Schedule />
-                  ) : (
-                    <Download />
-                  )
-                }
-                onClick={() => handleGerarRelatorio(relatorio.id)}
-                disabled={gerandoRelatorio === relatorio.id}
-                sx={{
-                  mt: 2,
-                  bgcolor: relatorio.color,
-                  '&:hover': {
-                    bgcolor: relatorio.color,
-                    filter: 'brightness(0.9)',
-                  },
-                }}
-              >
-                {gerandoRelatorio === relatorio.id ? 'Gerando...' : 'Gerar Relatório'}
-              </Button>
+                {/* Formato */}
+                <FormControl fullWidth>
+                  <InputLabel>Formato</InputLabel>
+                  <Select
+                    value={formato}
+                    onChange={(e) => setFormato(e.target.value)}
+                    label="Formato"
+                  >
+                    <MenuItem value="pdf">
+                      <Stack direction="row" spacing={1} alignItems="center">
+                        <PictureAsPdf fontSize="small" />
+                        <span>PDF</span>
+                      </Stack>
+                    </MenuItem>
+                    <MenuItem value="excel">
+                      <Stack direction="row" spacing={1} alignItems="center">
+                        <TableChart fontSize="small" />
+                        <span>Excel</span>
+                      </Stack>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+
+                {/* Botão Gerar */}
+                <Button
+                  variant="contained"
+                  size="large"
+                  startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <Download />}
+                  onClick={handleGerarRelatorio}
+                  disabled={loading}
+                  fullWidth
+                  sx={{
+                    py: 1.5,
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    boxShadow: '0 8px 24px rgba(102, 126, 234, 0.4)',
+                  }}
+                >
+                  {loading ? 'Gerando...' : 'Gerar Relatório'}
+                </Button>
+              </Stack>
             </CardContent>
           </Card>
-        ))}
+        </Box>
+
+
+        {/* Preview/Informações */}
+        <Box>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" fontWeight={600} mb={2}>
+                Tipos de Relatórios Disponíveis
+              </Typography>
+              <Divider sx={{ mb: 3 }} />
+
+              <List>
+                <ListItem>
+                  <ListItemIcon>
+                    <LocalHospital color="primary" />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Relatório de Consultas"
+                    secondary="Lista completa de consultas realizadas com data, animal, tutor, veterinário e status"
+                  />
+                  <Chip label={`${consultas.length} registros`} color="primary" />
+                </ListItem>
+
+                <Divider variant="inset" component="li" />
+
+                <ListItem>
+                  <ListItemIcon>
+                    <Pets color="secondary" />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Relatório de Animais"
+                    secondary="Cadastro completo de animais com informações de espécie, raça, tutor e dados médicos"
+                  />
+                  <Chip label={`${animais.length} registros`} color="secondary" />
+                </ListItem>
+
+                <Divider variant="inset" component="li" />
+
+                <ListItem>
+                  <ListItemIcon>
+                    <Science color="success" />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Relatório de Diagnósticos IA"
+                    secondary="Histórico de diagnósticos realizados pela IA com taxa de confiança e validação"
+                  />
+                  <Chip label={`${diagnosticos.length} registros`} color="success" />
+                </ListItem>
+              </List>
+
+              <Box mt={4} p={3} bgcolor="grey.50" borderRadius={2}>
+                <Typography variant="h6" fontWeight={600} mb={2}>
+                  📊 Informações do Relatório Atual
+                </Typography>
+                <Stack spacing={1}>
+                  <Typography variant="body2">
+                    <strong>Tipo:</strong> {tipoRelatorio === 'consultas' ? 'Consultas' : tipoRelatorio === 'animais' ? 'Animais' : 'Diagnósticos IA'}
+                  </Typography>
+                  <Typography variant="body2">
+                    <strong>Período:</strong> {dataInicio ? formatDate(dataInicio) : '-'} até {dataFim ? formatDate(dataFim) : '-'}
+                  </Typography>
+                  <Typography variant="body2">
+                    <strong>Formato:</strong> {formato === 'pdf' ? 'PDF' : 'Excel (XLSX)'}
+                  </Typography>
+                  <Typography variant="body2">
+                    <strong>Registros:</strong>{' '}
+                    {tipoRelatorio === 'consultas' ? consultas.length :
+                     tipoRelatorio === 'animais' ? animais.length :
+                     diagnosticos.length}
+                  </Typography>
+                </Stack>
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
       </Box>
-
-      <Divider sx={{ my: 4 }} />
-
-      {/* Informações */}
-      <Paper sx={{ p: 3, bgcolor: 'info.light' }}>
-        <Stack spacing={2}>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Avatar sx={{ bgcolor: 'info.main' }}>
-              <PictureAsPdf />
-            </Avatar>
-            <Typography variant="h6" fontWeight={600} color="info.dark">
-              Sobre os Relatórios
-            </Typography>
-          </Stack>
-          
-          <Typography variant="body2" color="info.dark">
-            • Todos os relatórios são gerados em formato PDF para fácil compartilhamento
-          </Typography>
-          
-          <Typography variant="body2" color="info.dark">
-            • Os dados são baseados no período selecionado e atualizados em tempo real
-          </Typography>
-          
-          <Typography variant="body2" color="info.dark">
-            • Você pode personalizar o período de análise para atender suas necessidades
-          </Typography>
-          
-          <Typography variant="body2" color="info.dark">
-            • Os relatórios incluem gráficos e tabelas para melhor visualização
-          </Typography>
-
-          <Alert severity="success" sx={{ mt: 2 }}>
-            <Typography variant="body2" fontWeight={600}>
-              💡 Dica: Use os relatórios mensais para acompanhar o crescimento da clínica!
-            </Typography>
-          </Alert>
-        </Stack>
-      </Paper>
     </Box>
   );
-}
+};
+
+
+export default Relatorios;

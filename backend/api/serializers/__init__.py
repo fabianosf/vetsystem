@@ -8,6 +8,9 @@ from api.models import (
     Tutor, Animal, Veterinario, Consulta,
     Vacina, Exame, PlanoSaude, ContratoPlano, Clinica
 )
+from .prontuario_serializers import ProntuarioSerializer, PrescricaoSerializer
+
+
 
 
 # ==========================================
@@ -33,17 +36,30 @@ class TutorSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'created_at', 'updated_at')
 
 
+
 # ==========================================
 # ANIMAIS
 # ==========================================
 class AnimalSerializer(serializers.ModelSerializer):
     tutor_name = serializers.CharField(source='tutor.name', read_only=True)
     species_display = serializers.CharField(source='get_species_display', read_only=True)
+    photo_url = serializers.SerializerMethodField()
+    
+    def get_photo_url(self, obj):
+        """Retorna URL completa da foto"""
+        if obj.photo:
+            request = self.context.get('request')
+            if request:
+                return request.build_absolute_uri(obj.photo.url)
+            return obj.photo.url
+        return None
     
     class Meta:
         model = Animal
         fields = '__all__'
         read_only_fields = ('id', 'created_at', 'updated_at')
+
+
 
 
 # ==========================================
@@ -63,10 +79,32 @@ class VeterinarioSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'created_at', 'updated_at')
 
 
+
 # ==========================================
 # CONSULTAS
 # ==========================================
+
+# Serializers simples para relacionamentos (nested)
+class AnimalSimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Animal
+        fields = ['id', 'name', 'species']
+
+
+class VeterinarioSimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Veterinario
+        fields = ['id', 'name']
+
+
+class TutorSimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tutor
+        fields = ['id', 'name']
+
+
 class ConsultaSerializer(serializers.ModelSerializer):
+    # Campos read_only com nomes descritivos (mantém compatibilidade)
     animal_name = serializers.CharField(source='animal.name', read_only=True)
     veterinario_name = serializers.CharField(source='veterinario.name', read_only=True)
     tutor_name = serializers.CharField(source='animal.tutor.name', read_only=True)
@@ -77,6 +115,35 @@ class ConsultaSerializer(serializers.ModelSerializer):
         model = Consulta
         fields = '__all__'
         read_only_fields = ('id', 'created_at', 'updated_at')
+    
+    def to_representation(self, instance):
+        """
+        Customiza a saída para incluir objetos aninhados
+        """
+        representation = super().to_representation(instance)
+        
+        # Sobrescreve os campos de ID com objetos completos
+        if instance.animal:
+            representation['animal'] = {
+                'id': instance.animal.id,
+                'name': instance.animal.name,
+                'species': getattr(instance.animal, 'species', None),
+            }
+        
+        if instance.veterinario:
+            representation['veterinario'] = {
+                'id': instance.veterinario.id,
+                'name': instance.veterinario.name,
+            }
+        
+        if instance.animal and instance.animal.tutor:
+            representation['tutor'] = {
+                'id': instance.animal.tutor.id,
+                'name': instance.animal.tutor.name,
+            }
+        
+        return representation
+
 
 
 # ==========================================
@@ -104,6 +171,7 @@ class VacinaSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'created_at')
 
 
+
 # ==========================================
 # EXAMES
 # ==========================================
@@ -117,6 +185,7 @@ class ExameSerializer(serializers.ModelSerializer):
         model = Exame
         fields = '__all__'
         read_only_fields = ('id', 'created_at')
+
 
 
 # ==========================================
@@ -152,6 +221,7 @@ class PlanoSaudeSerializer(serializers.ModelSerializer):
         model = PlanoSaude
         fields = '__all__'
         read_only_fields = ('id', 'created_at')
+
 
 
 # ==========================================
@@ -192,6 +262,7 @@ class ContratoPlanoSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'created_at')
 
 
+
 # ==========================================
 # CLÍNICAS
 # ==========================================
@@ -216,6 +287,7 @@ class ClinicaSerializer(serializers.ModelSerializer):
         read_only_fields = ('id', 'created_at')
 
 
+
 __all__ = [
     'TutorSerializer',
     'AnimalSerializer',
@@ -227,6 +299,12 @@ __all__ = [
     'ContratoPlanoSerializer',
     'ClinicaSerializer',
     'NotificacaoSerializer',
+    'AnimalSimpleSerializer',
+    'VeterinarioSimpleSerializer',
+    'TutorSimpleSerializer',
+    'ProntuarioSerializer',
+    'PrescricaoSerializer',
 ]
+
 
 from .health_check_serializer import HealthCheckSerializer, HealthCheckCreateSerializer

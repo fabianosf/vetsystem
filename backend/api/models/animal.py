@@ -98,9 +98,15 @@ class Animal(models.Model):
         auto_now=True,
         verbose_name='Última Atualização'
     )
+    photo = models.ImageField(
+        upload_to='animals/%Y/%m/',
+        null=True,
+        blank=True,
+        verbose_name='Foto do Animal'
+    )
 
     class Meta:
-        db_table = 'api_animal'
+        db_table = 'animals'
         verbose_name = 'Animal'
         verbose_name_plural = 'Animais'
         ordering = ['-created_at']
