@@ -1,82 +1,72 @@
-import { useState, useEffect, useCallback } from 'react';
-import { api } from '../services/api';
-import { toast } from 'react-toastify';
-import type { Notificacao } from '../types';
+import { useState, useEffect } from 'react';
+import api from '../services/api';
 
-export function useNotifications() {
-  const [notificacoes, setNotificacoes] = useState<Notificacao[]>([]);
-  const [naoLidas, setNaoLidas] = useState(0);
+export interface Notification {
+  id: number;
+  tipo: string;
+  titulo: string;
+  mensagem: string;
+  lida: boolean;
+  created_at: string;
+  icon?: string;
+  color?: 'primary' | 'success' | 'warning' | 'error' | 'info';
+}
+
+export const useNotifications = () => {
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // Carregar notificações não lidas
-  const carregarNaoLidas = useCallback(async () => {
+  const fetchNotifications = async () => {
     try {
-      const response = await api.get<{ count: number; results: Notificacao[] }>(
-        '/notificacoes/nao_lidas/'
-      );
-      setNotificacoes(response.data.results);
-      setNaoLidas(response.data.count);
+      setLoading(true);
+      const response = await api.get('/notificacoes/nao_lidas/');
+      
+      setNotifications(response.data.results || []);
+      setUnreadCount(response.data.count || 0);
     } catch (error) {
       console.error('Erro ao carregar notificações:', error);
+      // Define valores padrão em caso de erro
+      setNotifications([]);
+      setUnreadCount(0);
+    } finally {
+      setLoading(false);
     }
-  }, []);
+  };
 
-  // Marcar como lida
-  const marcarComoLida = async (id: number) => {
+  const markAsRead = async (id: number) => {
     try {
       await api.post(`/notificacoes/${id}/marcar_lida/`);
-      setNotificacoes(prev => prev.filter(n => n.id !== id));
-      setNaoLidas(prev => Math.max(0, prev - 1));
+      await fetchNotifications();
     } catch (error) {
-      toast.error('Erro ao marcar notificação como lida');
+      console.error('Erro ao marcar notificação como lida:', error);
     }
   };
 
-  // Marcar todas como lidas
-  const marcarTodasLidas = async () => {
+  const markAllAsRead = async () => {
     try {
-      setLoading(true);
       await api.post('/notificacoes/marcar_todas_lidas/');
-      setNotificacoes([]);
-      setNaoLidas(0);
-      toast.success('Todas as notificações foram marcadas como lidas');
+      await fetchNotifications();
     } catch (error) {
-      toast.error('Erro ao marcar notificações');
-    } finally {
-      setLoading(false);
+      console.error('Erro ao marcar todas como lidas:', error);
     }
   };
 
-  // Limpar notificações lidas
-  const limparLidas = async () => {
-    try {
-      setLoading(true);
-      await api.delete('/notificacoes/limpar_lidas/');
-      toast.success('Notificações lidas removidas');
-    } catch (error) {
-      toast.error('Erro ao limpar notificações');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Carregar ao montar
   useEffect(() => {
-    carregarNaoLidas();
+    fetchNotifications();
     
-    // Polling a cada 30 segundos
-    const interval = setInterval(carregarNaoLidas, 30000);
+    // Atualiza a cada 60 segundos
+    const interval = setInterval(fetchNotifications, 60000);
     
     return () => clearInterval(interval);
-  }, [carregarNaoLidas]);
+  }, []);
 
-  return {
-    notificacoes,
-    naoLidas,
+  return { 
+    notifications, 
+    unreadCount, 
     loading,
-    carregarNaoLidas,
-    marcarComoLida,
-    marcarTodasLidas,
-    limparLidas,
+    fetchNotifications,
+    markAsRead,
+    markAllAsRead 
   };
-}
+};

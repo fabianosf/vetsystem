@@ -32,8 +32,10 @@ import {
   CheckCircle,
   HourglassEmpty,
   Description,
+  Science,
+  Pets,
 } from '@mui/icons-material';
-import { useToast } from '../../contexts/ToastContext';
+import { toast } from 'react-toastify';
 
 interface Exame {
   id: number;
@@ -54,7 +56,6 @@ export default function Exames() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('TODOS');
-  const toast = useToast();
 
   useEffect(() => {
     loadExames();
@@ -143,7 +144,7 @@ export default function Exames() {
         <Box>
           <Stack direction="row" spacing={2} alignItems="center">
             <Avatar sx={{ bgcolor: 'info.main', width: 48, height: 48 }}>
-              🔬
+              <Science />
             </Avatar>
             <Box>
               <Typography variant="h4" fontWeight={700}>
@@ -174,8 +175,15 @@ export default function Exames() {
       </Box>
 
       {/* Cards de Resumo */}
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} mb={3}>
-        <Card sx={{ flex: 1, p: 2, bgcolor: 'warning.light', color: 'warning.contrastText' }}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
+          gap: 2,
+          mb: 3,
+        }}
+      >
+        <Card sx={{ p: 2, bgcolor: 'warning.light', color: 'warning.contrastText' }}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Box>
               <Typography variant="h4" fontWeight={700}>
@@ -187,7 +195,7 @@ export default function Exames() {
           </Stack>
         </Card>
 
-        <Card sx={{ flex: 1, p: 2, bgcolor: 'info.light', color: 'info.contrastText' }}>
+        <Card sx={{ p: 2, bgcolor: 'info.light', color: 'info.contrastText' }}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Box>
               <Typography variant="h4" fontWeight={700}>
@@ -199,7 +207,7 @@ export default function Exames() {
           </Stack>
         </Card>
 
-        <Card sx={{ flex: 1, p: 2, bgcolor: 'success.light', color: 'success.contrastText' }}>
+        <Card sx={{ p: 2, bgcolor: 'success.light', color: 'success.contrastText' }}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Box>
               <Typography variant="h4" fontWeight={700}>
@@ -210,7 +218,7 @@ export default function Exames() {
             <CheckCircle sx={{ fontSize: 40, opacity: 0.8 }} />
           </Stack>
         </Card>
-      </Stack>
+      </Box>
 
       {/* Filtros */}
       <Card sx={{ mb: 3, p: 2 }}>
@@ -319,7 +327,7 @@ export default function Exames() {
                     <TableCell>
                       <Stack direction="row" spacing={1} alignItems="center">
                         <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.light' }}>
-                          🐾
+                          <Pets sx={{ fontSize: 18 }} />
                         </Avatar>
                         <Typography variant="body2" fontWeight={600}>
                           {exame.animal_nome || `Animal #${exame.animal}`}

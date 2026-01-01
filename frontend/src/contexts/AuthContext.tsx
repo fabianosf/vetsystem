@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useTokenRefresh } from '../hooks/useTokenRefresh';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
@@ -39,8 +39,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Ativa renovação automática de token
+  useTokenRefresh();
+
   useEffect(() => {
     loadUserFromStorage();
+    
+    // Listener para sincronizar logout entre abas
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'access_token' && !e.newValue) {
+        setUser(null);
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   const loadUserFromStorage = async () => {
@@ -93,6 +106,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('user');
     setUser(null);
+    
+    // Força reload para limpar qualquer estado residual
+    window.location.href = '/login';
   };
 
   return (

@@ -14,9 +14,7 @@ from api.serializers.diagnostico_serializers import (
     DiagnosticoCreateSerializer,
     ValidarDiagnosticoSerializer
 )
-# from api.ml.disease_classifier import classifier
 from ml.disease_classifier import classifier
-
 from django.utils import timezone
 
 
@@ -26,6 +24,7 @@ class DiagnosticoIAViewSet(viewsets.ModelViewSet):
     
     Endpoints:
     - POST /api/diagnosticos/ - Fazer diagnóstico (upload de imagem)
+    - POST /api/diagnosticos/analyze/ - Alias para fazer diagnóstico
     - GET /api/diagnosticos/ - Listar diagnósticos
     - GET /api/diagnosticos/{id}/ - Detalhe do diagnóstico
     - POST /api/diagnosticos/{id}/validar/ - Validar diagnóstico (veterinário)
@@ -48,7 +47,7 @@ class DiagnosticoIAViewSet(viewsets.ModelViewSet):
     
     def get_serializer_class(self):
         """Retorna serializer apropriado para cada action"""
-        if self.action == 'create':
+        if self.action in ['create', 'analyze']:
             return DiagnosticoCreateSerializer
         elif self.action == 'validar':
             return ValidarDiagnosticoSerializer
@@ -96,6 +95,14 @@ class DiagnosticoIAViewSet(viewsets.ModelViewSet):
                 {'error': f'Erro ao processar imagem: {str(e)}'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+    
+    @action(detail=False, methods=['post'], url_path='analyze')
+    def analyze(self, request):
+        """
+        POST /api/diagnosticos/analyze/
+        Endpoint alternativo para análise de imagem (compatibilidade frontend)
+        """
+        return self.create(request)
     
     @action(detail=True, methods=['post'])
     def validar(self, request, pk=None):

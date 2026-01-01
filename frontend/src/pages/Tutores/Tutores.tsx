@@ -1,360 +1,484 @@
-import { useEffect, useState } from 'react';
-import { api } from '../../services/api';
-import { useToast } from '../../contexts/ToastContext';
-import { usePDF } from '../../hooks/usePDF';
-import type { Tutor, PaginatedResponse } from '../../types';
+import { useState, useEffect } from 'react';
 import {
-  Box, Card, CardContent, Typography, Button, Dialog, DialogTitle,
-  DialogContent, DialogActions, TextField, Grid, IconButton, InputAdornment,
-  Avatar, Stack, Chip, CircularProgress
+  Box,
+  Typography,
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  IconButton,
+  Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Avatar,
+  InputAdornment,
+  CircularProgress,
+  Stack,
+  Card,
+  Divider,
 } from '@mui/material';
 import {
-  Add, Edit, Delete, Search, Person, Email, Phone, LocationOn,
-  Pets, Close, PictureAsPdf
+  Add,
+  Edit,
+  Delete,
+  Search,
+  Person,
+  Phone,
+  Email,
+  Home,
+  People,
+  Badge,
 } from '@mui/icons-material';
+import { toast } from 'react-toastify';
+import api from '../../services/api';
 
-export default function Tutores() {
+interface Tutor {
+  id: number;
+  name: string;
+  cpf: string;
+  phone: string;
+  email: string;
+  address: string;
+  is_active: boolean;
+}
+
+const Tutores: React.FC = () => {
   const [tutores, setTutores] = useState<Tutor[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
   const [editingTutor, setEditingTutor] = useState<Tutor | null>(null);
-  const toast = useToast();
-  const { gerarRelatorioTutores } = usePDF();
-  
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
-    phone: '',
     cpf: '',
+    phone: '',
+    email: '',
     address: '',
-    city: '',
-    state: '',
-    cep: '',
   });
 
   useEffect(() => {
-    loadTutores();
+    fetchTutores();
   }, []);
 
-  const loadTutores = async () => {
-    const loadingToast = toast.loading('Carregando tutores...');
+  const fetchTutores = async () => {
     try {
-      const response = await api.get<PaginatedResponse<Tutor>>('/tutores/');
-      setTutores(response.data.results || response.data);
-      toast.dismiss(loadingToast);
-    } catch (error) {
-      toast.dismiss(loadingToast);
-      toast.error('Erro ao carregar tutores');
+      setLoading(true);
+      const response = await api.get('/tutores/');
+      setTutores(response.data.results || response.data || []);
+    } catch (error: any) {
+      if (error.response?.status !== 404) {
+        console.error('Erro ao carregar tutores:', error);
+        toast.error('Erro ao carregar tutores');
+      }
+      setTutores([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const loadingToast = toast.loading(editingTutor ? 'Atualizando tutor...' : 'Cadastrando tutor...');
-    
-    try {
-      if (editingTutor) {
-        await api.put(`/tutores/${editingTutor.id}/`, formData);
-        toast.dismiss(loadingToast);
-        toast.success('✅ Tutor atualizado com sucesso!');
-      } else {
-        await api.post('/tutores/', formData);
-        toast.dismiss(loadingToast);
-        toast.success('✅ Tutor cadastrado com sucesso!');
-      }
-      loadTutores();
-      closeModal();
-    } catch (error: any) {
-      toast.dismiss(loadingToast);
-      toast.error(error.response?.data?.detail || '❌ Erro ao salvar tutor');
-    }
-  };
-
-  const handleDelete = async (id: number) => {
-    if (!confirm('Deseja realmente excluir este tutor?')) return;
-    
-    const loadingToast = toast.loading('Excluindo tutor...');
-    try {
-      await api.delete(`/tutores/${id}/`);
-      toast.dismiss(loadingToast);
-      toast.success('🗑️ Tutor excluído com sucesso!');
-      loadTutores();
-    } catch (error) {
-      toast.dismiss(loadingToast);
-      toast.error('❌ Erro ao excluir tutor');
-    }
-  };
-
-  const openModal = (tutor?: Tutor) => {
+  const handleOpenDialog = (tutor?: Tutor) => {
     if (tutor) {
       setEditingTutor(tutor);
       setFormData({
         name: tutor.name,
-        email: tutor.email,
-        phone: tutor.phone,
         cpf: tutor.cpf,
-        address: tutor.address || '',
-        city: tutor.city || '',
-        state: tutor.state || '',
-        cep: tutor.cep || '',
+        phone: tutor.phone,
+        email: tutor.email,
+        address: tutor.address,
+      });
+    } else {
+      setEditingTutor(null);
+      setFormData({
+        name: '',
+        cpf: '',
+        phone: '',
+        email: '',
+        address: '',
       });
     }
-    setShowModal(true);
+    setOpenDialog(true);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
     setEditingTutor(null);
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      cpf: '',
-      address: '',
-      city: '',
-      state: '',
-      cep: '',
-    });
   };
 
-  const filteredTutores = tutores.filter(tutor =>
-    tutor.name.toLowerCase().includes(search.toLowerCase()) ||
-    tutor.email.toLowerCase().includes(search.toLowerCase()) ||
-    tutor.cpf.includes(search)
+  const handleSave = async () => {
+    try {
+      if (editingTutor) {
+        await api.put(`/tutores/${editingTutor.id}/`, formData);
+        toast.success('Tutor atualizado com sucesso!');
+      } else {
+        await api.post('/tutores/', formData);
+        toast.success('Tutor cadastrado com sucesso!');
+      }
+      handleCloseDialog();
+      fetchTutores();
+    } catch (error: any) {
+      console.error('Erro ao salvar tutor:', error);
+      toast.error(error.response?.data?.detail || 'Erro ao salvar tutor');
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    if (window.confirm('Deseja realmente excluir este tutor?')) {
+      try {
+        await api.delete(`/tutores/${id}/`);
+        toast.success('Tutor excluído com sucesso!');
+        fetchTutores();
+      } catch (error) {
+        toast.error('Erro ao excluir tutor');
+      }
+    }
+  };
+
+  const filteredTutores = tutores.filter(
+    (tutor) =>
+      tutor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      tutor.cpf.includes(searchTerm) ||
+      tutor.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  const handleGerarPDF = () => {
-    gerarRelatorioTutores(filteredTutores);
-  };
-
-  if (loading && tutores.length === 0) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-        <CircularProgress />
-      </Box>
-    );
-  }
 
   return (
     <Box>
+      {/* Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" fontWeight={700}>Tutores</Typography>
-        <Stack direction="row" spacing={2}>
-          <Button
-            variant="outlined"
-            startIcon={<PictureAsPdf />}
-            onClick={handleGerarPDF}
-            disabled={filteredTutores.length === 0}
-          >
-            Gerar PDF
-          </Button>
-          <Button variant="contained" startIcon={<Add />} onClick={() => openModal()}>
-            Novo Tutor
-          </Button>
-        </Stack>
+        <Box>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Avatar sx={{ bgcolor: 'secondary.main', width: 48, height: 48 }}>
+              <People />
+            </Avatar>
+            <Box>
+              <Typography variant="h4" fontWeight={700}>
+                Tutores
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Gerencie os tutores cadastrados no sistema
+              </Typography>
+            </Box>
+          </Stack>
+        </Box>
+        <Button
+          variant="contained"
+          startIcon={<Add />}
+          onClick={() => handleOpenDialog()}
+          size="large"
+          sx={{
+            borderRadius: 2,
+            px: 3,
+            py: 1.5,
+            textTransform: 'none',
+            fontWeight: 600,
+            boxShadow: '0 4px 12px rgba(118, 75, 162, 0.4)',
+          }}
+        >
+          Novo Tutor
+        </Button>
       </Box>
 
-      <Card sx={{ mb: 3 }}>
-        <CardContent>
-          <TextField
-            fullWidth
-            placeholder="Buscar por nome, email ou CPF..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </CardContent>
+      {/* Stats Cards */}
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
+          gap: 2,
+          mb: 3,
+        }}
+      >
+        <Card sx={{ p: 2, bgcolor: 'primary.light', color: 'primary.contrastText' }}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
+            <Box>
+              <Typography variant="h4" fontWeight={700}>
+                {tutores.length}
+              </Typography>
+              <Typography variant="body2">Total de Tutores</Typography>
+            </Box>
+            <People sx={{ fontSize: 40, opacity: 0.8 }} />
+          </Stack>
+        </Card>
+
+        <Card sx={{ p: 2, bgcolor: 'success.light', color: 'success.contrastText' }}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
+            <Box>
+              <Typography variant="h4" fontWeight={700}>
+                {tutores.filter(t => t.is_active).length}
+              </Typography>
+              <Typography variant="body2">Ativos</Typography>
+            </Box>
+            <Person sx={{ fontSize: 40, opacity: 0.8 }} />
+          </Stack>
+        </Card>
+
+        <Card sx={{ p: 2, bgcolor: 'warning.light', color: 'warning.contrastText' }}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
+            <Box>
+              <Typography variant="h4" fontWeight={700}>
+                {tutores.filter(t => !t.is_active).length}
+              </Typography>
+              <Typography variant="body2">Inativos</Typography>
+            </Box>
+            <Person sx={{ fontSize: 40, opacity: 0.8 }} />
+          </Stack>
+        </Card>
+      </Box>
+
+      {/* Search Bar */}
+      <Card sx={{ p: 2, mb: 3 }}>
+        <TextField
+          fullWidth
+          placeholder="Buscar por nome, CPF ou email..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search />
+              </InputAdornment>
+            ),
+          }}
+        />
       </Card>
 
-      <Grid container spacing={3}>
-        {filteredTutores.map((tutor) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={tutor.id}>
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Box display="flex" alignItems="center" gap={2} mb={2}>
-                  <Avatar sx={{ bgcolor: 'primary.main', width: 56, height: 56 }}>
-                    {tutor.name.charAt(0).toUpperCase()}
-                  </Avatar>
-                  <Box>
-                    <Typography variant="h6" fontWeight={600}>{tutor.name}</Typography>
-                    <Chip
-                      label={`${tutor.total_animais || 0} animais`}
-                      size="small"
-                      icon={<Pets fontSize="small" />}
-                      color="primary"
-                    />
-                  </Box>
-                </Box>
-
-                <Stack spacing={1}>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <Email fontSize="small" color="action" />
-                    <Typography variant="body2" color="text.secondary">{tutor.email}</Typography>
-                  </Box>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <Phone fontSize="small" color="action" />
-                    <Typography variant="body2" color="text.secondary">{tutor.phone}</Typography>
-                  </Box>
-                  {tutor.city && (
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <LocationOn fontSize="small" color="action" />
-                      <Typography variant="body2" color="text.secondary">
-                        {tutor.city}/{tutor.state}
+      {/* Table */}
+      <Card>
+        <TableContainer component={Paper} elevation={0}>
+          <Table>
+            <TableHead>
+              <TableRow sx={{ bgcolor: 'grey.50' }}>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    Tutor
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    CPF
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    Telefone
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    Email
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    Status
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    Ações
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
+                    <CircularProgress />
+                  </TableCell>
+                </TableRow>
+              ) : filteredTutores.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
+                    <Person sx={{ fontSize: 48, color: 'text.secondary', mb: 1 }} />
+                    <Typography color="text.secondary">
+                      Nenhum tutor encontrado
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                filteredTutores.map((tutor) => (
+                  <TableRow
+                    key={tutor.id}
+                    hover
+                    sx={{
+                      '&:hover': {
+                        bgcolor: 'action.hover',
+                      },
+                    }}
+                  >
+                    <TableCell>
+                      <Stack direction="row" spacing={2} alignItems="center">
+                        <Avatar sx={{ bgcolor: 'primary.main' }}>
+                          {tutor.name.charAt(0).toUpperCase()}
+                        </Avatar>
+                        <Box>
+                          <Typography variant="body2" fontWeight={600}>
+                            {tutor.name}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            {tutor.address}
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" fontFamily="monospace">
+                        {tutor.cpf}
                       </Typography>
-                    </Box>
-                  )}
-                </Stack>
-              </CardContent>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2">{tutor.phone}</Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2">{tutor.email}</Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        label={tutor.is_active ? 'Ativo' : 'Inativo'}
+                        color={tutor.is_active ? 'success' : 'default'}
+                        size="small"
+                        sx={{ fontWeight: 600 }}
+                      />
+                    </TableCell>
+                    <TableCell align="right">
+                      <Stack direction="row" spacing={0.5} justifyContent="flex-end">
+                        <IconButton
+                          size="small"
+                          color="primary"
+                          onClick={() => handleOpenDialog(tutor)}
+                        >
+                          <Edit fontSize="small" />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          color="error"
+                          onClick={() => handleDelete(tutor.id)}
+                        >
+                          <Delete fontSize="small" />
+                        </IconButton>
+                      </Stack>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Card>
 
-              <Box sx={{ p: 2, pt: 0 }}>
-                <Stack direction="row" spacing={1}>
-                  <Button fullWidth variant="outlined" startIcon={<Edit />} onClick={() => openModal(tutor)}>
-                    Editar
-                  </Button>
-                  <IconButton color="error" onClick={() => handleDelete(tutor.id)}>
-                    <Delete />
-                  </IconButton>
-                </Stack>
-              </Box>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-
-      {filteredTutores.length === 0 && (
-        <Box textAlign="center" py={8}>
-          <Person sx={{ fontSize: 80, color: 'text.disabled', mb: 2 }} />
-          <Typography variant="h6" color="text.secondary">Nenhum tutor encontrado</Typography>
-        </Box>
-      )}
-
-      <Dialog open={showModal} onClose={closeModal} maxWidth="md" fullWidth>
-        <form onSubmit={handleSubmit}>
-          <DialogTitle>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-              <Typography variant="h6">{editingTutor ? 'Editar Tutor' : 'Novo Tutor'}</Typography>
-              <IconButton onClick={closeModal} size="small"><Close /></IconButton>
+      {/* Dialog */}
+      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth disableEnforceFocus>
+        <DialogTitle>
+          <Stack direction="row" spacing={1} alignItems="center">
+            {editingTutor ? <Edit /> : <Add />}
+            <Typography variant="h6" fontWeight={600}>
+              {editingTutor ? 'Editar Tutor' : 'Novo Tutor'}
+            </Typography>
+          </Stack>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <Stack spacing={2} sx={{ mt: 2 }}>
+            <TextField
+              fullWidth
+              label="Nome Completo"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Person />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+                gap: 2,
+              }}
+            >
+              <TextField
+                fullWidth
+                label="CPF"
+                value={formData.cpf}
+                onChange={(e) => setFormData({ ...formData, cpf: e.target.value })}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Badge />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+              
+              <TextField
+                fullWidth
+                label="Telefone"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Phone />
+                    </InputAdornment>
+                  ),
+                }}
+              />
             </Box>
-          </DialogTitle>
 
-          <DialogContent dividers>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Nome Completo"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start"><Person /></InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
+            <TextField
+              fullWidth
+              label="Email"
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Email />
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="CPF"
-                  value={formData.cpf}
-                  onChange={(e) => setFormData({ ...formData, cpf: e.target.value })}
-                  required
-                  placeholder="000.000.000-00"
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start"><Email /></InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Telefone"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  required
-                  placeholder="(11) 98765-4321"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start"><Phone /></InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 8 }}>
-                <TextField
-                  fullWidth
-                  label="Endereço"
-                  value={formData.address}
-                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 4 }}>
-                <TextField
-                  fullWidth
-                  label="CEP"
-                  value={formData.cep}
-                  onChange={(e) => setFormData({ ...formData, cep: e.target.value })}
-                  placeholder="00000-000"
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 9 }}>
-                <TextField
-                  fullWidth
-                  label="Cidade"
-                  value={formData.city}
-                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 3 }}>
-                <TextField
-                  fullWidth
-                  label="Estado (UF)"
-                  value={formData.state}
-                  onChange={(e) => setFormData({ ...formData, state: e.target.value })}
-                  inputProps={{ maxLength: 2 }}
-                  placeholder="SP"
-                />
-              </Grid>
-            </Grid>
-          </DialogContent>
-
-          <DialogActions>
-            <Button onClick={closeModal}>Cancelar</Button>
-            <Button type="submit" variant="contained">
-              {editingTutor ? 'Salvar' : 'Cadastrar'}
-            </Button>
-          </DialogActions>
-        </form>
+            <TextField
+              fullWidth
+              label="Endereço"
+              value={formData.address}
+              onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+              multiline
+              rows={2}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Home />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Stack>
+        </DialogContent>
+        <Divider />
+        <DialogActions sx={{ p: 2 }}>
+          <Button onClick={handleCloseDialog} variant="outlined">
+            Cancelar
+          </Button>
+          <Button variant="contained" onClick={handleSave}>
+            Salvar
+          </Button>
+        </DialogActions>
       </Dialog>
     </Box>
   );
-}
+};
+
+export default Tutores;

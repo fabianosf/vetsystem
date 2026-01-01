@@ -2,6 +2,7 @@
 from api.tasks import enviar_email_boas_vindas, enviar_confirmacao_consulta
 from api.models import Notificacao  
 
+
 class ConsultaSerializer(serializers.ModelSerializer):
     animal_nome = serializers.SerializerMethodField()
     tutor_nome = serializers.SerializerMethodField()
@@ -35,6 +36,26 @@ class ConsultaSerializer(serializers.ModelSerializer):
             return obj.clinica.nome if obj.clinica else None
         except:
             return None
+
+    def to_representation(self, instance):
+        """
+        Esconde campos sensíveis (médicos) para recepcionista
+        """
+        data = super().to_representation(instance)
+        
+        # Pega o role do context (passado pela view)
+        user_role = self.context.get('user_role', '').lower()
+        
+        # Campos médicos sensíveis
+        sensitive_fields = ['diagnostico', 'observacoes', 'receituario', 'exames']
+        
+        # Se for recepcionista, remove campos sensíveis
+        if user_role == 'recepcionista':
+            for field in sensitive_fields:
+                if field in data:
+                    data[field] = None  # ou data.pop(field) para remover completamente
+        
+        return data
 
 
 class NotificacaoSerializer(serializers.ModelSerializer):

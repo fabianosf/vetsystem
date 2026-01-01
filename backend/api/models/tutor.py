@@ -1,9 +1,20 @@
 from django.db import models
+from django.conf import settings  # Para pegar o User model
 
 class Tutor(models.Model):
     """
     Model representando um tutor (dono de pet)
     """
+    user = models.OneToOneField(  # 👈 NOVO CAMPO
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='tutor_profile',
+        null=True,
+        blank=True,
+        verbose_name='Usuário',
+        help_text='Conta de acesso do tutor'
+    )
+    
     name = models.CharField(
         max_length=255,
         verbose_name='Nome Completo',

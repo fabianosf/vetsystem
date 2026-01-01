@@ -1,74 +1,158 @@
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Box, Typography, Divider } from '@mui/material';
-import { 
-  Dashboard as DashboardIcon, 
-  Person, 
-  Pets, 
-  MedicalServices, 
-  HealthAndSafety,
-  LocalHospital,
+import React from 'react';
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Box,
+  Typography,
+  Divider,
+} from '@mui/material';
+import {
+  Dashboard,
   CalendarMonth,
-  BiotechOutlined
+  Person,
+  Pets,
+  Science,
+  MedicalServices,
+  LocalHospital,
+  HealthAndSafety,
+  Assessment
 } from '@mui/icons-material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
+interface SidebarProps {
+  open: boolean;
+  onClose: () => void;
+  isMobile: boolean;
+}
 
 const menuItems = [
-  { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
+  { text: 'Dashboard', icon: <Dashboard />, path: '/dashboard' },
   { text: 'Agendamento', icon: <CalendarMonth />, path: '/agendamento' },
+  { text: 'Consultas', icon: <MedicalServices />, path: '/consultas' },
   { text: 'Tutores', icon: <Person />, path: '/tutores' },
   { text: 'Animais', icon: <Pets />, path: '/animais' },
-  { text: 'Diagnóstico IA', icon: <BiotechOutlined />, path: '/diagnosticos' },
+  { text: 'Diagnóstico IA', icon: <Science />, path: '/diagnostico' },
   { text: 'Veterinários', icon: <MedicalServices />, path: '/veterinarios' },
   { text: 'Planos', icon: <HealthAndSafety />, path: '/planos' },
   { text: 'Clínicas', icon: <LocalHospital />, path: '/clinicas' },
+  { text: 'Relatórios', icon: <Assessment />, path: '/relatorios' }, // ✅ Novo
 ];
 
-
-export default function Sidebar() {
-  const location = useLocation();
+const Sidebar: React.FC<SidebarProps> = ({ open, onClose, isMobile }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    if (isMobile) {
+      onClose();
+    }
+  };
 
-  return (
-    <Box sx={{ width: 240, height: '100%', bgcolor: 'background.paper', borderRight: 1, borderColor: 'divider' }}>
-      <Box sx={{ p: 3, textAlign: 'center' }}>
-        <Typography variant="h5" fontWeight={700} color="primary">
-          🐾 VetSystem
-        </Typography>
+  const drawerContent = (
+    <Box sx={{ width: 240, pt: 2 }}>
+      {/* Logo/Header */}
+      <Box sx={{ px: 2, pb: 2 }}>
+        <Box display="flex" alignItems="center" gap={1}>
+          <Pets color="primary" />
+          <Typography variant="h6" fontWeight={700} color="primary">
+            VetSystem
+          </Typography>
+        </Box>
         <Typography variant="caption" color="text.secondary">
           Sistema de Gestão
         </Typography>
       </Box>
-      
+
       <Divider />
-      
-      <List>
-        {menuItems.map((item) => (
-          <ListItem key={item.text} disablePadding>
-            <ListItemButton
-              selected={location.pathname === item.path}
-              onClick={() => navigate(item.path)}
-              sx={{
-                '&.Mui-selected': {
-                  bgcolor: 'primary.main',
-                  color: 'white',
-                  '&:hover': {
-                    bgcolor: 'primary.dark',
-                  },
-                  '& .MuiListItemIcon-root': {
+
+      {/* Menu Items */}
+      <List sx={{ pt: 2 }}>
+        {menuItems.map((item) => {
+          const isActive = location.pathname === item.path;
+          
+          return (
+            <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
+              <ListItemButton
+                onClick={() => handleNavigation(item.path)}
+                selected={isActive}
+                sx={{
+                  mx: 1,
+                  borderRadius: 1,
+                  '&.Mui-selected': {
+                    bgcolor: 'primary.main',
                     color: 'white',
+                    '&:hover': {
+                      bgcolor: 'primary.dark',
+                    },
+                    '& .MuiListItemIcon-root': {
+                      color: 'white',
+                    },
                   },
-                },
-              }}
-            >
-              <ListItemIcon sx={{ color: location.pathname === item.path ? 'white' : 'inherit' }}>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 40,
+                    color: isActive ? 'white' : 'text.secondary',
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.text}
+                  primaryTypographyProps={{
+                    fontSize: '0.9rem',
+                    fontWeight: isActive ? 600 : 400,
+                  }}
+                />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
       </List>
     </Box>
   );
-}
+
+  return (
+    <>
+      {/* Mobile Drawer */}
+      {isMobile ? (
+        <Drawer
+          anchor="left"
+          open={open}
+          onClose={onClose}
+          ModalProps={{
+            keepMounted: true,
+          }}
+        >
+          {drawerContent}
+        </Drawer>
+      ) : (
+        /* Desktop Drawer */
+        <Drawer
+          variant="persistent"
+          open={open}
+          sx={{
+            width: 240,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: 240,
+              boxSizing: 'border-box',
+              top: 64,
+              height: 'calc(100% - 64px)',
+            },
+          }}
+        >
+          {drawerContent}
+        </Drawer>
+      )}
+    </>
+  );
+};
+
+export default Sidebar;

@@ -1,42 +1,38 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import {
   IconButton,
   Badge,
   Menu,
   MenuItem,
+  ListItemIcon,
+  ListItemText,
   Typography,
   Box,
   Divider,
   Button,
-  ListItemIcon,
-  ListItemText,
-  Chip,
+  CircularProgress,
 } from '@mui/material';
 import {
-  Notifications,
-  NotificationsNone,  
-  Warning,
-  Info,
-  CheckCircle,
-  Error as ErrorIcon,
-  DoneAll,
-  Delete,
+  Notifications as NotificationsIcon,
+  Event as EventIcon,
+  Science as ScienceIcon,
+  Vaccines as VaccinesIcon,
+  CheckCircle as CheckIcon,
 } from '@mui/icons-material';
 import { useNotifications } from '../../hooks/useNotifications';
-import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
-export default function NotificationBell() {
+const iconMap: Record<string, React.ReactElement> = {
+  event: <EventIcon fontSize="small" />,
+  lab: <ScienceIcon fontSize="small" />,
+  vaccine: <VaccinesIcon fontSize="small" />,
+  default: <NotificationsIcon fontSize="small" />,
+};
+
+export const NotificationBell: React.FC = () => {
+  const { notifications, unreadCount, loading, markAsRead, markAllAsRead } = useNotifications();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const navigate = useNavigate();
-  const {
-    notificacoes,
-    naoLidas,
-    marcarComoLida,
-    marcarTodasLidas,
-    limparLidas,
-  } = useNotifications();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -46,33 +42,20 @@ export default function NotificationBell() {
     setAnchorEl(null);
   };
 
-  const handleNotificationClick = (notificacao: any) => {
-    marcarComoLida(notificacao.id);
-    if (notificacao.link) {
-      navigate(notificacao.link);
-    }
+  const handleMarkAsRead = async (id: number) => {
+    await markAsRead(id);
+  };
+
+  const handleMarkAllAsRead = async () => {
+    await markAllAsRead();
     handleClose();
   };
 
-  const getIconByType = (tipo: string) => {
-    switch (tipo) {
-      case 'SUCCESS': return <CheckCircle color="success" />;
-      case 'ERROR': return <ErrorIcon color="error" />;
-      case 'WARNING': return <Warning color="warning" />;
-      default: return <Info color="info" />;
-    }
-  };
-
-
   return (
     <>
-      <IconButton
-        color="inherit"
-        onClick={handleClick}
-        sx={{ ml: 1 }}
-      >
-        <Badge badgeContent={naoLidas} color="error">
-          {naoLidas > 0 ? <Notifications /> : <NotificationsNone />}
+      <IconButton color="inherit" onClick={handleClick}>
+        <Badge badgeContent={unreadCount} color="error">
+          <NotificationsIcon />
         </Badge>
       </IconButton>
 
@@ -82,131 +65,75 @@ export default function NotificationBell() {
         onClose={handleClose}
         PaperProps={{
           sx: {
-            width: 400,
-            maxHeight: 500,
+            width: 360,
+            maxHeight: 480,
           },
         }}
       >
-        {/* Header */}
-        <Box
-          sx={{
-            px: 2,
-            py: 1.5,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Typography variant="h6" fontWeight="bold">
-            Notificações
-          </Typography>
-          {naoLidas > 0 && (
-            <Chip
-              label={naoLidas}
-              color="error"
-              size="small"
-            />
-          )}
+        <Box sx={{ p: 2, pb: 1 }}>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Typography variant="h6" fontWeight={600}>
+              Notificações
+            </Typography>
+            {unreadCount > 0 && (
+              <Button size="small" onClick={handleMarkAllAsRead}>
+                Marcar todas como lidas
+              </Button>
+            )}
+          </Box>
         </Box>
 
         <Divider />
 
-        {/* Lista de notificações */}
-        {notificacoes.length === 0 ? (
-          <Box sx={{ py: 4, textAlign: 'center' }}>
-            <NotificationsNone
-              sx={{ fontSize: 48, color: 'text.secondary', mb: 1 }}
-            />
-            <Typography color="text.secondary">
-              Nenhuma notificação
+        {loading ? (
+          <Box display="flex" justifyContent="center" p={3}>
+            <CircularProgress size={24} />
+          </Box>
+        ) : notifications.length === 0 ? (
+          <Box p={3} textAlign="center">
+            <CheckIcon color="success" sx={{ fontSize: 48, mb: 1 }} />
+            <Typography variant="body2" color="text.secondary">
+              Nenhuma notificação nova
             </Typography>
           </Box>
         ) : (
-          <>
-            {notificacoes.map((notif: any) => (
-              <MenuItem
-                key={notif.id}
-                onClick={() => handleNotificationClick(notif)}
-                sx={{
-                  py: 1.5,
-                  px: 2,
-                  borderLeft: 3,
-                  borderColor:
-                    notif.tipo === 'ERROR'
-                      ? 'error.main'
-                      : notif.tipo === 'WARNING'
-                      ? 'warning.main'
-                      : notif.tipo === 'SUCCESS'
-                      ? 'success.main'
-                      : 'info.main',
-                  '&:hover': {
-                    bgcolor: 'action.hover',
-                  },
-                }}
-              >
-                <ListItemIcon>
-                  {getIconByType(notif.tipo)}
-                  {/* Se quiser mostrar também o ícone por categoria junto, use:
-                  <Box display="flex" alignItems="center" gap={0.5}>
-                    {getIconByCategory(notif.categoria)}
-                    {getIconByType(notif.tipo)}
-                  </Box>
-                  */}
-                </ListItemIcon>
-                <ListItemText
-                  primary={notif.titulo}
-                  secondary={
-                    <>
-                      <Typography variant="body2" color="text.secondary">
-                        {notif.mensagem}
-                      </Typography>
-                      <Typography variant="caption" color="text.secondary">
-                        {formatDistanceToNow(new Date(notif.created_at), {
-                          addSuffix: true,
-                          locale: ptBR,
-                        })}
-                      </Typography>
-                    </>
-                  }
-                  primaryTypographyProps={{ fontWeight: 'medium' }}
-                />
-              </MenuItem>
-            ))}
-          </>
-        )}
-
-        {/* Footer com ações */}
-        {notificacoes.length > 0 && (
-          <>
-            <Divider />
-            <Box sx={{ p: 1, display: 'flex', gap: 1 }}>
-              <Button
-                size="small"
-                startIcon={<DoneAll />}
-                onClick={() => {
-                  marcarTodasLidas();
-                  handleClose();
-                }}
-                fullWidth
-              >
-                Marcar todas como lidas
-              </Button>
-              <Button
-                size="small"
-                startIcon={<Delete />}
-                onClick={() => {
-                  limparLidas();
-                  handleClose();
-                }}
-                color="error"
-                fullWidth
-              >
-                Limpar
-              </Button>
-            </Box>
-          </>
+          notifications.map((notification) => (
+            <MenuItem
+              key={notification.id}
+              onClick={() => handleMarkAsRead(notification.id)}
+              sx={{
+                whiteSpace: 'normal',
+                py: 1.5,
+                '&:hover': { bgcolor: 'action.hover' },
+              }}
+            >
+              <ListItemIcon>
+                {iconMap[notification.icon || 'default'] || iconMap.default}
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <Typography variant="body2" fontWeight={600}>
+                    {notification.titulo}
+                  </Typography>
+                }
+                secondary={
+                  <>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+                      {notification.mensagem}
+                    </Typography>
+                    <Typography variant="caption" color="text.disabled">
+                      {formatDistanceToNow(new Date(notification.created_at), {
+                        addSuffix: true,
+                        locale: ptBR,
+                      })}
+                    </Typography>
+                  </>
+                }
+              />
+            </MenuItem>
+          ))
         )}
       </Menu>
     </>
   );
-}
+};

@@ -31,8 +31,10 @@ import {
   CheckCircle,
   Warning,
   Schedule,
+  Vaccines,
+  Pets,
 } from '@mui/icons-material';
-import { useToast } from '../../contexts/ToastContext';
+import { toast } from 'react-toastify';
 
 interface Vacina {
   id: number;
@@ -53,7 +55,6 @@ export default function Vacinas() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('TODOS');
-  const toast = useToast();
 
   useEffect(() => {
     loadVacinas();
@@ -117,7 +118,7 @@ export default function Vacinas() {
         <Box>
           <Stack direction="row" spacing={2} alignItems="center">
             <Avatar sx={{ bgcolor: 'success.main', width: 48, height: 48 }}>
-              💉
+              <Vaccines />
             </Avatar>
             <Box>
               <Typography variant="h4" fontWeight={700}>
@@ -148,8 +149,15 @@ export default function Vacinas() {
       </Box>
 
       {/* Cards de Resumo */}
-      <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} mb={3}>
-        <Card sx={{ flex: 1, p: 2, bgcolor: 'success.light', color: 'success.contrastText' }}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
+          gap: 2,
+          mb: 3,
+        }}
+      >
+        <Card sx={{ p: 2, bgcolor: 'success.light', color: 'success.contrastText' }}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Box>
               <Typography variant="h4" fontWeight={700}>
@@ -161,7 +169,7 @@ export default function Vacinas() {
           </Stack>
         </Card>
 
-        <Card sx={{ flex: 1, p: 2, bgcolor: 'warning.light', color: 'warning.contrastText' }}>
+        <Card sx={{ p: 2, bgcolor: 'warning.light', color: 'warning.contrastText' }}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Box>
               <Typography variant="h4" fontWeight={700}>
@@ -173,7 +181,7 @@ export default function Vacinas() {
           </Stack>
         </Card>
 
-        <Card sx={{ flex: 1, p: 2, bgcolor: 'error.light', color: 'error.contrastText' }}>
+        <Card sx={{ p: 2, bgcolor: 'error.light', color: 'error.contrastText' }}>
           <Stack direction="row" justifyContent="space-between" alignItems="center">
             <Box>
               <Typography variant="h4" fontWeight={700}>
@@ -184,7 +192,7 @@ export default function Vacinas() {
             <Warning sx={{ fontSize: 40, opacity: 0.8 }} />
           </Stack>
         </Card>
-      </Stack>
+      </Box>
 
       {/* Filtros */}
       <Card sx={{ mb: 3, p: 2 }}>
@@ -273,6 +281,7 @@ export default function Vacinas() {
               {filteredVacinas.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={7} align="center" sx={{ py: 4 }}>
+                    <Vaccines sx={{ fontSize: 48, color: 'text.secondary', mb: 1 }} />
                     <Typography color="text.secondary">
                       Nenhuma vacina encontrada
                     </Typography>
@@ -294,7 +303,7 @@ export default function Vacinas() {
                       <TableCell>
                         <Stack direction="row" spacing={1} alignItems="center">
                           <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.light' }}>
-                            🐾
+                            <Pets sx={{ fontSize: 18 }} />
                           </Avatar>
                           <Typography variant="body2" fontWeight={600}>
                             {vacina.animal_nome || `Animal #${vacina.animal}`}
@@ -306,7 +315,7 @@ export default function Vacinas() {
                           {vacina.nome}
                         </Typography>
                         {vacina.fabricante && (
-                          <Typography variant="caption" color="text.secondary">
+                          <Typography variant="caption" color="text.secondary" display="block">
                             {vacina.fabricante}
                           </Typography>
                         )}
@@ -318,7 +327,7 @@ export default function Vacinas() {
                       </TableCell>
                       <TableCell>
                         {vacina.proxima_dose ? (
-                          <Typography variant="body2" color="primary">
+                          <Typography variant="body2" color="primary.main" fontWeight={600}>
                             {new Date(vacina.proxima_dose).toLocaleDateString('pt-BR')}
                           </Typography>
                         ) : (

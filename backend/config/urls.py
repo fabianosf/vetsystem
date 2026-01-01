@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from rest_framework.authtoken import views as drf_authtoken_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -12,6 +13,7 @@ urlpatterns = [
     
     # Autenticação
     path('api/auth/', include('accounts.urls')),
+     path('api-token-auth/', drf_authtoken_views.obtain_auth_token),  # 👈 ADD ISTO
     
     # Documentação da API
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

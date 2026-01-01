@@ -36,6 +36,13 @@ class DiagnosticoIASerializer(serializers.ModelSerializer):
 class DiagnosticoCreateSerializer(serializers.ModelSerializer):
     """Serializer para criar diagnóstico (upload de imagem)"""
     
+    # ✅ Tornar animal opcional
+    animal = serializers.PrimaryKeyRelatedField(
+        queryset=Animal.objects.all(),
+        required=False,
+        allow_null=True
+    )
+    
     class Meta:
         model = DiagnosticoIA
         fields = ['animal', 'imagem', 'observacoes']

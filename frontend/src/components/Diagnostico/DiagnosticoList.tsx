@@ -14,6 +14,7 @@ import {
   IconButton,
   Tooltip,
   CircularProgress,
+  Alert,
 } from '@mui/material';
 import {
   CheckCircle as ValidadoIcon,
@@ -23,6 +24,7 @@ import {
 } from '@mui/icons-material';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { toast } from 'react-toastify';
 import api from '../../services/api';
 
 interface Diagnostico {
@@ -50,17 +52,21 @@ export const DiagnosticoList: React.FC = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [validarDialogOpen, setValidarDialogOpen] = useState(false);
   const [observacoes, setObservacoes] = useState('');
+  const [validando, setValidando] = useState(false);
 
   useEffect(() => {
     loadDiagnosticos();
   }, []);
 
   const loadDiagnosticos = async () => {
+    setLoading(true);
     try {
       const response = await api.get('/diagnosticos/');
-      setDiagnosticos(response.data.results || []);
+      const data = response.data.results || response.data || [];
+      setDiagnosticos(data);
     } catch (error) {
       console.error('Erro ao carregar diagnósticos:', error);
+      toast.error('Erro ao carregar diagnósticos');
     } finally {
       setLoading(false);
     }
@@ -71,18 +77,31 @@ export const DiagnosticoList: React.FC = () => {
     setDialogOpen(true);
   };
 
+  const handleOpenValidar = (diagnostico: Diagnostico) => {
+    setSelectedDiagnostico(diagnostico);
+    setObservacoes('');
+    setValidarDialogOpen(true);
+  };
+
   const handleValidar = async () => {
     if (!selectedDiagnostico) return;
 
+    setValidando(true);
     try {
       await api.post(`/diagnosticos/${selectedDiagnostico.id}/validar/`, {
-        observacoes,
+        aprovado: true,
+        observacoes_vet: observacoes,
       });
+
+      toast.success('Diagnóstico validado com sucesso!');
       setValidarDialogOpen(false);
       setObservacoes('');
       loadDiagnosticos();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erro ao validar diagnóstico:', error);
+      toast.error(error.response?.data?.error || 'Erro ao validar diagnóstico');
+    } finally {
+      setValidando(false);
     }
   };
 
@@ -96,16 +115,14 @@ export const DiagnosticoList: React.FC = () => {
 
   return (
     <Box>
-      <Typography variant="h5" gutterBottom>
-        Histórico de Diagnósticos
+      <Typography variant="h5" gutterBottom fontWeight={600}>
+        📋 Histórico de Diagnósticos
       </Typography>
 
       {diagnosticos.length === 0 ? (
-        <Card sx={{ p: 4, textAlign: 'center' }}>
-          <Typography variant="body1" color="text.secondary">
-            Nenhum diagnóstico realizado ainda
-          </Typography>
-        </Card>
+        <Alert severity="info" sx={{ mt: 2 }}>
+          Nenhum diagnóstico realizado ainda. Faça o primeiro diagnóstico na aba "Novo Diagnóstico".
+        </Alert>
       ) : (
         <Box
           sx={{
@@ -116,10 +133,11 @@ export const DiagnosticoList: React.FC = () => {
               md: 'repeat(3, 1fr)',
             },
             gap: 2,
+            mt: 2,
           }}
         >
           {diagnosticos.map((diag) => (
-            <Card key={diag.id}>
+            <Card key={diag.id} elevation={2}>
               <Box
                 component="img"
                 src={diag.imagem}
@@ -153,7 +171,7 @@ export const DiagnosticoList: React.FC = () => {
                 </Box>
 
                 <Typography variant="body2" color="text.secondary" gutterBottom>
-                  {format(new Date(diag.created_at), "dd 'de' MMMM 'às' HH:mm", {
+                  {format(new Date(diag.created_at), "dd/MM/yyyy 'às' HH:mm", {
                     locale: ptBR,
                   })}
                 </Typography>
@@ -163,7 +181,7 @@ export const DiagnosticoList: React.FC = () => {
                 </Typography>
 
                 <Typography variant="body2" color="text.secondary">
-                  Confiança: {diag.confianca.toFixed(1)}%
+                  Confiança: {((diag.confianca || 0) * 100).toFixed(1)}%
                 </Typography>
 
                 <Box display="flex" gap={1} mt={2}>
@@ -174,17 +192,14 @@ export const DiagnosticoList: React.FC = () => {
                     onClick={() => handleView(diag)}
                     fullWidth
                   >
-                    Ver Detalhes
+                    Detalhes
                   </Button>
                   {!diag.validado && (
                     <Tooltip title="Validar Diagnóstico">
                       <IconButton
                         color="primary"
                         size="small"
-                        onClick={() => {
-                          setSelectedDiagnostico(diag);
-                          setValidarDialogOpen(true);
-                        }}
+                        onClick={() => handleOpenValidar(diag)}
                       >
                         <ValidarIcon />
                       </IconButton>
@@ -233,27 +248,27 @@ export const DiagnosticoList: React.FC = () => {
                     {selectedDiagnostico.classe_predita}
                   </Typography>
 
-                  <Typography variant="subtitle2" color="text.secondary">
+                  <Typography variant="subtitle2" color="text.secondary" mt={2}>
                     Confiança:
                   </Typography>
                   <Typography variant="body1" gutterBottom>
-                    {selectedDiagnostico.confianca.toFixed(1)}%
+                    {((selectedDiagnostico.confianca || 0) * 100).toFixed(1)}%
                   </Typography>
 
                   {selectedDiagnostico.validado && (
                     <>
-                      <Typography variant="subtitle2" color="text.secondary">
+                      <Typography variant="subtitle2" color="text.secondary" mt={2}>
                         Validado por:
                       </Typography>
                       <Typography variant="body1" gutterBottom>
-                        {selectedDiagnostico.validado_por}
+                        {selectedDiagnostico.validado_por || 'Veterinário'}
                       </Typography>
                     </>
                   )}
 
                   {selectedDiagnostico.observacoes && (
                     <>
-                      <Typography variant="subtitle2" color="text.secondary">
+                      <Typography variant="subtitle2" color="text.secondary" mt={2}>
                         Observações:
                       </Typography>
                       <Typography variant="body2">
@@ -274,27 +289,37 @@ export const DiagnosticoList: React.FC = () => {
       {/* Dialog de Validação */}
       <Dialog
         open={validarDialogOpen}
-        onClose={() => setValidarDialogOpen(false)}
+        onClose={() => !validando && setValidarDialogOpen(false)}
         maxWidth="sm"
         fullWidth
       >
         <DialogTitle>Validar Diagnóstico</DialogTitle>
         <DialogContent>
+          <Typography variant="body2" color="text.secondary" mb={2}>
+            Ao validar, você confirma que revisou o diagnóstico da IA e concorda com o resultado.
+          </Typography>
           <TextField
-            label="Observações"
+            label="Observações (opcional)"
             multiline
             rows={4}
             fullWidth
             value={observacoes}
             onChange={(e) => setObservacoes(e.target.value)}
             placeholder="Adicione suas observações sobre o diagnóstico..."
-            sx={{ mt: 2 }}
+            disabled={validando}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setValidarDialogOpen(false)}>Cancelar</Button>
-          <Button onClick={handleValidar} variant="contained" color="primary">
-            Validar
+          <Button onClick={() => setValidarDialogOpen(false)} disabled={validando}>
+            Cancelar
+          </Button>
+          <Button
+            onClick={handleValidar}
+            variant="contained"
+            color="primary"
+            disabled={validando}
+          >
+            {validando ? 'Validando...' : 'Validar Diagnóstico'}
           </Button>
         </DialogActions>
       </Dialog>

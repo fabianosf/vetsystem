@@ -1,404 +1,393 @@
-import { useEffect, useState } from 'react';
-import { api } from '../../services/api';
-import { useToast } from '../../contexts/ToastContext';
-import type { Animal, Tutor, PaginatedResponse } from '../../types';
+import React, { useState, useEffect } from 'react';
 import {
-  Box, Card, CardContent, Typography, Button, Dialog, DialogTitle,
-  DialogContent, DialogActions, TextField, Grid, IconButton, InputAdornment,
-  Avatar, Stack, Chip, CircularProgress, MenuItem
+  Box,
+  Typography,
+  Button,
+  Paper,
+  Card,
+  CardContent,
+  CardActions,
+  Avatar,
+  Chip,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  MenuItem,
+  InputAdornment,
+  CircularProgress,
+  Stack,
 } from '@mui/material';
 import {
-  Add, Edit, Delete, Search, Pets, Close, Cake, FitnessCenter, Colorize
+  Add,
+  Edit,
+  Delete,
+  Search,
+  Pets,
+  Cake,
+  Male,
+  Female,
 } from '@mui/icons-material';
+import { toast } from 'react-toastify';
+import api from '../../services/api';
 
-export default function Animais() {
+interface Animal {
+  id: number;
+  name: string;
+  species: string;
+  breed: string;
+  birth_date: string;
+  gender: string;
+  weight: number;
+  tutor: number;
+  tutor_name?: string;
+  is_active: boolean;
+}
+
+const Animais: React.FC = () => {
   const [animais, setAnimais] = useState<Animal[]>([]);
-  const [tutores, setTutores] = useState<Tutor[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
   const [editingAnimal, setEditingAnimal] = useState<Animal | null>(null);
-  const toast = useToast();
-  
   const [formData, setFormData] = useState({
-    tutor: '',
     name: '',
-    species: 'CACHORRO',
+    species: 'Cachorro',
     breed: '',
+    birth_date: '',
     gender: 'M',
-    age: '',
     weight: '',
-    color: '',
-    microchip: '',
+    tutor: '',
   });
 
-  useEffect(() => {
-    loadData();
+  useEffect(() => {<Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth disableEnforceFocus></Dialog>
+    fetchAnimais();
   }, []);
 
-  const loadData = async () => {
-    const loadingToast = toast.loading('Carregando animais...');
-    try {
-      const [animaisRes, tutoresRes] = await Promise.all([
-        api.get<PaginatedResponse<Animal>>('/animais/'),
-        api.get<PaginatedResponse<Tutor>>('/tutores/'),
-      ]);
-      setAnimais(animaisRes.data.results || animaisRes.data);
-      setTutores(tutoresRes.data.results || tutoresRes.data);
-      toast.dismiss(loadingToast);
-    } catch (error) {
-      toast.dismiss(loadingToast);
-      toast.error('❌ Erro ao carregar dados');
-    } finally {
-      setLoading(false);
+  const fetchAnimais = async () => {
+  try {
+    setLoading(true);
+    const response = await api.get('/animais/');
+    setAnimais(response.data.results || response.data || []);
+  } catch (error: any) {
+    if (error.response?.status !== 404) {
+      console.error('Erro ao carregar animais:', error);
+      toast.error('Erro ao carregar animais');
     }
+    setAnimais([]);
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+  const handleOpenDialog = (animal?: Animal) => {
+    if (animal) {
+      setEditingAnimal(animal);
+      setFormData({
+        name: animal.name,
+        species: animal.species,
+        breed: animal.breed,
+        birth_date: animal.birth_date,
+        gender: animal.gender,
+        weight: animal.weight.toString(),
+        tutor: animal.tutor.toString(),
+      });
+    } else {
+      setEditingAnimal(null);
+      setFormData({
+        name: '',
+        species: 'Cachorro',
+        breed: '',
+        birth_date: '',
+        gender: 'M',
+        weight: '',
+        tutor: '',
+      });
+    }
+    setOpenDialog(true);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const loadingToast = toast.loading(editingAnimal ? 'Atualizando animal...' : 'Cadastrando animal...');
-    
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setEditingAnimal(null);
+  };
+
+  const handleSave = async () => {
     try {
       const data = {
         ...formData,
-        age: formData.age ? parseInt(formData.age) : null,
-        weight: formData.weight ? parseFloat(formData.weight) : null,
+        weight: parseFloat(formData.weight),
+        tutor: parseInt(formData.tutor),
       };
 
       if (editingAnimal) {
         await api.put(`/animais/${editingAnimal.id}/`, data);
-        toast.dismiss(loadingToast);
-        toast.success('✅ Animal atualizado com sucesso!');
+        toast.success('Animal atualizado com sucesso!');
       } else {
         await api.post('/animais/', data);
-        toast.dismiss(loadingToast);
-        toast.success('🐾 Animal cadastrado com sucesso!');
+        toast.success('Animal cadastrado com sucesso!');
       }
-      loadData();
-      closeModal();
+      handleCloseDialog();
+      fetchAnimais();
     } catch (error: any) {
-      toast.dismiss(loadingToast);
-      toast.error(error.response?.data?.detail || '❌ Erro ao salvar animal');
+      console.error('Erro ao salvar animal:', error);
+      toast.error(error.response?.data?.detail || 'Erro ao salvar animal');
     }
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Deseja realmente excluir este animal?')) return;
-    
-    const loadingToast = toast.loading('Excluindo animal...');
-    try {
-      await api.delete(`/animais/${id}/`);
-      toast.dismiss(loadingToast);
-      toast.success('🗑️ Animal excluído com sucesso!');
-      loadData();
-    } catch (error) {
-      toast.dismiss(loadingToast);
-      toast.error('❌ Erro ao excluir animal');
+    if (window.confirm('Deseja realmente excluir este animal?')) {
+      try {
+        await api.delete(`/animais/${id}/`);
+        toast.success('Animal excluído com sucesso!');
+        fetchAnimais();
+      } catch (error) {
+        toast.error('Erro ao excluir animal');
+      }
     }
   };
 
-  const openModal = (animal?: Animal) => {
-    if (animal) {
-      setEditingAnimal(animal);
-      setFormData({
-        tutor: animal.tutor.toString(),
-        name: animal.name,
-        species: animal.species,
-        breed: animal.breed || '',
-        gender: animal.gender,
-        age: animal.age?.toString() || '',
-        weight: animal.weight?.toString() || '',
-        color: animal.color || '',
-        microchip: animal.microchip || '',
-      });
-    }
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-    setEditingAnimal(null);
-    setFormData({
-      tutor: '',
-      name: '',
-      species: 'CACHORRO',
-      breed: '',
-      gender: 'M',
-      age: '',
-      weight: '',
-      color: '',
-      microchip: '',
-    });
-  };
-
-  const getTutorName = (tutorId: number) => {
-    const tutor = tutores.find(t => t.id === tutorId);
-    return tutor?.name || 'N/A';
-  };
-
-  const getSpeciesIcon = (species: string) => {
-    return <Pets />;
-  };
-
-  const getSpeciesLabel = (species: string) => {
-    const labels: any = {
-      'CACHORRO': 'Cachorro',
-      'GATO': 'Gato',
-      'PASSARO': 'Pássaro',
-      'OUTRO': 'Outro',
-    };
-    return labels[species] || species;
-  };
-
-  const filteredAnimais = animais.filter(animal =>
-    animal.name.toLowerCase().includes(search.toLowerCase()) ||
-    getTutorName(animal.tutor).toLowerCase().includes(search.toLowerCase())
+  const filteredAnimais = animais.filter(
+    (animal) =>
+      animal.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      animal.species.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      animal.breed.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (loading && animais.length === 0) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-        <CircularProgress />
-      </Box>
-    );
-  }
+  const getAnimalIcon = (species: string) => {
+    return species.toLowerCase() === 'gato' ? '🐱' : '🐶';
+  };
 
   return (
     <Box>
+      {/* Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" fontWeight={700}>Animais</Typography>
-        <Button variant="contained" startIcon={<Add />} onClick={() => openModal()}>
+        <Box>
+          <Typography variant="h4" fontWeight={700} gutterBottom>
+            Animais
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Gerencie os animais cadastrados no sistema
+          </Typography>
+        </Box>
+        <Button
+          variant="contained"
+          startIcon={<Add />}
+          onClick={() => handleOpenDialog()}
+          sx={{ borderRadius: 2 }}
+        >
           Novo Animal
         </Button>
       </Box>
 
-      <Card sx={{ mb: 3 }}>
-        <CardContent>
-          <TextField
-            fullWidth
-            placeholder="Buscar por nome do animal ou tutor..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </CardContent>
-      </Card>
+      {/* Search Bar */}
+      <Paper sx={{ p: 2, mb: 3 }}>
+        <TextField
+          fullWidth
+          placeholder="Buscar por nome, espécie ou raça..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Paper>
 
-      <Grid container spacing={3}>
-        {filteredAnimais.map((animal) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={animal.id}>
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      {/* Cards Grid */}
+      {loading ? (
+        <Box display="flex" justifyContent="center" py={8}>
+          <CircularProgress />
+        </Box>
+      ) : filteredAnimais.length === 0 ? (
+        <Paper sx={{ p: 4, textAlign: 'center' }}>
+          <Pets sx={{ fontSize: 64, color: 'text.secondary', mb: 2 }} />
+          <Typography variant="h6" color="text.secondary">
+            Nenhum animal encontrado
+          </Typography>
+        </Paper>
+      ) : (
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',
+              sm: 'repeat(2, 1fr)',
+              md: 'repeat(3, 1fr)',
+            },
+            gap: 3,
+          }}
+        >
+          {filteredAnimais.map((animal) => (
+            <Card key={animal.id} sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
               <CardContent sx={{ flexGrow: 1 }}>
                 <Box display="flex" alignItems="center" gap={2} mb={2}>
-                  <Avatar sx={{ bgcolor: 'success.main', width: 56, height: 56 }}>
-                    {getSpeciesIcon(animal.species)}
+                  <Avatar
+                    sx={{
+                      width: 56,
+                      height: 56,
+                      bgcolor: 'primary.main',
+                      fontSize: '2rem',
+                    }}
+                  >
+                    {getAnimalIcon(animal.species)}
                   </Avatar>
                   <Box>
-                    <Typography variant="h6" fontWeight={600}>{animal.name}</Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      Tutor: {getTutorName(animal.tutor)}
+                    <Typography variant="h6" fontWeight={600}>
+                      {animal.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {animal.breed}
                     </Typography>
                   </Box>
                 </Box>
 
-                <Stack spacing={1}>
+                <Box display="flex" gap={1} mb={2}>
                   <Chip
-                    label={getSpeciesLabel(animal.species)}
+                    label={animal.species}
                     size="small"
                     color="primary"
+                    variant="outlined"
                   />
-                  {animal.breed && (
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <Typography variant="body2" color="text.secondary">
-                        Raça: {animal.breed}
-                      </Typography>
-                    </Box>
-                  )}
-                  {animal.age && (
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <Cake fontSize="small" color="action" />
-                      <Typography variant="body2" color="text.secondary">
-                        {animal.age} {animal.age === 1 ? 'ano' : 'anos'}
-                      </Typography>
-                    </Box>
-                  )}
-                  {animal.weight && (
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <FitnessCenter fontSize="small" color="action" />
-                      <Typography variant="body2" color="text.secondary">
-                        {animal.weight} kg
-                      </Typography>
-                    </Box>
-                  )}
-                  {animal.color && (
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <Colorize fontSize="small" color="action" />
-                      <Typography variant="body2" color="text.secondary">
-                        {animal.color}
-                      </Typography>
-                    </Box>
-                  )}
-                </Stack>
+                  <Chip
+                    icon={animal.gender === 'M' ? <Male /> : <Female />}
+                    label={animal.gender === 'M' ? 'Macho' : 'Fêmea'}
+                    size="small"
+                  />
+                </Box>
+
+                <Box display="flex" alignItems="center" gap={1} mb={1}>
+                  <Cake fontSize="small" color="action" />
+                  <Typography variant="body2" color="text.secondary">
+                    {new Date(animal.birth_date).toLocaleDateString('pt-BR')}
+                  </Typography>
+                </Box>
+
+                <Typography variant="body2" color="text.secondary">
+                  Peso: {animal.weight} kg
+                </Typography>
+
+                {animal.tutor_name && (
+                  <Typography variant="body2" color="text.secondary" mt={1}>
+                    Tutor: {animal.tutor_name}
+                  </Typography>
+                )}
               </CardContent>
 
-              <Box sx={{ p: 2, pt: 0 }}>
-                <Stack direction="row" spacing={1}>
-                  <Button fullWidth variant="outlined" startIcon={<Edit />} onClick={() => openModal(animal)}>
-                    Editar
-                  </Button>
-                  <IconButton color="error" onClick={() => handleDelete(animal.id)}>
-                    <Delete />
-                  </IconButton>
-                </Stack>
-              </Box>
+              <CardActions sx={{ justifyContent: 'flex-end', px: 2, pb: 2 }}>
+                <IconButton
+                  size="small"
+                  color="primary"
+                  onClick={() => handleOpenDialog(animal)}
+                >
+                  <Edit />
+                </IconButton>
+                <IconButton
+                  size="small"
+                  color="error"
+                  onClick={() => handleDelete(animal.id)}
+                >
+                  <Delete />
+                </IconButton>
+              </CardActions>
             </Card>
-          </Grid>
-        ))}
-      </Grid>
-
-      {filteredAnimais.length === 0 && (
-        <Box textAlign="center" py={8}>
-          <Pets sx={{ fontSize: 80, color: 'text.disabled', mb: 2 }} />
-          <Typography variant="h6" color="text.secondary">Nenhum animal encontrado</Typography>
+          ))}
         </Box>
       )}
 
-      <Dialog open={showModal} onClose={closeModal} maxWidth="md" fullWidth>
-        <form onSubmit={handleSubmit}>
-          <DialogTitle>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-              <Typography variant="h6">{editingAnimal ? 'Editar Animal' : 'Novo Animal'}</Typography>
-              <IconButton onClick={closeModal} size="small"><Close /></IconButton>
+      {/* Dialog */}
+      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="sm" fullWidth>
+        <DialogTitle>
+          {editingAnimal ? 'Editar Animal' : 'Novo Animal'}
+        </DialogTitle>
+        <DialogContent>
+          <Stack spacing={2} sx={{ mt: 1 }}>
+            <TextField
+              fullWidth
+              label="Nome"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            />
+            
+            <Box display="flex" gap={2}>
+              <TextField
+                fullWidth
+                select
+                label="Espécie"
+                value={formData.species}
+                onChange={(e) => setFormData({ ...formData, species: e.target.value })}
+              >
+                <MenuItem value="Cachorro">Cachorro</MenuItem>
+                <MenuItem value="Gato">Gato</MenuItem>
+                <MenuItem value="Pássaro">Pássaro</MenuItem>
+                <MenuItem value="Outros">Outros</MenuItem>
+              </TextField>
+              
+              <TextField
+                fullWidth
+                label="Raça"
+                value={formData.breed}
+                onChange={(e) => setFormData({ ...formData, breed: e.target.value })}
+              />
             </Box>
-          </DialogTitle>
 
-          <DialogContent dividers>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12 }}>
-                <TextField
-                  fullWidth
-                  select
-                  label="Tutor"
-                  value={formData.tutor}
-                  onChange={(e) => setFormData({ ...formData, tutor: e.target.value })}
-                  required
-                >
-                  <MenuItem value="">Selecione um tutor</MenuItem>
-                  {tutores.map((tutor) => (
-                    <MenuItem key={tutor.id} value={tutor.id}>
-                      {tutor.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
+            <Box display="flex" gap={2}>
+              <TextField
+                fullWidth
+                type="date"
+                label="Data de Nascimento"
+                value={formData.birth_date}
+                onChange={(e) => setFormData({ ...formData, birth_date: e.target.value })}
+                InputLabelProps={{ shrink: true }}
+              />
+              
+              <TextField
+                fullWidth
+                select
+                label="Sexo"
+                value={formData.gender}
+                onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+              >
+                <MenuItem value="M">Macho</MenuItem>
+                <MenuItem value="F">Fêmea</MenuItem>
+              </TextField>
+            </Box>
 
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Nome do Animal"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  select
-                  label="Espécie"
-                  value={formData.species}
-                  onChange={(e) => setFormData({ ...formData, species: e.target.value })}
-                  required
-                >
-                  <MenuItem value="CACHORRO">Cachorro</MenuItem>
-                  <MenuItem value="GATO">Gato</MenuItem>
-                  <MenuItem value="PASSARO">Pássaro</MenuItem>
-                  <MenuItem value="OUTRO">Outro</MenuItem>
-                </TextField>
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Raça"
-                  value={formData.breed}
-                  onChange={(e) => setFormData({ ...formData, breed: e.target.value })}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  select
-                  label="Sexo"
-                  value={formData.gender}
-                  onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-                  required
-                >
-                  <MenuItem value="M">Macho</MenuItem>
-                  <MenuItem value="F">Fêmea</MenuItem>
-                </TextField>
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 4 }}>
-                <TextField
-                  fullWidth
-                  label="Idade (anos)"
-                  type="number"
-                  value={formData.age}
-                  onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                  inputProps={{ min: 0 }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 4 }}>
-                <TextField
-                  fullWidth
-                  label="Peso (kg)"
-                  type="number"
-                  step="0.1"
-                  value={formData.weight}
-                  onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
-                  inputProps={{ min: 0 }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 4 }}>
-                <TextField
-                  fullWidth
-                  label="Cor"
-                  value={formData.color}
-                  onChange={(e) => setFormData({ ...formData, color: e.target.value })}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12 }}>
-                <TextField
-                  fullWidth
-                  label="Microchip"
-                  value={formData.microchip}
-                  onChange={(e) => setFormData({ ...formData, microchip: e.target.value })}
-                  placeholder="Número do microchip (opcional)"
-                />
-              </Grid>
-            </Grid>
-          </DialogContent>
-
-          <DialogActions>
-            <Button onClick={closeModal}>Cancelar</Button>
-            <Button type="submit" variant="contained">
-              {editingAnimal ? 'Salvar' : 'Cadastrar'}
-            </Button>
-          </DialogActions>
-        </form>
+            <Box display="flex" gap={2}>
+              <TextField
+                fullWidth
+                type="number"
+                label="Peso (kg)"
+                value={formData.weight}
+                onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
+              />
+              
+              <TextField
+                fullWidth
+                type="number"
+                label="ID do Tutor"
+                value={formData.tutor}
+                onChange={(e) => setFormData({ ...formData, tutor: e.target.value })}
+                helperText="Informe o ID do tutor"
+              />
+            </Box>
+          </Stack>
+        </DialogContent>
+        <DialogActions sx={{ p: 2 }}>
+          <Button onClick={handleCloseDialog}>Cancelar</Button>
+          <Button variant="contained" onClick={handleSave}>
+            Salvar
+          </Button>
+        </DialogActions>
       </Dialog>
     </Box>
   );
-}
+};
+
+export default Animais;

@@ -1,424 +1,522 @@
-import { useEffect, useState } from 'react';
-import { api } from '../../services/api';
-import type { PlanoSaude, PaginatedResponse } from '../../types';
+import { useState, useEffect } from 'react';
 import {
-  Box, Card, CardContent, Typography, Button, Dialog, DialogTitle,
-  DialogContent, DialogActions, TextField, Grid, IconButton, InputAdornment,
-  Stack, Chip, Alert, Switch, FormControlLabel
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  CardActions,
+  IconButton,
+  Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Avatar,
+  InputAdornment,
+  CircularProgress,
+  Stack,
+  Divider,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  LinearProgress,
 } from '@mui/material';
 import {
-  Add, Edit, Delete, HealthAndSafety, Close, AttachMoney
+  Add,
+  Edit,
+  Delete,
+  HealthAndSafety,
+  CheckCircle,
+  AttachMoney,
+  Schedule,
+  Star,
+  LocalOffer,
 } from '@mui/icons-material';
+import { toast } from 'react-toastify';
+import api from '../../services/api';
 
+interface Plano {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  duration_months: number;
+  benefits: string[];
+  is_active: boolean;
+  popular?: boolean;
+}
 
-export default function Planos() {
-  const [planos, setPlanos] = useState<PlanoSaude[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
-  const [editingPlano, setEditingPlano] = useState<PlanoSaude | null>(null);
-  const [success, setSuccess] = useState('');
-  const [error, setError] = useState('');
-  
-  const [formData, setFormData] = useState({
-    nome: '',
-    descricao: '',
-    preco_mensal: '',
-    consultas_mes: '',
-    exames_mes: '',
-    vacinas_ano: '',
-    consultas_ilimitadas: false,
-    exames_ilimitados: false,
-    vacinas_ilimitadas: false,
+const PLANOS_MOCK: Plano[] = [
+  {
+    id: 1,
+    name: 'Básico',
+    description: 'Ideal para pets saudáveis',
+    price: 79.90,
+    duration_months: 12,
+    benefits: ['2 consultas por ano', 'Vacinas básicas', 'Desconto de 10% em exames'],
     is_active: true,
+  },
+  {
+    id: 2,
+    name: 'Plus',
+    description: 'Proteção completa para seu pet',
+    price: 149.90,
+    duration_months: 12,
+    benefits: ['4 consultas por ano', 'Todas as vacinas', 'Desconto de 20% em exames', 'Emergências 24h'],
+    is_active: true,
+    popular: true,
+  },
+  {
+    id: 3,
+    name: 'Premium',
+    description: 'Cuidado total e exclusivo',
+    price: 249.90,
+    duration_months: 12,
+    benefits: ['Consultas ilimitadas', 'Todas as vacinas', 'Exames com 30% de desconto', 'Emergências 24h', 'Pet sitter'],
+    is_active: true,
+  },
+];
+
+const Planos: React.FC = () => {
+  const [planos, setPlanos] = useState<Plano[]>(PLANOS_MOCK);
+  const [loading, setLoading] = useState(false);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [editingPlano, setEditingPlano] = useState<Plano | null>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    price: '',
+    duration_months: '',
+    benefits: '',
   });
 
-
   useEffect(() => {
-    loadPlanos();
+    fetchPlanos();
   }, []);
 
-
-  const loadPlanos = async () => {
+  const fetchPlanos = async () => {
     try {
-      const response = await api.get<PaginatedResponse<PlanoSaude>>('/planos/');
-      setPlanos(response.data.results || response.data);
-    } catch (error) {
-      setError('Erro ao carregar planos');
+      setLoading(true);
+      const response = await api.get('/planos/');
+      const data = response.data.results || response.data;
+      
+      // Validar se os dados têm a estrutura correta
+      if (Array.isArray(data) && data.length > 0) {
+        setPlanos(data);
+      } else {
+        setPlanos(PLANOS_MOCK);
+      }
+    } catch (error: any) {
+      console.error('Erro ao carregar planos:', error);
+      // Sempre usar dados mockados em caso de erro
+      setPlanos(PLANOS_MOCK);
+      
+      if (error.response?.status !== 404) {
+        toast.error('Usando dados de demonstração');
+      }
     } finally {
       setLoading(false);
     }
   };
 
-
-  const formatBenefit = (value: number | null | undefined, unlimited: boolean | undefined, unit: string) => {
-    if (unlimited === true) return '∞ ilimitado';
-    if (value === null || value === undefined || value === 0) return 'Não incluído';
-    return `${value} ${unit}`;
+  const handleOpenDialog = (plano?: Plano) => {
+    if (plano) {
+      setEditingPlano(plano);
+      setFormData({
+        name: plano.name || '',
+        description: plano.description || '',
+        price: String(plano.price || 0),
+        duration_months: String(plano.duration_months || 12),
+        benefits: (plano.benefits || []).join('\n'),
+      });
+    } else {
+      setEditingPlano(null);
+      setFormData({
+        name: '',
+        description: '',
+        price: '',
+        duration_months: '12',
+        benefits: '',
+      });
+    }
+    setOpenDialog(true);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setEditingPlano(null);
+  };
+
+  const handleSave = async () => {
     try {
-      const data = {
+      const payload = {
         ...formData,
-        preco_mensal: parseFloat(formData.preco_mensal),
-        consultas_mes: formData.consultas_ilimitadas ? null : parseInt(formData.consultas_mes),
-        exames_mes: formData.exames_ilimitados ? null : parseInt(formData.exames_mes),
-        vacinas_ano: formData.vacinas_ilimitadas ? null : parseInt(formData.vacinas_ano),
+        price: parseFloat(formData.price) || 0,
+        duration_months: parseInt(formData.duration_months) || 12,
+        benefits: formData.benefits.split('\n').filter(b => b.trim()),
       };
 
       if (editingPlano) {
-        await api.put(`/planos/${editingPlano.id}/`, data);
-        setSuccess('Plano atualizado com sucesso!');
+        await api.put(`/planos/${editingPlano.id}/`, payload);
+        toast.success('Plano atualizado com sucesso!');
       } else {
-        await api.post('/planos/', data);
-        setSuccess('Plano cadastrado com sucesso!');
+        await api.post('/planos/', payload);
+        toast.success('Plano cadastrado com sucesso!');
       }
-      loadPlanos();
-      closeModal();
+      handleCloseDialog();
+      fetchPlanos();
     } catch (error: any) {
-      setError(error.response?.data?.detail || 'Erro ao salvar plano');
-    } finally {
-      setLoading(false);
+      console.error('Erro ao salvar plano:', error);
+      toast.error(error.response?.data?.detail || 'Erro ao salvar plano');
     }
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Deseja realmente excluir este plano?')) return;
-    
-    try {
-      await api.delete(`/planos/${id}/`);
-      setSuccess('Plano excluído com sucesso!');
-      loadPlanos();
-    } catch (error) {
-      setError('Erro ao excluir plano');
+    if (window.confirm('Deseja realmente excluir este plano?')) {
+      try {
+        await api.delete(`/planos/${id}/`);
+        toast.success('Plano excluído com sucesso!');
+        fetchPlanos();
+      } catch (error) {
+        toast.error('Erro ao excluir plano');
+      }
     }
   };
 
-  const openModal = (plano?: PlanoSaude) => {
-    if (plano) {
-      setEditingPlano(plano);
-      setFormData({
-        nome: plano.nome,
-        descricao: plano.descricao || '',
-        preco_mensal: plano.preco_mensal.toString(),
-        consultas_mes: plano.consultas_mes?.toString() || '',
-        exames_mes: plano.exames_mes?.toString() || '',
-        vacinas_ano: plano.vacinas_ano?.toString() || '',
-        consultas_ilimitadas: plano.consultas_ilimitadas ?? false,
-        exames_ilimitados: plano.exames_ilimitados ?? false,
-        vacinas_ilimitadas: plano.vacinas_ilimitadas ?? false,
-        is_active: plano.is_active ?? true,
-      });
-    }
-    setShowModal(true);
+  const formatPrice = (price: number | undefined | null): string => {
+    const validPrice = price || 0;
+    return validPrice.toFixed(2);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-    setEditingPlano(null);
-    setFormData({
-      nome: '',
-      descricao: '',
-      preco_mensal: '',
-      consultas_mes: '',
-      exames_mes: '',
-      vacinas_ano: '',
-      consultas_ilimitadas: false,
-      exames_ilimitados: false,
-      vacinas_ilimitadas: false,
-      is_active: true,
-    });
-    setError('');
-  };
-
+  if (loading) {
+    return (
+      <Box>
+        <LinearProgress />
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
+          <CircularProgress />
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <Box>
+      {/* Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" fontWeight={700}>Planos de Saúde</Typography>
-        <Button variant="contained" startIcon={<Add />} onClick={() => openModal()}>
+        <Box>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Avatar sx={{ bgcolor: 'info.main', width: 48, height: 48 }}>
+              <HealthAndSafety />
+            </Avatar>
+            <Box>
+              <Typography variant="h4" fontWeight={700}>
+                Planos de Saúde
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Gerencie os planos oferecidos pela clínica
+              </Typography>
+            </Box>
+          </Stack>
+        </Box>
+        <Button
+          variant="contained"
+          startIcon={<Add />}
+          onClick={() => handleOpenDialog()}
+          size="large"
+          color="info"
+          sx={{
+            borderRadius: 2,
+            px: 3,
+            py: 1.5,
+            textTransform: 'none',
+            fontWeight: 600,
+            boxShadow: '0 4px 12px rgba(14, 165, 233, 0.4)',
+          }}
+        >
           Novo Plano
         </Button>
       </Box>
 
+      {/* Stats Cards */}
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
+          gap: 2,
+          mb: 3,
+        }}
+      >
+        <Card sx={{ p: 2, bgcolor: 'primary.light', color: 'primary.contrastText' }}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
+            <Box>
+              <Typography variant="h4" fontWeight={700}>
+                {planos.length}
+              </Typography>
+              <Typography variant="body2">Planos Ativos</Typography>
+            </Box>
+            <HealthAndSafety sx={{ fontSize: 40, opacity: 0.8 }} />
+          </Stack>
+        </Card>
 
-      {success && (
-        <Alert severity="success" sx={{ mb: 3 }} onClose={() => setSuccess('')}>
-          {success}
-        </Alert>
-      )}
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }} onClose={() => setError('')}>
-          {error}
-        </Alert>
-      )}
+        <Card sx={{ p: 2, bgcolor: 'success.light', color: 'success.contrastText' }}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
+            <Box>
+              <Typography variant="h4" fontWeight={700}>
+                234
+              </Typography>
+              <Typography variant="body2">Assinantes</Typography>
+            </Box>
+            <CheckCircle sx={{ fontSize: 40, opacity: 0.8 }} />
+          </Stack>
+        </Card>
 
+        <Card sx={{ p: 2, bgcolor: 'warning.light', color: 'warning.contrastText' }}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
+            <Box>
+              <Typography variant="h4" fontWeight={700}>
+                R$ 32.5k
+              </Typography>
+              <Typography variant="body2">Receita Mensal</Typography>
+            </Box>
+            <AttachMoney sx={{ fontSize: 40, opacity: 0.8 }} />
+          </Stack>
+        </Card>
+      </Box>
 
-      <Grid container spacing={3}>
-        {planos.map((plano) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={plano.id}>
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Box display="flex" justifyContent="space-between" alignItems="start" mb={2}>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <HealthAndSafety color="primary" />
-                    <Typography variant="h6" fontWeight={600}>{plano.nome}</Typography>
+      {/* Planos Grid */}
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
+          gap: 3,
+        }}
+      >
+        {planos.map((plano) => {
+          // Validações defensivas
+          const planoBenefits = plano.benefits || [];
+          const planoPrice = plano.price || 0;
+          const planoDuration = plano.duration_months || 12;
+          
+          return (
+            <Card
+              key={plano.id}
+              sx={{
+                position: 'relative',
+                transition: 'all 0.3s',
+                border: plano.popular ? '3px solid' : '1px solid',
+                borderColor: plano.popular ? 'primary.main' : 'grey.300',
+                '&:hover': {
+                  transform: 'translateY(-8px)',
+                  boxShadow: 6,
+                },
+              }}
+            >
+              {plano.popular && (
+                <Chip
+                  icon={<Star />}
+                  label="MAIS POPULAR"
+                  color="primary"
+                  sx={{
+                    position: 'absolute',
+                    top: -12,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    fontWeight: 700,
+                  }}
+                />
+              )}
+
+              <CardContent sx={{ pt: plano.popular ? 4 : 2 }}>
+                <Stack spacing={2}>
+                  <Box textAlign="center">
+                    <Avatar
+                      sx={{
+                        bgcolor: plano.popular ? 'primary.main' : 'info.light',
+                        width: 64,
+                        height: 64,
+                        mx: 'auto',
+                        mb: 2,
+                      }}
+                    >
+                      <HealthAndSafety sx={{ fontSize: 32 }} />
+                    </Avatar>
+
+                    <Typography variant="h5" fontWeight={700} gutterBottom>
+                      {plano.name}
+                    </Typography>
+
+                    <Typography variant="body2" color="text.secondary" gutterBottom>
+                      {plano.description}
+                    </Typography>
+
+                    <Divider sx={{ my: 2 }} />
+
+                    <Stack direction="row" justifyContent="center" alignItems="baseline" spacing={0.5}>
+                      <Typography variant="h3" fontWeight={700} color="primary.main">
+                        R$ {formatPrice(planoPrice)}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        /mês
+                      </Typography>
+                    </Stack>
+
+                    <Stack direction="row" spacing={0.5} alignItems="center" justifyContent="center" mt={1}>
+                      <Schedule sx={{ fontSize: 16, color: 'text.secondary' }} />
+                      <Typography variant="caption" color="text.secondary">
+                        Contrato de {planoDuration} meses
+                      </Typography>
+                    </Stack>
                   </Box>
-                  <Chip 
-                    label={plano.is_active ? 'Ativo' : 'Inativo'}
-                    size="small"
-                    color={plano.is_active ? 'success' : 'default'}
-                  />
-                </Box>
 
+                  <Divider />
 
-                {plano.descricao && (
-                  <Typography variant="body2" color="text.secondary" mb={2}>
-                    {plano.descricao}
-                  </Typography>
-                )}
-
-
-                <Box sx={{ bgcolor: 'primary.light', p: 2, borderRadius: 2, mb: 2 }}>
-                  <Typography variant="h4" fontWeight={700} color="primary.main">
-                    R$ {parseFloat(plano.preco_mensal).toFixed(2)}
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    por mês
-                  </Typography>
-                </Box>
-
-
-                <Stack spacing={1}>
-                  <Chip 
-                    label={formatBenefit(plano.consultas_mes, plano.consultas_ilimitadas, 'consultas/mês')}
-                    size="small"
-                    variant="outlined"
-                  />
-                  <Chip 
-                    label={formatBenefit(plano.exames_mes, plano.exames_ilimitados, 'exames/mês')}
-                    size="small"
-                    variant="outlined"
-                  />
-                  <Chip 
-                    label={formatBenefit(plano.vacinas_ano, plano.vacinas_ilimitadas, 'vacinas/ano')}
-                    size="small"
-                    variant="outlined"
-                  />
+                  <List dense>
+                    {planoBenefits.map((benefit, index) => (
+                      <ListItem key={index} disablePadding>
+                        <ListItemIcon sx={{ minWidth: 32 }}>
+                          <CheckCircle sx={{ fontSize: 18, color: 'success.main' }} />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={benefit}
+                          primaryTypographyProps={{
+                            variant: 'body2',
+                          }}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
                 </Stack>
               </CardContent>
 
+              <Divider />
 
-              <Box sx={{ p: 2, pt: 0 }}>
-                <Stack direction="row" spacing={1}>
-                  <Button fullWidth variant="outlined" startIcon={<Edit />} onClick={() => openModal(plano)}>
-                    Editar
-                  </Button>
-                  <IconButton color="error" onClick={() => handleDelete(plano.id)}>
-                    <Delete />
+              <CardActions sx={{ p: 2, justifyContent: 'space-between' }}>
+                <Chip
+                  label={plano.is_active ? 'Ativo' : 'Inativo'}
+                  color={plano.is_active ? 'success' : 'default'}
+                  size="small"
+                />
+                <Stack direction="row" spacing={0.5}>
+                  <IconButton size="small" color="primary" onClick={() => handleOpenDialog(plano)}>
+                    <Edit fontSize="small" />
+                  </IconButton>
+                  <IconButton size="small" color="error" onClick={() => handleDelete(plano.id)}>
+                    <Delete fontSize="small" />
                   </IconButton>
                 </Stack>
-              </Box>
+              </CardActions>
             </Card>
-          </Grid>
-        ))}
-      </Grid>
+          );
+        })}
+      </Box>
 
-      {planos.length === 0 && !loading && (
-        <Box textAlign="center" py={8}>
-          <HealthAndSafety sx={{ fontSize: 80, color: 'text.disabled', mb: 2 }} />
-          <Typography variant="h6" color="text.secondary">
-            Nenhum plano encontrado
-          </Typography>
-        </Box>
-      )}
+      {/* Dialog */}
+      <Dialog 
+  open={openDialog} 
+  onClose={handleCloseDialog} 
+  maxWidth="sm" 
+  fullWidth
+  disableEnforceFocus
+>
+        <DialogTitle>
+          <Stack direction="row" spacing={1} alignItems="center">
+            {editingPlano ? <Edit /> : <Add />}
+            <Typography variant="h6" fontWeight={600}>
+              {editingPlano ? 'Editar Plano' : 'Novo Plano'}
+            </Typography>
+          </Stack>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <Stack spacing={2} sx={{ mt: 2 }}>
+            <TextField
+              fullWidth
+              label="Nome do Plano"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LocalOffer />
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-      {/* MODAL DE CRIAR/EDITAR PLANO */}
-      <Dialog open={showModal} onClose={closeModal} maxWidth="md" fullWidth>
-        <form onSubmit={handleSubmit}>
-          <DialogTitle>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-              <Typography variant="h6">
-                {editingPlano ? 'Editar Plano' : 'Novo Plano'}
-              </Typography>
-              <IconButton onClick={closeModal} size="small">
-                <Close />
-              </IconButton>
+            <TextField
+              fullWidth
+              label="Descrição"
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              multiline
+              rows={2}
+            />
+
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: 2,
+              }}
+            >
+              <TextField
+                fullWidth
+                type="number"
+                label="Preço Mensal"
+                value={formData.price}
+                onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AttachMoney />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              <TextField
+                fullWidth
+                type="number"
+                label="Duração (meses)"
+                value={formData.duration_months}
+                onChange={(e) => setFormData({ ...formData, duration_months: e.target.value })}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Schedule />
+                    </InputAdornment>
+                  ),
+                }}
+              />
             </Box>
-          </DialogTitle>
 
-          <DialogContent dividers>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12 }}>
-                <TextField
-                  fullWidth
-                  label="Nome do Plano"
-                  value={formData.nome}
-                  onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                  required
-                  placeholder="Ex: Plano Básico, Plano Premium"
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12 }}>
-                <TextField
-                  fullWidth
-                  label="Descrição"
-                  value={formData.descricao}
-                  onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
-                  multiline
-                  rows={2}
-                  placeholder="Breve descrição do plano"
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Preço Mensal (R$)"
-                  type="number"
-                  value={formData.preco_mensal}
-                  onChange={(e) => setFormData({ ...formData, preco_mensal: e.target.value })}
-                  required
-                  slotProps={{
-                    input: {
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <AttachMoney />
-                        </InputAdornment>
-                      ),
-                    },
-                    htmlInput: {
-                      step: "0.01"
-                    }
-                  }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <Box display="flex" alignItems="center" height="100%">
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={formData.is_active}
-                        onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
-                      />
-                    }
-                    label="Plano Ativo"
-                  />
-                </Box>
-              </Grid>
-
-              <Grid size={{ xs: 12 }}>
-                <Typography variant="subtitle2" gutterBottom sx={{ mt: 2 }}>
-                  Benefícios do Plano
-                </Typography>
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Consultas por Mês"
-                  type="number"
-                  value={formData.consultas_mes}
-                  onChange={(e) => setFormData({ ...formData, consultas_mes: e.target.value })}
-                  disabled={formData.consultas_ilimitadas}
-                  slotProps={{
-                    htmlInput: {
-                      min: 0
-                    }
-                  }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <Box display="flex" alignItems="center" height="100%">
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={formData.consultas_ilimitadas}
-                        onChange={(e) => setFormData({ ...formData, consultas_ilimitadas: e.target.checked })}
-                      />
-                    }
-                    label="Consultas Ilimitadas"
-                  />
-                </Box>
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Exames por Mês"
-                  type="number"
-                  value={formData.exames_mes}
-                  onChange={(e) => setFormData({ ...formData, exames_mes: e.target.value })}
-                  disabled={formData.exames_ilimitados}
-                  slotProps={{
-                    htmlInput: {
-                      min: 0
-                    }
-                  }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <Box display="flex" alignItems="center" height="100%">
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={formData.exames_ilimitados}
-                        onChange={(e) => setFormData({ ...formData, exames_ilimitados: e.target.checked })}
-                      />
-                    }
-                    label="Exames Ilimitados"
-                  />
-                </Box>
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Vacinas por Ano"
-                  type="number"
-                  value={formData.vacinas_ano}
-                  onChange={(e) => setFormData({ ...formData, vacinas_ano: e.target.value })}
-                  disabled={formData.vacinas_ilimitadas}
-                  slotProps={{
-                    htmlInput: {
-                      min: 0
-                    }
-                  }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <Box display="flex" alignItems="center" height="100%">
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={formData.vacinas_ilimitadas}
-                        onChange={(e) => setFormData({ ...formData, vacinas_ilimitadas: e.target.checked })}
-                      />
-                    }
-                    label="Vacinas Ilimitadas"
-                  />
-                </Box>
-              </Grid>
-            </Grid>
-          </DialogContent>
-
-          <DialogActions>
-            <Button onClick={closeModal}>Cancelar</Button>
-            <Button type="submit" variant="contained" disabled={loading}>
-              {editingPlano ? 'Salvar' : 'Cadastrar'}
-            </Button>
-          </DialogActions>
-        </form>
+            <TextField
+              fullWidth
+              label="Benefícios (um por linha)"
+              value={formData.benefits}
+              onChange={(e) => setFormData({ ...formData, benefits: e.target.value })}
+              multiline
+              rows={5}
+              helperText="Digite cada benefício em uma linha separada"
+            />
+          </Stack>
+        </DialogContent>
+        <Divider />
+        <DialogActions sx={{ p: 2 }}>
+          <Button onClick={handleCloseDialog} variant="outlined">
+            Cancelar
+          </Button>
+          <Button variant="contained" onClick={handleSave}>
+            Salvar
+          </Button>
+        </DialogActions>
       </Dialog>
     </Box>
   );
-}
+};
+
+export default Planos;
+

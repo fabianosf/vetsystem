@@ -14,20 +14,14 @@ from .plano_views import PlanoSaudeViewSet
 
 # Views especializadas
 from .diagnostico_views import DiagnosticoIAViewSet
-from .health_check_views import HealthCheck  # ✅ CORRIGIDO
 
-# Dashboard (funções corretas)
-from .dashboard_views import (
-    dashboard_stats,
-    consultas_timeline,
-    consultas_por_status,
-    veterinarios_performance,
-    racas_mais_comuns,
-    diagnosticos_ia_timeline,
-    planos_distribuicao,
-)
+# Dashboard
+try:
+    from .dashboard_views import dashboard_kpis
+except ImportError:
+    pass
 
-# PDF (importar o que existir)
+# PDF
 try:
     from .pdf_views import (
         gerar_ficha_animal,
@@ -38,11 +32,17 @@ try:
 except ImportError:
     pass
 
-# Notificações (function-based views)
-from .notification_views import (
-    notificar_consulta_agendada,
-    notificar_lembrete_consulta,
-    notificar_consulta_cancelada,
-    enviar_notificacao_custom,
-    listar_notificacoes,
-)
+# Notificações
+try:
+    from .notification_views import (
+        listar_notificacoes,
+        listar_notificacoes_nao_lidas,
+        marcar_como_lida,
+        marcar_todas_como_lidas,
+        notificar_consulta_agendada,
+        notificar_lembrete_consulta,
+        notificar_consulta_cancelada,
+        enviar_notificacao_custom,
+    )
+except ImportError:
+    pass

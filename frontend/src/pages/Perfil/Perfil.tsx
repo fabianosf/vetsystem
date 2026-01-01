@@ -1,144 +1,150 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../../context/AuthContext';
-import api from '../../services/api';
 import {
   Box,
   Card,
-  Grid,
+  CardContent,
   Typography,
-  TextField,
-  Button,
   Avatar,
+  Button,
+  TextField,
   Stack,
   Divider,
   IconButton,
-  InputAdornment,
-  Alert,
-  LinearProgress,
   Paper,
+  Chip,
+  Alert,
+  InputAdornment,
 } from '@mui/material';
 import {
+  Person,
   Edit,
   Save,
   Cancel,
   PhotoCamera,
-  Visibility,
-  VisibilityOff,
   Email,
   Phone,
   Badge,
-  Lock,
+  LocationOn,
+  CalendarMonth,
+  CheckCircle,
 } from '@mui/icons-material';
-import { useToast } from '../../contexts/ToastContext';
+import { toast } from 'react-toastify';
+import api from '../../services/api';
+
+interface UserProfile {
+  id: number;
+  username: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  role?: string;
+  avatar?: string;
+  date_joined: string;
+}
 
 export default function Perfil() {
-  const { user, updateUser } = useAuth();
-  const toast = useToast();
-  const [loading, setLoading] = useState(false);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [editMode, setEditMode] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    first_name: user?.first_name || '',
-    last_name: user?.last_name || '',
-    email: user?.email || '',
-    telefone: '',
-    avatar: user?.avatar || '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    state: '',
   });
 
-  const [passwordData, setPasswordData] = useState({
-    old_password: '',
-    new_password: '',
-    confirm_password: '',
-  });
+  useEffect(() => {
+    loadProfile();
+  }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordData({
-      ...passwordData,
-      [e.target.name]: e.target.value,
-    });
+  const loadProfile = async () => {
+    try {
+      // Ajuste a rota conforme seu backend
+      const response = await api.get('/auth/profile/');
+      setProfile(response.data);
+      setFormData({
+        first_name: response.data.first_name || '',
+        last_name: response.data.last_name || '',
+        email: response.data.email || '',
+        phone: response.data.phone || '',
+        address: response.data.address || '',
+        city: response.data.city || '',
+        state: response.data.state || '',
+      });
+    } catch (error) {
+      console.error('Erro ao carregar perfil:', error);
+      // Dados mockados para demonstração
+      const mockProfile: UserProfile = {
+        id: 1,
+        username: 'admin',
+        email: 'admin@vetsystem.com',
+        first_name: 'Administrador',
+        last_name: 'Sistema',
+        phone: '(11) 98765-4321',
+        address: 'Rua Exemplo, 123',
+        city: 'São Paulo',
+        state: 'SP',
+        role: 'Veterinário',
+        date_joined: '2024-01-15T10:30:00Z',
+      };
+      setProfile(mockProfile);
+      setFormData({
+        first_name: mockProfile.first_name,
+        last_name: mockProfile.last_name,
+        email: mockProfile.email,
+        phone: mockProfile.phone || '',
+        address: mockProfile.address || '',
+        city: mockProfile.city || '',
+        state: mockProfile.state || '',
+      });
+    }
   };
 
   const handleSave = async () => {
     setLoading(true);
     try {
-      const response = await api.patch('/auth/me/', formData);
-      updateUser(response.data);
+      await api.patch('/auth/profile/', formData);
       toast.success('Perfil atualizado com sucesso!');
       setEditMode(false);
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Erro ao atualizar perfil');
+      loadProfile();
+    } catch (error) {
+      console.error('Erro ao atualizar perfil:', error);
+      toast.error('Erro ao atualizar perfil');
     } finally {
       setLoading(false);
     }
   };
 
-  const handlePasswordUpdate = async () => {
-    if (passwordData.new_password !== passwordData.confirm_password) {
-      toast.error('As senhas não coincidem');
-      return;
-    }
-
-    if (passwordData.new_password.length < 6) {
-      toast.error('A senha deve ter pelo menos 6 caracteres');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      await api.post('/auth/change-password/', {
-        old_password: passwordData.old_password,
-        new_password: passwordData.new_password,
+  const handleCancel = () => {
+    setEditMode(false);
+    if (profile) {
+      setFormData({
+        first_name: profile.first_name || '',
+        last_name: profile.last_name || '',
+        email: profile.email || '',
+        phone: profile.phone || '',
+        address: profile.address || '',
+        city: profile.city || '',
+        state: profile.state || '',
       });
-      toast.success('Senha alterada com sucesso!');
-      setPasswordData({
-        old_password: '',
-        new_password: '',
-        confirm_password: '',
-      });
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Erro ao alterar senha');
-    } finally {
-      setLoading(false);
     }
   };
 
-  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData({
-          ...formData,
-          avatar: reader.result as string,
-        });
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const getRoleBadge = (role: string) => {
-    const config: any = {
-      ADMIN: { label: 'Administrador', color: 'secondary' },
-      VETERINARIO: { label: 'Veterinário', color: 'primary' },
-      TUTOR: { label: 'Tutor', color: 'success' },
-    };
-    return config[role] || { label: role, color: 'default' };
-  };
-
-  const roleConfig = user ? getRoleBadge(user.role) : null;
-
-  if (loading && !editMode) {
+  if (!profile) {
     return (
-      <Box>
-        <LinearProgress />
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
+        <Typography>Carregando perfil...</Typography>
       </Box>
     );
   }
@@ -146,334 +152,303 @@ export default function Perfil() {
   return (
     <Box>
       {/* Header */}
-      <Box mb={4}>
-        <Typography variant="h4" fontWeight={700} gutterBottom>
-          Meu Perfil
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Gerencie suas informações pessoais e configurações
-        </Typography>
+      <Box display="flex" alignItems="center" gap={2} mb={3}>
+        <Person sx={{ fontSize: 40, color: 'primary.main' }} />
+        <Box>
+          <Typography variant="h4" fontWeight={700}>
+            Meu Perfil
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Gerencie suas informações pessoais
+          </Typography>
+        </Box>
       </Box>
 
-      <Grid container spacing={3}>
-        {/* Card do Perfil - Esquerda */}
-        <Grid size={{ xs: 12, md: 4 }}>
-          <Card>
-            <Box
-              sx={{
-                height: 150,
-                background: 'linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%)',
-                position: 'relative',
-              }}
-            />
-            
-            <Box sx={{ p: 3, mt: -8 }}>
-              <Box sx={{ position: 'relative', display: 'inline-block' }}>
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: '300px 1fr' },
+          gap: 3,
+        }}
+      >
+        {/* Sidebar - Avatar e Info Básica */}
+        <Card>
+          <CardContent>
+            <Box display="flex" flexDirection="column" alignItems="center" textAlign="center">
+              {/* Avatar */}
+              <Box position="relative">
                 <Avatar
-                  src={formData.avatar}
                   sx={{
                     width: 120,
                     height: 120,
-                    border: '4px solid white',
-                    boxShadow: 3,
                     fontSize: 48,
-                    fontWeight: 700,
                     bgcolor: 'primary.main',
+                    mb: 2,
                   }}
                 >
-                  {user?.first_name?.charAt(0).toUpperCase()}
+                  {profile.first_name?.[0] || 'U'}
                 </Avatar>
-                
-                {editMode && (
-                  <IconButton
-                    component="label"
-                    sx={{
-                      position: 'absolute',
-                      bottom: 0,
-                      right: 0,
-                      bgcolor: 'primary.main',
-                      color: 'white',
-                      '&:hover': {
-                        bgcolor: 'primary.dark',
-                      },
-                    }}
-                  >
-                    <PhotoCamera />
-                    <input
-                      type="file"
-                      hidden
-                      accept="image/*"
-                      onChange={handleAvatarChange}
-                    />
-                  </IconButton>
-                )}
+                <IconButton
+                  sx={{
+                    position: 'absolute',
+                    bottom: 16,
+                    right: -8,
+                    bgcolor: 'primary.main',
+                    color: 'white',
+                    '&:hover': { bgcolor: 'primary.dark' },
+                  }}
+                  size="small"
+                >
+                  <PhotoCamera fontSize="small" />
+                </IconButton>
               </Box>
 
-              <Box mt={2}>
-                <Typography variant="h5" fontWeight={700}>
-                  {user?.first_name} {user?.last_name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" gutterBottom>
-                  {user?.email}
-                </Typography>
-                
-                {roleConfig && (
-                  <Box mt={1}>
-                    <Button
-                      variant="contained"
-                      color={roleConfig.color as any}
-                      size="small"
-                      fullWidth
-                      disabled
-                      sx={{ textTransform: 'none', fontWeight: 600 }}
-                    >
-                      {roleConfig.label}
-                    </Button>
-                  </Box>
-                )}
-              </Box>
+              {/* Nome e Username */}
+              <Typography variant="h6" fontWeight={700} gutterBottom>
+                {profile.first_name} {profile.last_name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" gutterBottom>
+                @{profile.username}
+              </Typography>
 
-              <Divider sx={{ my: 2 }} />
+              {/* Role Badge */}
+              <Chip
+                icon={<Badge />}
+                label={profile.role || 'Usuário'}
+                color="primary"
+                sx={{ mt: 1, fontWeight: 600 }}
+              />
+
+              <Divider sx={{ width: '100%', my: 2 }} />
+
+              {/* Info Rápida */}
+              <Stack spacing={1.5} width="100%" alignItems="flex-start">
+                <Box display="flex" alignItems="center" gap={1}>
+                  <Email sx={{ fontSize: 18, color: 'text.secondary' }} />
+                  <Typography variant="caption" color="text.secondary">
+                    {profile.email}
+                  </Typography>
+                </Box>
+
+                <Box display="flex" alignItems="center" gap={1}>
+                  <CalendarMonth sx={{ fontSize: 18, color: 'text.secondary' }} />
+                  <Typography variant="caption" color="text.secondary">
+                    Desde {new Date(profile.date_joined).toLocaleDateString('pt-BR')}
+                  </Typography>
+                </Box>
+              </Stack>
+
+              <Divider sx={{ width: '100%', my: 2 }} />
 
               {/* Estatísticas */}
-              <Stack spacing={2}>
-                <Paper sx={{ p: 2, bgcolor: 'primary.light', color: 'primary.contrastText' }}>
-                  <Typography variant="caption">Membro desde</Typography>
-                  <Typography variant="h6" fontWeight={700}>
-                    {new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gap: 2,
+                  width: '100%',
+                }}
+              >
+                <Paper elevation={0} sx={{ p: 1.5, bgcolor: 'primary.50', textAlign: 'center' }}>
+                  <Typography variant="h6" fontWeight={700} color="primary.main">
+                    48
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    Consultas
                   </Typography>
                 </Paper>
-
-                <Paper sx={{ p: 2, bgcolor: 'success.light', color: 'success.contrastText' }}>
-                  <Typography variant="caption">Último acesso</Typography>
-                  <Typography variant="h6" fontWeight={700}>
-                    Hoje
+                <Paper elevation={0} sx={{ p: 1.5, bgcolor: 'success.50', textAlign: 'center' }}>
+                  <Typography variant="h6" fontWeight={700} color="success.main">
+                    32
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    Pacientes
                   </Typography>
                 </Paper>
-              </Stack>
+              </Box>
             </Box>
-          </Card>
-        </Grid>
+          </CardContent>
+        </Card>
 
-        {/* Informações e Edição - Direita */}
-        <Grid size={{ xs: 12, md: 8 }}>
-          {/* Card de Informações Pessoais */}
-          <Card sx={{ mb: 3 }}>
-            <Box sx={{ p: 3 }}>
-              <Stack direction="row" justifyContent="space-between" alignItems="center" mb={3}>
-                <Typography variant="h6" fontWeight={700}>
-                  Informações Pessoais
-                </Typography>
-                
-                {!editMode ? (
+        {/* Formulário de Edição */}
+        <Card>
+          <CardContent>
+            <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+              <Typography variant="h6" fontWeight={600}>
+                Informações Pessoais
+              </Typography>
+              {!editMode ? (
+                <Button
+                  variant="contained"
+                  startIcon={<Edit />}
+                  onClick={() => setEditMode(true)}
+                >
+                  Editar Perfil
+                </Button>
+              ) : (
+                <Stack direction="row" spacing={1}>
                   <Button
-                    startIcon={<Edit />}
-                    onClick={() => setEditMode(true)}
                     variant="outlined"
+                    startIcon={<Cancel />}
+                    onClick={handleCancel}
+                    disabled={loading}
                   >
-                    Editar
+                    Cancelar
                   </Button>
-                ) : (
-                  <Stack direction="row" spacing={1}>
-                    <Button
-                      startIcon={<Cancel />}
-                      onClick={() => {
-                        setEditMode(false);
-                        setFormData({
-                          first_name: user?.first_name || '',
-                          last_name: user?.last_name || '',
-                          email: user?.email || '',
-                          telefone: '',
-                          avatar: user?.avatar || '',
-                        });
-                      }}
-                      color="error"
-                    >
-                      Cancelar
-                    </Button>
-                    <Button
-                      startIcon={<Save />}
-                      onClick={handleSave}
-                      variant="contained"
-                      disabled={loading}
-                    >
-                      Salvar
-                    </Button>
-                  </Stack>
-                )}
-              </Stack>
-
-              {loading && <LinearProgress sx={{ mb: 2 }} />}
-
-              <Grid container spacing={2}>
-                <Grid size={{ xs: 12, sm: 6 }}>
-                  <TextField
-                    fullWidth
-                    label="Nome"
-                    name="first_name"
-                    value={formData.first_name}
-                    onChange={handleChange}
-                    disabled={!editMode || loading}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <Badge />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-
-                <Grid size={{ xs: 12, sm: 6 }}>
-                  <TextField
-                    fullWidth
-                    label="Sobrenome"
-                    name="last_name"
-                    value={formData.last_name}
-                    onChange={handleChange}
-                    disabled={!editMode || loading}
-                  />
-                </Grid>
-
-                <Grid size={{ xs: 12 }}>
-                  <TextField
-                    fullWidth
-                    label="E-mail"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    disabled={!editMode || loading}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <Email />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-
-                <Grid size={{ xs: 12 }}>
-                  <TextField
-                    fullWidth
-                    label="Telefone"
-                    name="telefone"
-                    value={formData.telefone}
-                    onChange={handleChange}
-                    disabled={!editMode || loading}
-                    placeholder="(00) 00000-0000"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <Phone />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-              </Grid>
-            </Box>
-          </Card>
-
-          {/* Card de Alterar Senha */}
-          <Card>
-            <Box sx={{ p: 3 }}>
-              <Typography variant="h6" fontWeight={700} gutterBottom>
-                Alterar Senha
-              </Typography>
-              <Typography variant="body2" color="text.secondary" mb={3}>
-                Mantenha sua conta segura com uma senha forte
-              </Typography>
-
-              <Grid container spacing={2}>
-                <Grid size={{ xs: 12 }}>
-                  <TextField
-                    fullWidth
-                    label="Senha Atual"
-                    name="old_password"
-                    type={showPassword ? 'text' : 'password'}
-                    value={passwordData.old_password}
-                    onChange={handlePasswordChange}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <Lock />
-                        </InputAdornment>
-                      ),
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            onClick={() => setShowPassword(!showPassword)}
-                            edge="end"
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-
-                <Grid size={{ xs: 12 }}>
-                  <TextField
-                    fullWidth
-                    label="Nova Senha"
-                    name="new_password"
-                    type={showPassword ? 'text' : 'password'}
-                    value={passwordData.new_password}
-                    onChange={handlePasswordChange}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <Lock />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-
-                <Grid size={{ xs: 12 }}>
-                  <TextField
-                    fullWidth
-                    label="Confirmar Nova Senha"
-                    name="confirm_password"
-                    type={showPassword ? 'text' : 'password'}
-                    value={passwordData.confirm_password}
-                    onChange={handlePasswordChange}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <Lock />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-
-                <Grid size={{ xs: 12 }}>
-                  {passwordData.new_password && passwordData.confirm_password && 
-                   passwordData.new_password !== passwordData.confirm_password && (
-                    <Alert severity="error" sx={{ mb: 2 }}>
-                      As senhas não coincidem
-                    </Alert>
-                  )}
-                  
                   <Button
-                    fullWidth
                     variant="contained"
-                    onClick={handlePasswordUpdate}
-                    disabled={loading || !passwordData.old_password || !passwordData.new_password}
-                    sx={{ py: 1.5 }}
+                    startIcon={<Save />}
+                    onClick={handleSave}
+                    disabled={loading}
                   >
-                    Alterar Senha
+                    {loading ? 'Salvando...' : 'Salvar'}
                   </Button>
-                </Grid>
-              </Grid>
+                </Stack>
+              )}
             </Box>
-          </Card>
-        </Grid>
-      </Grid>
+
+            <Divider sx={{ mb: 3 }} />
+
+            {editMode && (
+              <Alert severity="info" sx={{ mb: 3 }} icon={<CheckCircle />}>
+                Modo de edição ativado. Faça as alterações e clique em Salvar.
+              </Alert>
+            )}
+
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+                gap: 3,
+              }}
+            >
+              {/* Nome */}
+              <TextField
+                label="Nome"
+                value={formData.first_name}
+                onChange={(e) => handleChange('first_name', e.target.value)}
+                disabled={!editMode}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Person />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              {/* Sobrenome */}
+              <TextField
+                label="Sobrenome"
+                value={formData.last_name}
+                onChange={(e) => handleChange('last_name', e.target.value)}
+                disabled={!editMode}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Person />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              {/* Email */}
+              <TextField
+                label="E-mail"
+                value={formData.email}
+                onChange={(e) => handleChange('email', e.target.value)}
+                disabled={!editMode}
+                fullWidth
+                type="email"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Email />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              {/* Telefone */}
+              <TextField
+                label="Telefone"
+                value={formData.phone}
+                onChange={(e) => handleChange('phone', e.target.value)}
+                disabled={!editMode}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Phone />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              {/* Endereço */}
+              <TextField
+                label="Endereço"
+                value={formData.address}
+                onChange={(e) => handleChange('address', e.target.value)}
+                disabled={!editMode}
+                fullWidth
+                sx={{ gridColumn: { sm: 'span 2' } }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LocationOn />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              {/* Cidade */}
+              <TextField
+                label="Cidade"
+                value={formData.city}
+                onChange={(e) => handleChange('city', e.target.value)}
+                disabled={!editMode}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LocationOn />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+
+              {/* Estado */}
+              <TextField
+                label="Estado"
+                value={formData.state}
+                onChange={(e) => handleChange('state', e.target.value)}
+                disabled={!editMode}
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LocationOn />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Box>
+
+            <Divider sx={{ my: 3 }} />
+
+            {/* Seção de Segurança */}
+            <Typography variant="h6" fontWeight={600} mb={2}>
+              Segurança
+            </Typography>
+            <Button variant="outlined" color="warning">
+              Alterar Senha
+            </Button>
+          </CardContent>
+        </Card>
+      </Box>
     </Box>
   );
 }

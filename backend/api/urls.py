@@ -1,88 +1,69 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-
-# ViewSets
-from api.views.tutor_views import TutorViewSet
-from api.views.animal_views import AnimalViewSet
-from api.views.veterinario_views import VeterinarioViewSet
-from api.views.consulta_views import ConsultaViewSet
-from api.views.plano_views import PlanoSaudeViewSet
-from api.views.clinica_views import ClinicaViewSet
+from rest_framework_simplejwt.views import TokenRefreshView
 from api.views.diagnostico_views import DiagnosticoIAViewSet
 
-
-# PDF Views
-from api.views.pdf_views import (
-    animal_ficha_pdf,
-    prescricao_pdf,
-    atestado_pdf,
-    relatorio_consulta_pdf,
+# ViewSets
+from api.views import (
+    AnimalViewSet,
+    TutorViewSet,
+    VeterinarioViewSet,
+    ConsultaViewSet,
+    ExameViewSet,
+    VacinaViewSet,
+    ClinicaViewSet,
+    PlanoSaudeViewSet,
+    DiagnosticoIAViewSet,
 )
 
+# Dashboard e Auth views
+from api.views.dashboard_views import dashboard_kpis
+from api.views.auth_views import (
+    login_view,
+    register_user,
+    request_password_reset,
+    verify_reset_token,
+    confirm_password_reset,
+)
 
-# Dashboard Views
-from api.views.dashboard_views import (
-    dashboard_stats,
-    consultas_timeline,
-    consultas_por_status,
-    veterinarios_performance,
-    racas_mais_comuns,
-    diagnosticos_ia_timeline,
-    planos_distribuicao,
+# Notification views
+from api.views.notification_views import (
+    listar_notificacoes,
+    listar_notificacoes_nao_lidas,
+    marcar_como_lida,
+    marcar_todas_como_lidas,
 )
 
 # Router
 router = DefaultRouter()
-router.register(r'tutores', TutorViewSet, basename='tutor')
 router.register(r'animais', AnimalViewSet, basename='animal')
+router.register(r'tutores', TutorViewSet, basename='tutor')
 router.register(r'veterinarios', VeterinarioViewSet, basename='veterinario')
 router.register(r'consultas', ConsultaViewSet, basename='consulta')
-router.register(r'planos', PlanoSaudeViewSet, basename='plano')
+router.register(r'exames', ExameViewSet, basename='exame')
+router.register(r'vacinas', VacinaViewSet, basename='vacina')
 router.register(r'clinicas', ClinicaViewSet, basename='clinica')
+router.register(r'planos', PlanoSaudeViewSet, basename='plano')
 router.register(r'diagnosticos', DiagnosticoIAViewSet, basename='diagnostico')
 
 urlpatterns = [
-    # Router URLs
+    # Router
     path('', include(router.urls)),
     
-    # Dashboard endpoints
-    path('dashboard/stats/', dashboard_stats, name='dashboard-stats'),
-    path('dashboard/consultas-timeline/', consultas_timeline, name='consultas-timeline'),
-    path('dashboard/consultas-status/', consultas_por_status, name='consultas-status'),
-    path('dashboard/veterinarios-performance/', veterinarios_performance, name='veterinarios-performance'),
-    path('dashboard/racas-comuns/', racas_mais_comuns, name='racas-comuns'),
-    path('dashboard/diagnosticos-timeline/', diagnosticos_ia_timeline, name='diagnosticos-timeline'),
-    path('dashboard/planos/', planos_distribuicao, name='planos-distribuicao'),
-        # PDF endpoints
-    path('pdf/animal/<int:animal_id>/ficha/', animal_ficha_pdf, name='animal-ficha-pdf'),
-    path('pdf/consulta/<int:consulta_id>/prescricao/', prescricao_pdf, name='prescricao-pdf'),
-    path('pdf/consulta/<int:consulta_id>/atestado/', atestado_pdf, name='atestado-pdf'),
-    path('pdf/consulta/<int:consulta_id>/relatorio/', relatorio_consulta_pdf, name='relatorio-pdf'),
+    # Auth
+    path('auth/login/', login_view, name='login'),
+    path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/register/', register_user, name='register'),
+    path('auth/password-reset/request/', request_password_reset, name='password-reset-request'),
+    path('auth/password-reset/verify/', verify_reset_token, name='password-reset-verify'),
+    path('auth/password-reset/confirm/', confirm_password_reset, name='password-reset-confirm'),
+    
+    # Dashboard
+    path('dashboard/kpis/', dashboard_kpis, name='dashboard-kpis'),
+    
     # Notificações
-    # path('notificacoes/', include('api.urls.notification_urls')),
-
-
-]
-
-# Notificações (function-based views)
-from api.views.notification_views import (
-    notificar_consulta_agendada,
-    notificar_lembrete_consulta,
-    notificar_consulta_cancelada,
-    enviar_notificacao_custom,
-    listar_notificacoes,
-)
-
-# Adicionar aos urlpatterns existentes
-urlpatterns += [
-    # Notificações automáticas
-    path('notificacoes/consulta/<int:consulta_id>/agendada/', notificar_consulta_agendada, name='notificar-consulta-agendada'),
-    path('notificacoes/consulta/<int:consulta_id>/lembrete/', notificar_lembrete_consulta, name='notificar-lembrete'),
-    path('notificacoes/consulta/<int:consulta_id>/cancelada/', notificar_consulta_cancelada, name='notificar-cancelada'),
-    
-    # Notificações personalizadas
-    path('notificacoes/custom/', enviar_notificacao_custom, name='notificacao-custom'),
-    
-    # Listar notificações
-    path('notificacoes/', listar_notificacoes, name='listar-notificacoes'),
+    path('notificacoes/', listar_notificacoes, name='notificacoes-list'),
+    path('notificacoes/nao_lidas/', listar_notificacoes_nao_lidas, name='notificacoes-nao-lidas'),
+    path('notificacoes/<int:pk>/marcar_lida/', marcar_como_lida, name='notificacao-marcar-lida'),
+    path('notificacoes/marcar_todas_lidas/', marcar_todas_como_lidas, name='notificacoes-marcar-todas'),
 ]

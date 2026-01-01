@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   Box,
-  Grid,
   Card,
   CardContent,
   Typography,
@@ -32,10 +31,9 @@ import {
   gerarRelatorioFinanceiroPDF,
   gerarCarteiraVacinacaoPDF,
 } from '../../utils/pdfGenerator';
-import { useToast } from '../../contexts/ToastContext';
+import { toast } from 'react-toastify';
 
 export default function Documentos() {
-  const toast = useToast();
   const [gerandoPDF, setGerandoPDF] = useState<string | null>(null);
 
   const handleGerarReceita = async () => {
@@ -295,88 +293,94 @@ export default function Documentos() {
         />
       </Box>
 
-      {/* Grid de Documentos */}
-      <Grid container spacing={3} mb={4}>
+      {/* Grid de Documentos com Box */}
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' },
+          gap: 3,
+          mb: 4,
+        }}
+      >
         {documentos.map((doc) => (
-          <Grid size={{ xs: 12, md: 6 }} key={doc.id}>
-            <Card
+          <Card
+            key={doc.id}
+            sx={{
+              height: '100%',
+              transition: 'all 0.3s',
+              '&:hover': {
+                transform: 'translateY(-8px)',
+                boxShadow: 6,
+              },
+            }}
+          >
+            {/* Header do Card */}
+            <Box
               sx={{
-                height: '100%',
-                transition: 'all 0.3s',
-                '&:hover': {
-                  transform: 'translateY(-8px)',
-                  boxShadow: 6,
-                },
+                p: 3,
+                bgcolor: doc.bgColor,
+                borderBottom: '3px solid',
+                borderColor: doc.color,
               }}
             >
-              {/* Header do Card */}
-              <Box
+              <Stack direction="row" spacing={2} alignItems="center">
+                <Box sx={{ color: doc.color }}>
+                  {doc.icon}
+                </Box>
+                <Box flex={1}>
+                  <Typography variant="h6" fontWeight={700} gutterBottom>
+                    {doc.titulo}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {doc.descricao}
+                  </Typography>
+                </Box>
+              </Stack>
+            </Box>
+
+            <CardContent>
+              <Typography variant="subtitle2" fontWeight={700} gutterBottom>
+                Recursos Incluídos:
+              </Typography>
+              
+              <List dense>
+                {doc.features.map((feature, index) => (
+                  <ListItem key={index} disablePadding>
+                    <ListItemIcon sx={{ minWidth: 32 }}>
+                      <CheckCircle sx={{ fontSize: 18, color: doc.color }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={feature}
+                      primaryTypographyProps={{
+                        variant: 'body2',
+                        color: 'text.secondary',
+                      }}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+
+              <Button
+                fullWidth
+                variant="contained"
+                startIcon={gerandoPDF === doc.id ? <PictureAsPdf /> : <Download />}
+                onClick={doc.action}
+                disabled={gerandoPDF === doc.id}
                 sx={{
-                  p: 3,
-                  bgcolor: doc.bgColor,
-                  borderBottom: '3px solid',
-                  borderColor: doc.color,
+                  mt: 2,
+                  bgcolor: doc.color,
+                  '&:hover': {
+                    bgcolor: doc.color,
+                    filter: 'brightness(0.9)',
+                  },
                 }}
               >
-                <Stack direction="row" spacing={2} alignItems="center">
-                  <Box sx={{ color: doc.color }}>
-                    {doc.icon}
-                  </Box>
-                  <Box flex={1}>
-                    <Typography variant="h6" fontWeight={700} gutterBottom>
-                      {doc.titulo}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {doc.descricao}
-                    </Typography>
-                  </Box>
-                </Stack>
-              </Box>
-
-              <CardContent>
-                <Typography variant="subtitle2" fontWeight={700} gutterBottom>
-                  Recursos Incluídos:
-                </Typography>
-                
-                <List dense>
-                  {doc.features.map((feature, index) => (
-                    <ListItem key={index} disablePadding>
-                      <ListItemIcon sx={{ minWidth: 32 }}>
-                        <CheckCircle sx={{ fontSize: 18, color: doc.color }} />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={feature}
-                        primaryTypographyProps={{
-                          variant: 'body2',
-                          color: 'text.secondary',
-                        }}
-                      />
-                    </ListItem>
-                  ))}
-                </List>
-
-                <Button
-                  fullWidth
-                  variant="contained"
-                  startIcon={gerandoPDF === doc.id ? <PictureAsPdf /> : <Download />}
-                  onClick={doc.action}
-                  disabled={gerandoPDF === doc.id}
-                  sx={{
-                    mt: 2,
-                    bgcolor: doc.color,
-                    '&:hover': {
-                      bgcolor: doc.color,
-                      filter: 'brightness(0.9)',
-                    },
-                  }}
-                >
-                  {gerandoPDF === doc.id ? 'Gerando...' : 'Gerar PDF'}
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
+                {gerandoPDF === doc.id ? 'Gerando...' : 'Gerar PDF'}
+              </Button>
+            </CardContent>
+          </Card>
         ))}
-      </Grid>
+      </Box>
 
       <Divider sx={{ my: 4 }} />
 
@@ -385,7 +389,7 @@ export default function Documentos() {
         <Stack spacing={2}>
           <Stack direction="row" spacing={2} alignItems="center">
             <Avatar sx={{ bgcolor: 'info.main' }}>
-              ℹ️
+              <Description />
             </Avatar>
             <Typography variant="h6" fontWeight={600} color="info.dark">
               Informações Importantes

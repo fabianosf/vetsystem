@@ -1,397 +1,514 @@
-import { useEffect, useState } from 'react';
-import { api } from '../../services/api';
-import type { Clinica, PaginatedResponse } from '../../types';
+import { useState, useEffect } from 'react';
 import {
-  Box, Card, CardContent, Typography, Button, Dialog, DialogTitle,
-  DialogContent, DialogActions, TextField, Grid, IconButton, InputAdornment,
-  Stack, Chip, Alert, CircularProgress, MenuItem
+  Box,
+  Typography,
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  IconButton,
+  Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Avatar,
+  InputAdornment,
+  CircularProgress,
+  Stack,
+  Card,
+  Divider,
 } from '@mui/material';
 import {
-  Add, Edit, Delete, Search, Business, Phone, Email, LocationOn, Close
+  Add,
+  Edit,
+  Delete,
+  Search,
+  LocalHospital,
+  Phone,
+  Email,
+  LocationOn,
+  Business,
+  CheckCircle,  
 } from '@mui/icons-material';
+import { toast } from 'react-toastify';
+import api from '../../services/api';
 
-export default function Clinicas() {
+interface Clinica {
+  id: number;
+  name: string;
+  cnpj: string;
+  phone: string;
+  email: string;
+  address: string;
+  city: string;
+  state: string;
+  is_active: boolean;
+  created_at?: string;
+}
+
+const Clinicas: React.FC = () => {
   const [clinicas, setClinicas] = useState<Clinica[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
   const [editingClinica, setEditingClinica] = useState<Clinica | null>(null);
-  const [success, setSuccess] = useState('');
-  const [error, setError] = useState('');
-  
   const [formData, setFormData] = useState({
-    nome: '',
+    name: '',
     cnpj: '',
-    telefone: '',
+    phone: '',
     email: '',
-    endereco: '',
-    cidade: '',
-    estado: '',
-    cep: '',
-    horario_funcionamento: '',
-    especialidades: '',
+    address: '',
+    city: '',
+    state: '',
   });
 
   useEffect(() => {
-    loadClinicas();
+    fetchClinicas();
   }, []);
 
-  const loadClinicas = async () => {
+  const fetchClinicas = async () => {
     try {
-      const response = await api.get<PaginatedResponse<Clinica>>('/clinicas/');
-      setClinicas(response.data.results || response.data);
-    } catch (error) {
-      setError('Erro ao carregar clínicas');
+      setLoading(true);
+      const response = await api.get('/clinicas/');
+      setClinicas(response.data.results || response.data || []);
+    } catch (error: any) {
+      if (error.response?.status !== 404) {
+        console.error('Erro ao carregar clínicas:', error);
+        toast.error('Erro ao carregar clínicas');
+      }
+      setClinicas([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    
+  const handleOpenDialog = (clinica?: Clinica) => {
+    if (clinica) {
+      setEditingClinica(clinica);
+      setFormData({
+        name: clinica.name,
+        cnpj: clinica.cnpj,
+        phone: clinica.phone,
+        email: clinica.email,
+        address: clinica.address,
+        city: clinica.city,
+        state: clinica.state,
+      });
+    } else {
+      setEditingClinica(null);
+      setFormData({
+        name: '',
+        cnpj: '',
+        phone: '',
+        email: '',
+        address: '',
+        city: '',
+        state: '',
+      });
+    }
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setEditingClinica(null);
+  };
+
+  const handleSave = async () => {
     try {
       if (editingClinica) {
         await api.put(`/clinicas/${editingClinica.id}/`, formData);
-        setSuccess('Clínica atualizada com sucesso!');
+        toast.success('Clínica atualizada com sucesso!');
       } else {
         await api.post('/clinicas/', formData);
-        setSuccess('Clínica cadastrada com sucesso!');
+        toast.success('Clínica cadastrada com sucesso!');
       }
-      loadClinicas();
-      closeModal();
+      handleCloseDialog();
+      fetchClinicas();
     } catch (error: any) {
-      setError(error.response?.data?.detail || 'Erro ao salvar clínica');
-    } finally {
-      setLoading(false);
+      console.error('Erro ao salvar clínica:', error);
+      toast.error(error.response?.data?.detail || 'Erro ao salvar clínica');
     }
   };
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Deseja realmente excluir esta clínica?')) return;
-    
-    try {
-      await api.delete(`/clinicas/${id}/`);
-      setSuccess('Clínica excluída com sucesso!');
-      loadClinicas();
-    } catch (error) {
-      setError('Erro ao excluir clínica');
+    if (window.confirm('Deseja realmente excluir esta clínica?')) {
+      try {
+        await api.delete(`/clinicas/${id}/`);
+        toast.success('Clínica excluída com sucesso!');
+        fetchClinicas();
+      } catch (error) {
+        toast.error('Erro ao excluir clínica');
+      }
     }
   };
 
-  const openModal = (clinica?: Clinica) => {
-    if (clinica) {
-      setEditingClinica(clinica);
-      setFormData({
-        nome: clinica.nome,
-        cnpj: clinica.cnpj || '',
-        telefone: clinica.telefone,
-        email: clinica.email || '',
-        endereco: clinica.endereco || '',
-        cidade: clinica.cidade || '',
-        estado: clinica.estado || '',
-        cep: clinica.cep || '',
-        horario_funcionamento: clinica.horario_funcionamento || '',
-        especialidades: clinica.especialidades || '',
-      });
-    }
-    setShowModal(true);
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-    setEditingClinica(null);
-    setFormData({
-      nome: '',
-      cnpj: '',
-      telefone: '',
-      email: '',
-      endereco: '',
-      cidade: '',
-      estado: '',
-      cep: '',
-      horario_funcionamento: '',
-      especialidades: '',
-    });
-    setError('');
-  };
-
-  const filteredClinicas = clinicas.filter(clinica =>
-    clinica.nome.toLowerCase().includes(search.toLowerCase()) ||
-    clinica.cidade?.toLowerCase().includes(search.toLowerCase())
+  const filteredClinicas = clinicas.filter(
+    (clinica) =>
+      clinica.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      clinica.cnpj.includes(searchTerm) ||
+      clinica.city.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  if (loading && clinicas.length === 0) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-        <CircularProgress />
-      </Box>
-    );
-  }
 
   return (
     <Box>
+      {/* Header */}
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
-        <Typography variant="h4" fontWeight={700}>Clínicas</Typography>
-        <Button variant="contained" startIcon={<Add />} onClick={() => openModal()}>
+        <Box>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Avatar sx={{ bgcolor: 'success.main', width: 48, height: 48 }}>
+              <LocalHospital />
+            </Avatar>
+            <Box>
+              <Typography variant="h4" fontWeight={700}>
+                Clínicas
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Gerencie as unidades da rede
+              </Typography>
+            </Box>
+          </Stack>
+        </Box>
+        <Button
+          variant="contained"
+          startIcon={<Add />}
+          onClick={() => handleOpenDialog()}
+          size="large"
+          color="success"
+          sx={{
+            borderRadius: 2,
+            px: 3,
+            py: 1.5,
+            textTransform: 'none',
+            fontWeight: 600,
+            boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4)',
+          }}
+        >
           Nova Clínica
         </Button>
       </Box>
 
-      {success && (
-        <Alert severity="success" sx={{ mb: 3 }} onClose={() => setSuccess('')}>
-          {success}
-        </Alert>
-      )}
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }} onClose={() => setError('')}>
-          {error}
-        </Alert>
-      )}
+      {/* Stats Cards */}
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(3, 1fr)' },
+          gap: 2,
+          mb: 3,
+        }}
+      >
+        <Card sx={{ p: 2, bgcolor: 'primary.light', color: 'primary.contrastText' }}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
+            <Box>
+              <Typography variant="h4" fontWeight={700}>
+                {clinicas.length}
+              </Typography>
+              <Typography variant="body2">Total de Clínicas</Typography>
+            </Box>
+            <Business sx={{ fontSize: 40, opacity: 0.8 }} />
+          </Stack>
+        </Card>
 
-      <Card sx={{ mb: 3 }}>
-        <CardContent>
-          <TextField
-            fullWidth
-            placeholder="Buscar por nome ou cidade..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </CardContent>
+        <Card sx={{ p: 2, bgcolor: 'success.light', color: 'success.contrastText' }}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
+            <Box>
+              <Typography variant="h4" fontWeight={700}>
+                {clinicas.filter(c => c.is_active).length}
+              </Typography>
+              <Typography variant="body2">Ativas</Typography>
+            </Box>
+            <CheckCircle sx={{ fontSize: 40, opacity: 0.8 }} />
+          </Stack>
+        </Card>
+
+        <Card sx={{ p: 2, bgcolor: 'info.light', color: 'info.contrastText' }}>
+          <Stack direction="row" justifyContent="space-between" alignItems="center">
+            <Box>
+              <Typography variant="h4" fontWeight={700}>
+                {new Set(clinicas.map(c => c.city)).size}
+              </Typography>
+              <Typography variant="body2">Cidades</Typography>
+            </Box>
+            <LocationOn sx={{ fontSize: 40, opacity: 0.8 }} />
+          </Stack>
+        </Card>
+      </Box>
+
+      {/* Search Bar */}
+      <Card sx={{ p: 2, mb: 3 }}>
+        <TextField
+          fullWidth
+          placeholder="Buscar por nome, CNPJ ou cidade..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search />
+              </InputAdornment>
+            ),
+          }}
+        />
       </Card>
 
-      <Grid container spacing={3}>
-        {filteredClinicas.map((clinica) => (
-          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={clinica.id}>
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Box display="flex" alignItems="center" gap={2} mb={2}>
-                  <Box
+      {/* Table */}
+      <Card>
+        <TableContainer component={Paper} elevation={0}>
+          <Table>
+            <TableHead>
+              <TableRow sx={{ bgcolor: 'grey.50' }}>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    Clínica
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    CNPJ
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    Localização
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    Contato
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    Status
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography variant="subtitle2" fontWeight={700}>
+                    Ações
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
+                    <CircularProgress />
+                  </TableCell>
+                </TableRow>
+              ) : filteredClinicas.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} align="center" sx={{ py: 4 }}>
+                    <LocalHospital sx={{ fontSize: 48, color: 'text.secondary', mb: 1 }} />
+                    <Typography color="text.secondary">
+                      Nenhuma clínica encontrada
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                filteredClinicas.map((clinica) => (
+                  <TableRow
+                    key={clinica.id}
+                    hover
                     sx={{
-                      width: 56,
-                      height: 56,
-                      borderRadius: 2,
-                      bgcolor: 'info.light',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      '&:hover': {
+                        bgcolor: 'action.hover',
+                      },
                     }}
                   >
-                    <Business fontSize="large" color="info" />
-                  </Box>
-                  <Box>
-                    <Typography variant="h6" fontWeight={600}>{clinica.nome}</Typography>
-                  </Box>
-                </Box>
-
-                <Stack spacing={1}>
-                  {clinica.telefone && (
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <Phone fontSize="small" color="action" />
-                      <Typography variant="body2" color="text.secondary">
-                        {clinica.telefone}
+                    <TableCell>
+                      <Stack direction="row" spacing={2} alignItems="center">
+                        <Avatar sx={{ bgcolor: 'success.main' }}>
+                          <LocalHospital />
+                        </Avatar>
+                        <Box>
+                          <Typography variant="body2" fontWeight={600}>
+                            {clinica.name}
+                          </Typography>
+                          <Typography variant="caption" color="text.secondary">
+                            {clinica.address}
+                          </Typography>
+                        </Box>
+                      </Stack>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" fontFamily="monospace">
+                        {clinica.cnpj}
                       </Typography>
-                    </Box>
-                  )}
-                  {clinica.email && (
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <Email fontSize="small" color="action" />
-                      <Typography variant="body2" color="text.secondary">
+                    </TableCell>
+                    <TableCell>
+                      <Stack direction="row" spacing={0.5} alignItems="center">
+                        <LocationOn sx={{ fontSize: 16, color: 'text.secondary' }} />
+                        <Typography variant="body2">
+                          {clinica.city} - {clinica.state}
+                        </Typography>
+                      </Stack>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" display="block">
+                        <Phone sx={{ fontSize: 12, verticalAlign: 'middle', mr: 0.5 }} />
+                        {clinica.phone}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary" display="block">
+                        <Email sx={{ fontSize: 12, verticalAlign: 'middle', mr: 0.5 }} />
                         {clinica.email}
                       </Typography>
-                    </Box>
-                  )}
-                  {clinica.endereco && (
-                    <Box display="flex" alignItems="center" gap={1}>
-                      <LocationOn fontSize="small" color="action" />
-                      <Typography variant="body2" color="text.secondary">
-                        {clinica.endereco}
-                      </Typography>
-                    </Box>
-                  )}
-                  {clinica.cidade && (
-                    <Chip
-                      label={`${clinica.cidade}/${clinica.estado}`}
-                      size="small"
-                      color="primary"
-                      variant="outlined"
-                    />
-                  )}
-                  {clinica.horario_funcionamento && (
-                    <Typography variant="caption" color="text.secondary">
-                      🕐 {clinica.horario_funcionamento}
-                    </Typography>
-                  )}
-                </Stack>
-              </CardContent>
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        label={clinica.is_active ? 'Ativa' : 'Inativa'}
+                        color={clinica.is_active ? 'success' : 'default'}
+                        size="small"
+                        sx={{ fontWeight: 600 }}
+                      />
+                    </TableCell>
+                    <TableCell align="right">
+                      <Stack direction="row" spacing={0.5} justifyContent="flex-end">
+                        <IconButton
+                          size="small"
+                          color="primary"
+                          onClick={() => handleOpenDialog(clinica)}
+                        >
+                          <Edit fontSize="small" />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          color="error"
+                          onClick={() => handleDelete(clinica.id)}
+                        >
+                          <Delete fontSize="small" />
+                        </IconButton>
+                      </Stack>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Card>
 
-              <Box sx={{ p: 2, pt: 0 }}>
-                <Stack direction="row" spacing={1}>
-                  <Button fullWidth variant="outlined" startIcon={<Edit />} onClick={() => openModal(clinica)}>
-                    Editar
-                  </Button>
-                  <IconButton color="error" onClick={() => handleDelete(clinica.id)}>
-                    <Delete />
-                  </IconButton>
-                </Stack>
-              </Box>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      {/* Dialog */}
+      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth="md" fullWidth disableEnforceFocus>
+        <DialogTitle>
+          <Stack direction="row" spacing={1} alignItems="center">
+            {editingClinica ? <Edit /> : <Add />}
+            <Typography variant="h6" fontWeight={600}>
+              {editingClinica ? 'Editar Clínica' : 'Nova Clínica'}
+            </Typography>
+          </Stack>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' },
+              gap: 2,
+              mt: 2,
+            }}
+          >
+            <TextField
+              fullWidth
+              label="Nome da Clínica"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              sx={{ gridColumn: { sm: 'span 2' } }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Business />
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-      {filteredClinicas.length === 0 && (
-        <Box textAlign="center" py={8}>
-          <Business sx={{ fontSize: 80, color: 'text.disabled', mb: 2 }} />
-          <Typography variant="h6" color="text.secondary">Nenhuma clínica encontrada</Typography>
-        </Box>
-      )}
+            <TextField
+              fullWidth
+              label="CNPJ"
+              value={formData.cnpj}
+              onChange={(e) => setFormData({ ...formData, cnpj: e.target.value })}
+            />
 
-      <Dialog open={showModal} onClose={closeModal} maxWidth="md" fullWidth>
-        <form onSubmit={handleSubmit}>
-          <DialogTitle>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-              <Typography variant="h6">{editingClinica ? 'Editar Clínica' : 'Nova Clínica'}</Typography>
-              <IconButton onClick={closeModal} size="small"><Close /></IconButton>
-            </Box>
-          </DialogTitle>
+            <TextField
+              fullWidth
+              label="Telefone"
+              value={formData.phone}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Phone />
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-          <DialogContent dividers>
-            <Grid container spacing={2}>
-              <Grid size={{ xs: 12, md: 8 }}>
-                <TextField
-                  fullWidth
-                  label="Nome da Clínica"
-                  value={formData.nome}
-                  onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                  required
-                />
-              </Grid>
+            <TextField
+              fullWidth
+              label="Email"
+              type="email"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              sx={{ gridColumn: { sm: 'span 2' } }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Email />
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-              <Grid size={{ xs: 12, md: 4 }}>
-                <TextField
-                  fullWidth
-                  label="CNPJ"
-                  value={formData.cnpj}
-                  onChange={(e) => setFormData({ ...formData, cnpj: e.target.value })}
-                  placeholder="00.000.000/0000-00"
-                />
-              </Grid>
+            <TextField
+              fullWidth
+              label="Endereço"
+              value={formData.address}
+              onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+              sx={{ gridColumn: { sm: 'span 2' } }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LocationOn />
+                  </InputAdornment>
+                ),
+              }}
+            />
 
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Telefone"
-                  value={formData.telefone}
-                  onChange={(e) => setFormData({ ...formData, telefone: e.target.value })}
-                  required
-                  placeholder="(11) 3456-7890"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start"><Phone /></InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
+            <TextField
+              fullWidth
+              label="Cidade"
+              value={formData.city}
+              onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+            />
 
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start"><Email /></InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 8 }}>
-                <TextField
-                  fullWidth
-                  label="Endereço"
-                  value={formData.endereco}
-                  onChange={(e) => setFormData({ ...formData, endereco: e.target.value })}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start"><LocationOn /></InputAdornment>
-                    ),
-                  }}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 4 }}>
-                <TextField
-                  fullWidth
-                  label="CEP"
-                  value={formData.cep}
-                  onChange={(e) => setFormData({ ...formData, cep: e.target.value })}
-                  placeholder="00000-000"
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 9 }}>
-                <TextField
-                  fullWidth
-                  label="Cidade"
-                  value={formData.cidade}
-                  onChange={(e) => setFormData({ ...formData, cidade: e.target.value })}
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 3 }}>
-                <TextField
-                  fullWidth
-                  label="Estado (UF)"
-                  value={formData.estado}
-                  onChange={(e) => setFormData({ ...formData, estado: e.target.value })}
-                  inputProps={{ maxLength: 2 }}
-                  placeholder="SP"
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Horário de Funcionamento"
-                  value={formData.horario_funcionamento}
-                  onChange={(e) => setFormData({ ...formData, horario_funcionamento: e.target.value })}
-                  placeholder="Seg-Sex: 8h-18h"
-                />
-              </Grid>
-
-              <Grid size={{ xs: 12, md: 6 }}>
-                <TextField
-                  fullWidth
-                  label="Especialidades"
-                  value={formData.especialidades}
-                  onChange={(e) => setFormData({ ...formData, especialidades: e.target.value })}
-                  placeholder="Ex: Cirurgia, Dermatologia"
-                />
-              </Grid>
-            </Grid>
-          </DialogContent>
-
-          <DialogActions>
-            <Button onClick={closeModal}>Cancelar</Button>
-            <Button type="submit" variant="contained" disabled={loading}>
-              {editingClinica ? 'Salvar' : 'Cadastrar'}
-            </Button>
-          </DialogActions>
-        </form>
+            <TextField
+              fullWidth
+              label="Estado (UF)"
+              value={formData.state}
+              onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+              inputProps={{ maxLength: 2, style: { textTransform: 'uppercase' } }}
+            />
+          </Box>
+        </DialogContent>
+        <Divider />
+        <DialogActions sx={{ p: 2 }}>
+          <Button onClick={handleCloseDialog} variant="outlined">
+            Cancelar
+          </Button>
+          <Button variant="contained" onClick={handleSave}>
+            Salvar
+          </Button>
+        </DialogActions>
       </Dialog>
     </Box>
   );
-}
+};
+
+export default Clinicas;
